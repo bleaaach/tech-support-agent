@@ -1,0 +1,128 @@
+# ========================
+# Tech Support Agent 配置
+# ========================
+
+# Wiki 文档路径（指向包含 Edge/NVIDIA_Jetson 的根目录，pipeline 会递归扫描子目录）
+wiki_docs_path: "D:/wiki-documents/sites/en/docs"
+jetson_docs_path: "D:/wiki-documents/sites/en/docs/Edge/NVIDIA_Jetson"
+
+# 数据输出路径
+output_dir: "D:/tech-support-agent/data"
+index_file: "D:/tech-support-agent/data/index.json"
+
+# Qdrant 配置
+qdrant:
+  host: "localhost"
+  port: 6333
+  collection_name: "jetson_wiki"
+  historical_replies_collection: "zoho_historical"  # 历史 agent 回复 RAG (方向 B)
+  vector_size: 1024  # BAAI/bge-m3 = 1024 维；OpenAI text-embedding-3-small = 1024 维（推荐）
+
+# LLM Provider 配置（整体开关）
+# provider 决定 chat/router 走哪个服务；embedding 走独立 embedding.provider
+provider: "openai"  # "openai" | "deepseek"
+
+# OpenAI 配置（同时供 embedding(若 provider=openai) + provider=openai 的 LLM 使用）
+# 默认走你的自定义 OpenAI 兼容端点，不再消耗 DeepSeek 额度。
+# 通过环境变量配置：
+#   OPENAI_BASE_URL    e.g. http://47.236.182.242/v1
+#   OPENAI_LLM_MODEL   e.g. glm-5.2 (默认) / gpt-5.5 / kimi-k2.7-code / deepseek-v4-pro
+#   OPENAI_API_KEY     your token
+openai:
+  api_key: "${OPENAI_API_KEY}"
+  base_url: "${OPENAI_BASE_URL}"
+  embedding_model: "text-embedding-3-small"
+  embedding_batch_size: 1000
+  llm_model: "${OPENAI_LLM_MODEL}"
+  llm_temperature: 0.3
+  embedding_batch_api: true  # 使用 Batch API 降低成本
+
+# DeepSeek 配置（provider=deepseek 时生效）
+deepseek:
+  api_key: "${DEEPSEEK_API_KEY}"
+  base_url: "https://api.deepseek.com/v1"
+  llm_model: "deepseek-chat"
+  llm_temperature: 0.3
+
+# Embedding 配置（独立 provider，跟 chat 无关）
+embedding:
+  provider: "siliconflow"    # "local" | "openai" | "siliconflow"  (硅基流动性价比最高)
+  local_model: "BAAI/bge-m3"
+  local_batch_size: 16
+  openai_model: "text-embedding-3-small"
+  openai_dimensions: 1024
+  siliconflow:
+    api_key: "${SILICONFLOW_API_KEY}"
+    model: "BAAI/bge-m3"
+    batch_size: 1000
+
+# 向量检索配置
+retrieval:
+  backend: "qdrant"          # "qdrant" | "sag" | "hybrid" (hybrid = Qdrant + SAG RRF 融合)
+  top_k: 10  # 增加 top_k 以获得更多候选结果
+  min_score: 0.30  # 降低阈值以捕获更多相关文档
+  enable_rerank: false
+  # 历史相似回复检索配置 (方向 B: 历史 agent 回复 RAG)
+  historical_top_k: 3
+  historical_min_score: 0.50
+  # hybrid 模式参数（仅 backend=hybrid 时生效）
+  qdrant_weight: 0.4
+  sag_weight: 0.6
+  hybrid_top_n: 10
+
+# SAG 检索后端（可选，独立服务）
+# 部署见 docs/SAG_DEPLOY_AND_INTEGRATION.md
+sag:
+  enabled: false             # 首次接入建议先设为 false，验证 SAG 后再切 true
+  base_url: "http://localhost:4173"
+  project_id: "jetson_wiki"
+  top_k: 8
+  search_mode: "fast"        # "fast" (无 LLM 抽实体) | "standard" (LLM 抽实体 + rerank)
+  strategy: "multi"          # "multi" (多跳) | "vector" (单跳)
+  timeout: 30
+
+# 关键词扩展配置（检索前自动扩展同义词）
+keyword_expansion:
+  enabled: true
+  # 搜索词 → 扩展词映射
+  synonyms:
+    "CAD": "CAD STP STEP DXF 3D model mechanical drawing schematic"
+    "STL": "STL OBJ 3D print model file"
+    "OBJ": "OBJ STL 3D model file"
+    "3D model": "3D model STP STEP DXF STL OBJ CAD mechanical"
+    "schematic": "schematic PDF circuit diagram"
+
+# 分块配置
+chunking:
+  chunk_size: 600  # 增大块大小以包含更多上下文
+  chunk_overlap: 150  # 增加重叠确保 Resources 部分不被遗漏
+  min_chunk_length: 50
+
+# 邮件模板配置
+email:
+  template_dir: "agent/templates"
+  default_language: "zh"
+  include_sources: true
+  max_sources: 3
+
+# FastAPI 配置
+api:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8501"
+
+# Streamlit 配置
+streamlit:
+  port: 8501
+
+# Agentic RAG Graph 配置 (Stage 2: LangGraph)
+graph:
+  max_rewrites: 2                 # 反思循环最大重写次数
+  reflection_threshold: 0.7       # 自评分数 ≥ 此值视为"文档够用"
+  enable_query_rewrite: true      # 是否启用 query_rewrite 节点
+  enable_reflection: true         # 是否启用 reflect 节点（关闭则退化为单次检索）
+  enable_historical: true         # 是否按 qtype 条件触发历史回复检索
+  reflection_model: "${OPENAI_LLM_MODEL}"  # 改写/反思用模型（默认同 LLM）
+  reflection_max_tokens: 200      # 反思输出 token 上限（结构化 JSON）

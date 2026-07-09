@@ -1,0 +1,158 @@
+{
+  "transfer": [
+    {
+      "question": "Hello, I ordered the \"Amazing Hand\" DIY kit from you and have now assembled it. One of the 3-pin break out boards (SCS-Y4-2012) was unfortunately defective when it arrived. There...",
+      "answer": "Dear Anders,\nThank you so much for your detailed feedback and for your kind words about the \"Amazing Hand\" DIY kit!\nWe sincerely apologize for the defective 3-pin breakout board. Thank you for bringing this short circuit issue to our attention. We highly value your suggestion and will definitely strengthen our quality assurance checks on these specific parts in the future to prevent this from happening again.\nWe hope you have a lot of fun playing with your new robotic hand.\nPlease stay tuned to our updates, as we are working on more exciting new products that you might also enjoy.",
+      "ticket_number": "#343533",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "NL\nNorman Lam\n.\n4月 08 01:48 上午\n( 2天前 )\nHi Lorraine, Confirmed that the details have been corrected. And, please ask DHL to come and pick up this Thursday, 09/04/2026 10:00AM-4:00PM GMT+8:00. Hi Jin, Please pack the devi...",
+      "answer": "Hi,\n\nyour waybill number is 7144554701.\nPackage No. 1: JD014600012569092008\nPickup Confirmation Code: CBJ260409667485\n\nPickup Details\nThursday, April 9, 2026\nPickup time: 10:30 a.m. – 4:00 p.m.\n\nAfter-sales DHL Return Instructions\n1.Please print out the document and hand it to the courier along with the package.\n2.DHL will generally send a pickup confirmation email; please confirm it promptly.\n3.If you need to reschedule the pickup time, open the last page of the document and click Schedule a Pickup in the third line to make adjustments.",
+      "ticket_number": "#328129",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "Dear Seeed Studio Technical Support Team, We recently purchased your reComputer Mini J501 Carrier Board for Jetson AGX Orin™ with GMSL Extension, and we are currently evaluating ca...",
+      "answer": "HI,\n\nAt the moment, we have not adapted ZED to our GMSL solution. Supporting a new GMSL configuration is a fairly complex process, so we do not have any guidance documentation available.\nIf your order volume is significant, we can offer a paid customization service for the new GMSL adaptation. The ZED X One camera itself uses a GMSL2 + Fakra interface, and the reComputer mini J501 uses the MAX96712 deserializer, which is also a four-channel solution. Therefore, in theory, this adaptation should be feasible as a paid custom project.",
+      "ticket_number": "#348509",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "SP\nSantiago Pavon\n.\n3月 17 10:55 下午\n( 24天前 )\nHello Seeed team, Could you kindly send 2 replacement motors for motor 4, please? Client's details: REACHYMINI-3488 Sandra Mueller Rueppurrer Str: 44 76137 Karlsruhe, Germany On Tu...",
+      "answer": "AR\nAI Robotics\n.\n3月 18 10:40 上午\n( 回复于 11 小时 )\nHi,\n\nplease fill in the following information, and we can arrange a replacement for you.\n\nProblem description Receiver information if replacement needed\nPollen Order Number\n（MUST HAVE） Product（Reachy Mini Wireless Kit / Reachy Mini Lite Kit） Damaged or problem parts Problem description （Discord discussion screenshot if have） Contact Email address Phone number Address City Postal Code State Country\n\n| **316000005** | DYNAMIXEL XL330-M288-T | 5V-103RPM，6P-L34*W20*H26mm | **2pcs** |",
+      "ticket_number": "#346420",
+      "assignee": ""
+    }
+  ],
+  "param_query": [
+    {
+      "question": "Hello, Thanks. Indeed at lower power mode it doesn't appear. In MAXN, it appears when I load Yolo26X which is big and draws a lot of current. When a warning about overcurrent throt...",
+      "answer": "Hello,\nThanks for the update.\nThis largely depends on your working environment. In a typical indoor setup, our heatsink/cooling solution can generally handle the MAXN power/thermal load, so the system should operate normally.\nThe MAXN warning is a system-level detection message. On older Jetson developer kits, the stock cooling is often not sufficient to sustain MAXN under heavy loads, so the warning can appear more easily. If your CPU temperature remains within a normal range and you are not observing actual performance drops, you can generally ignore the warning.",
+      "ticket_number": "#341206",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "Dear Seeed team, thank you for your reply. What is SKU? I attachment also please find pictures of the product and all documents, we have. Before we contact you, we received from Di...",
+      "answer": "Hi Dear ,\nThank you for your message.\nCould you please provide more detailed information about the issue? For example, it would be very helpful if you could share a video or some photos showing the current status of the device and its behavior.\nYou may also refer to our wiki tutorial for reflashing the device:\nhttps://wiki.seeedstudio.com/reComputer_Industrial_Getting_Started/#flash-jetpack\nAfter we receive the additional details, we will further check the issue and advise you on the warranty/service process.",
+      "ticket_number": "#348264",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "Hello Sir, Greetings from XRDA3 Technologies, India. We are an India-based startup currently working on the development of an automotive e-cockpit solution comprising IVI + Instrum...",
+      "answer": "Hi maneesh,\n\nThe deserializer is designed specifically for a particular carrier board, so this deserializer is not applicable to other platforms. Therefore, if you need to adapt GMSL for your own development board, you can contact Sensing (https://sensing-world.com/h-col-127.html).",
+      "ticket_number": "#337175",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "AR\nAI Robotics\n.\n2025 11月 24 10:20 上午\n( 回复于 2 天 )\nHi, This product does not come with schematics or a PCB board, which means it is not open-source. We apologize sincerely—we do not have detailed specifications to provide. As you h...",
+      "answer": "AS\nADI Seeed-3\n.\n2025 11月 24 11:33 下午\n( 137天前 )\nTeam Seeed, Thank you for your kind reply. Yes, Please recommend a camera. We need 4 lanes to provide our customer with 3840 x 2160 color video at 30 FPS. Also, We need a 4 lane MI...",
+      "ticket_number": "#333530",
+      "assignee": "AI Robotics"
+    }
+  ],
+  "compatibility": [
+    {
+      "question": "Good Morning, I hope this message finds you well. I have a Seeed Studio reComputer J3011. According to the datasheet, it supports a 16-pin CSI camera interface. I am using a TI DS9...",
+      "answer": "Hi,\n\nI think you might have checked the wrong document. Our datasheet specifies a 15-pin CSI interface.\n\n1. The reComputer J3011 carrier board comes with native 15-pin CSI interfaces (2 independent 2-lane MIPI CSI-2 interfaces), and there is no native 16-pin CSI physical interface.\n\n2. RAW10/RAW12 formats are fully supported.\n\n3. Standard CSI-2 signaling (HS/LP modes) is fully supported.\n\nWe do not provide a dedicated document for this; only the schematic diagram is available for reference.Find it under Resources on the wiki page.\nGetting start with reComputer J30/40 | Seeed Studio Wiki",
+      "ticket_number": "#336721",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "QuestionI replied to the tech support mail, but I couldn't got the answer yet. The support number is ##339759##. hky6385 22 Jan, 2:55 PM I replied to the tech support mail, but I couldn't got the answer yet. The support number is ##339759##.",
+      "answer": "Hi,\n\nNVIDIA recently made a hardware change to the DRAM used on Orin modules. The related PCN is available here:\nhttps://developer.nvidia.com/embedded/jetson-pcn-center#jetson-pcn:~:text=Other%20Orin%20PCNs-,Orin%20DRAM%20PCNs,-The%20table%20below\n\nIf you are using a newer batch of modules, this change may cause flashing to fail.\n\nWe expect to integrate the PCN patch into our BSP today and will provide you with a new BSP download link for reflashing as soon as it is released.\n\nIn addition, could you please send us a photo of the exterior casing of your reComputer unit for reference?",
+      "ticket_number": "#340181",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "Thank you very much. Of course, I chose the Orbbec camera. I have one more question related to this. Since it will probably take a while to finish building my robotic arm, is any o...",
+      "answer": "Hi Kamil,\nThanks for your question!\nFor your testing needs with the Orbbec camera and YOLO segmentation on the ReComputer J4012, we’d like to recommend one of our cost-effective robotic arms that should suit your use case well:\n👉 SO-ARM101 Low-Cost AI Arm Kit Pro\nhttps://www.seeedstudio.com/SO-ARM101-Low-Cost-AI-Arm-Kit-Pro-p-6427.html\nThis arm is budget-friendly and has enough load capacity to mount the Orbbec camera for development and testing purposes.\nFeel free to let us know if you need help with mounting, compatibility, or software integration — we’d be happy to assist!",
+      "ticket_number": "#335870",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "Dear Technical Support Team, You have received a technical support inquiry from a customer. Please respond to the customer as soon as possible using the provided customer email add...",
+      "answer": "Hello,\nThanks for your question.\nThe Robotics J401 carrier board specifies a power input range of 19–54V via the XT30 (2+2) connector. A “48V” lithium battery pack typically reaches ~54.6V when fully charged (e.g., a 13S Li-ion/LiPo pack). Since 54.6V exceeds the stated 54V maximum, we do not recommend connecting the battery directly at full charge.\nEven a small over-voltage margin can become a reliability risk, and in real robotics systems you can also see additional transient spikes during load changes, cable inductance effects, motor start/stop, etc.",
+      "ticket_number": "#344146",
+      "assignee": "AI Robotics"
+    }
+  ],
+  "howto": [
+    {
+      "question": "QuestionDear Sir, In our application, we used this Jetson, we connected a camera (5W) and a wireless keyboard and mouse to the USB ports. After that, we got the message \"system throttled due to over-current.\" Can you explain what's wrong and what I n...",
+      "answer": "Dear Line,\n\nThe camera, mouse, and keyboard you have connected should not cause the device to enter an overcurrent protection state.\n\nMy initial guess is that the notification you're seeing might be a system message indicating that the device is running at a high temperature.\nPlease help confirming three things:\n1. Your device model (SKU would be better) and the JetPack version installed on the device (cat /etc/nv_tegra_release)\n2. A photo of the notification when it appears\n3. If convenient, please use the jtop tool to verify whether the device is actually experiencing frequency throttling.",
+      "ticket_number": "#343221",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "Hi, Thanks. I reflashe it but I still get jetpack 6.2.1. I will try to work with this. Krišs Līdumnieks kriss.lidumnieks@gmail.com+(371) 25651327 trešd., 2026. g. 14. janv., plkst....",
+      "answer": "Hi,\n\nPlease do not attempt to run apt upgrade or click the system update button in the GUI on third-party Jetson carrier boards. In some cases, even running dpkg --configure -a may cause NVIDIA L4T-related packages to be replaced, which could result in the system being unintentionally upgraded to version 36.4.7.\nThis image has been fully validated by us and is confirmed to be JetPack 6.1 (L4T 36.4.0)：\n\nhttps://seeedstudio88-my.sharepoint.com/:u:/g/personal/youjiang_yu_seeedstudio88_onmicrosoft_com/IQDoxYCJWUNsTI2hKJM0CppoAcY3mF-l6Y-vSPP4DE2v5Qs?e=sAHGnu",
+      "ticket_number": "#339179",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "Good day, Unfortunately it didn’t work. Trying to istall Windows 11 Insation madia is USB flash drive Windows MediaCreation Tool was used to prepare it I tried all USB ports BIOS c...",
+      "answer": "Hi,\n\nYou may also refer to the following guide for reinstalling the original Windows image on the ODYSSEY device:\nhttps://wiki.seeedstudio.com/ODYSSEY-X86J4105/#re-installing-the-original-windows\nThis guide explains how to restore the original Windows system by preparing a USB drive with the provided image and booting the device from it.\nIf the issue still cannot be resolved after trying the above steps and the device is still within the 1-year warranty period, we can further assist with the RMA process if necessary.",
+      "ticket_number": "#343174",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "Hello, I've noticed that the aluminum heatsink with fan for Jetson Orin NX/Orin Nano/Xavier NX modules is only specified for use up to a humidity level of 65%. What would be the co...",
+      "answer": "Hi,\n\nThank you for your consultation. Below is the overview regarding the use of this aluminum heat dissipation module under 85% humidity conditions:\nKey Risks:\n1. The service life of the fan may be shortened by over 50%, with a high likelihood of bearing corrosion and motor failure.\n\n2.The oxidation rate of the heat sink will accelerate, resulting in a 5–10% reduction in heat dissipation efficiency.\n\n3.The risk of condensation will increase significantly, which may cause short circuits in the Jetson module.",
+      "ticket_number": "#335850",
+      "assignee": "AI Robotics"
+    }
+  ],
+  "general": [
+    {
+      "question": "我希望您能帮我澄清一些关于系统通信协议的问题。我计划连接几个Feetech电机（TTL协议）和一些Robstride电机（CAN协议），通过Jetson驱动它们。虽然有人建议用USB设备控制电机，但我读到通过GPIO引脚直接连接可以显著提升通信速度。请问这些引脚的位置，以及同时控制这两种电机需要什么？用recomputer j30/j40载板的话   Interfaces Usage | Seeed Studio Wiki",
+      "answer": "Hi,\n\nthank you for your message. Regarding your question, our suggestions are as follows:\nOn the reComputer J401 carrier board:\n\n- For Feetech TTL motors: Use the onboard UART (3.3V). Since the motor TX is 5V, a 5V→3.3V level shifter is required.\n- For Robstride CAN motors: Use the onboard CAN interface directly; no USB-CAN adapter is needed.\n\nDo not use GPIO for simulated communication, as its stability and speed are inferior to hardware UART/CAN.\nThe two interfaces can be used at the same time without conflict.",
+      "ticket_number": "#343298",
+      "assignee": "Seeed TechSupport Team"
+    },
+    {
+      "question": "BS\nBazaar Service\n.\n私有\n.\n3月 06 04:35 下午",
+      "answer": "Hi,\n\nwe can see your order includes three UK C13 power cables. Have you only received one so far? If so, we can arrange a replacement for you.\n\nAdditionally, you mentioned selecting the BLE/Wi-Fi function. Please note that our product listing only specifies the interface, not the Wi-Fi or Bluetooth module itself. If you would like to purchase these separately, you can find them on our bundle page as accessories.The link:reComputer Super, Edge AI Device of NVIDIA® Jetson™ Orin™ NX/Orin™ Nano",
+      "ticket_number": "#336720",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "BS\nBazaar Service\n.\n私有\n.\n1月 27 09:56 上午",
+      "answer": "Hi,\n\nif you want to buy more, search in this web:\nhttps://www.seeedstudio.com/?srsltid=AfmBOoqo9XGEyrZqPqXdjDfvQvyp6c-afUTMOLoQh4fOPEMyX_CrqYi0\n\nif u only want to buy a jetson module, selecting in here：https://www.seeedstudio.com/NVIDIA-Jetson-Orin-NX-Module-16GB-p-5524.html\n\nif u want to buy carrier board plus the Jetson Module with 5G, refer this link: https://www.seeedstudio.com/reComputer-Robotics-J4011-p-6504.html or https://www.seeedstudio.com/reComputer-Robotics-J3011-p-6503.html",
+      "ticket_number": "#340253",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "|  序号 | SKU           | 零件名称                               | 规格                                | 每套数量 |\n| :-: | :------------ | :--------------------------------- | :-------------------------------- | :--: |\n|  1  | **332000022** | Amazing Hand\\_Parts - **Link**     | FDM, ABS, L22.4×W10.3×H55.2mm, 黑色 |  4个  |\n|  2  | **332000023** | Amazing Hand\\_Parts - **Proximal** | FDM, ABS, L22.4×W22.8×H42.8mm, 黑色 |  4个  |\n|  3  | **332000017** | Amazing Hand\\_Parts - **Distal**   | FDM, ABS, L10×W11.2×H45mm, 黑色     |  4个  |\n补发",
+      "answer": "Hi,\n\nnormally we do not provide after-sales support for issues caused by improper operation on your part. We appreciate your understanding.\n\nWe will resend the item for you this time, but there will be no further replacements next time.\nIf your product is still under warranty, we will arrange a replacement for you — no return needed\n| No. | SKU           | Part Name                          | Specification                              | Qty per set |",
+      "ticket_number": "#342812",
+      "assignee": "AI Robotics"
+    }
+  ],
+  "troubleshooting": [
+    {
+      "question": "I can't get past the registration, can you help me? My AI is-seeed studio reComputer Industrial J4012- Fanless Edge AI Device with Jetson Orin NX 16GB I entered the password, it gi...",
+      "answer": "Thank you for contacting Seeed Studio.\nTo better understand the issue, could you please help clarify the following?\nWhen you power on the device, has the system already been configured with a username and password, or are you still in the initial setup stage where the system asks you to create a username and password for the first time?\nAlso, regarding the code you mentioned, could you please share a screenshot or photo of the screen showing the code? This will help us better understand what step the system is currently at and provide more accurate assistance.\nWe look forward to your reply.",
+      "ticket_number": "#345146",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "Dear Seeed Studio Technical Support Team, I am writing to urgently request assistance with my reComputer J4012 (Orin NX 16GB) device. I am unable to flash the system using the offi...",
+      "answer": "Dear Arda Nas,\nHello, regarding your issue, we have tested flashing the reComputer J4012 (Orin NX 16GB) using the official JetPack 6.0 image from our Wiki, and we were not able to reproduce the problem you described.\nWe kindly suggest that you completely power off the Jetson (disconnect the power), then re-enter Recovery Mode and try flashing again.\nIf the issue still persists after retrying, the device may require further inspection. In that case, we can only suggest sending the unit back to us for repair.",
+      "ticket_number": "#341899",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "Questioni bought 2 J4012 device when i use it, LAN1+PoE is working but LAN2 is not working. When i Connect Ethernet Port to LAN2, LED is blink but orange color is now blink just on state. only green led is blink. Linux Can detect LAN2 as Microchip bu...",
+      "answer": "Dear sg.kim,\n\nThank you for choosing Seeed's product.\nTo help resolve your issue more quickly, please confirm the following:\n      1. When using LAN2 alone, is LAN2 able to work properly?\n      2. If you need to use both network ports simultaneously, please refer to the article below to configure the two network ports on different network segments. https://wiki.seeedstudio.com/reserver_industrial_hardware_interface_usage/#binding-physical-network-ip-to-eth-numbers",
+      "ticket_number": "#343290",
+      "assignee": "AI Robotics"
+    },
+    {
+      "question": "Subject: Re: Support Request - Motors 4 & 5 Issue Details Dear Welt, Thank you for your reply. Regarding Motors 4 and 5, here is what happened: When We first assembled the robot an...",
+      "answer": "Hi,\n\nWe have received your application. Please help us complete this form, and we will resend the accessories to you.\n\nProblem description Receiver information if replacement needed\nPollen Order Number\n（MUST HAVE） Product（Reachy Mini Wireless Kit / Reachy Mini Lite Kit） Damaged or problem parts Problem description （Discord discussion screenshot if have） Contact Email address Phone number Address City Postal Code State Country",
+      "ticket_number": "#348440",
+      "assignee": "AI Robotics"
+    }
+  ]
+}

@@ -1,0 +1,3946 @@
+{
+  "input_root": "/other_data/zoho-ticket/zx/ZohoTicketsData/tickets",
+  "output_root": "/other_data/zoho-ticket/cleaned_email_units",
+  "ticket_count": 651,
+  "email_unit_count": 2917,
+  "meta_fallback_unit_count": 0,
+  "tickets_with_no_units": [
+    "ticket_0056_348177_Hello, I have purchased one of your products which is reComputer J401 carrier board for Nvidia Orin",
+    "ticket_0062_348071_Hello there, So I'm looking at the reComputer J4011 mainly the M.2 Key B connector and I see in the",
+    "ticket_0105_347150_I have the 3D printed parts and I want the motors plus everything else. Could you guide me in which",
+    "ticket_0111_347116_Can you provide dimensions and power specifications for the ODYSSEY-X86i51135G7. If you have a step",
+    "ticket_0148_346586_Hello Seeed team, We are integrating a TechNexion AR0522 GMSL2 camera (MAX9296) with the reComputer",
+    "ticket_0171_346229_Hi, I wanted to ask if this Industrial Jetson Orin Nano 4GB model supports MAXN SUPER mode. Does it",
+    "ticket_0186_345911_回复：RE_ 回复：[## 345379 ##] RE_ Issue with m.2 connector on Jetson",
+    "ticket_0227_344940_Hello! We would like to order reComputer Industrial J4011- Fanless Edge AI Device with Jetson Orin™",
+    "ticket_0245_344721_Hello, I purchased a reComputer Robotics J4012 (Orin NX 16GB) with GMSL extension. 1. The FAKRA 1–4",
+    "ticket_0248_344684_Hello, I am looking to get confirmation if the carrier board used in the J4012B is a dev board or a",
+    "ticket_0250_344622_I’m a Product Manager at Arm evaluating depth sensing hardware _robot accessories for a Linux-based",
+    "ticket_0251_344620_Hi, I want to clarify if power adapter for reComputer Robotics J4012 - Intelligent Edge AI Computer",
+    "ticket_0252_344261_https___www.seeedstudio.com_reComputer-Mini-J4012-with-Extension-p-6353.html (1) For this, is there",
+    "ticket_0285_343767_Hello, I bought a SO-101 robotic arm, but I am having troubles when I want to teleoperate it. Could",
+    "ticket_0315_342803_I need to return this product and get a full refund. It didn't have the GMSL compatibility that was",
+    "ticket_0346_343505_https___www.seeedstudio.com_SO-ARM-101-Assembled-Kit-Pro-p-6691.html Does the assembled arm include",
+    "ticket_0348_343482_I want to purchase this product, RTL 8822CE Module with the antenna kit. My Jetson is NVIDIA Jetson",
+    "ticket_0364_341925_Hello Hello, I purchased this order #4000478222 from you. However, by the time I receive the items,",
+    "ticket_0380__",
+    "ticket_0421_341213_Hello, I am developing an edge-ai solution that will use an _Eco Capture Dual SDI M.2_ capture card",
+    "ticket_0435_338769_HI I am looking to order extra servos for my Violin Robot arm, but couldn't find by the name of the",
+    "ticket_0453_340572_Dear Sir or Madam, I am looking for a AI computer and found the J4012 Orin Nx 16 G. Do you have any",
+    "ticket_0454_339294_Re_Help! Can't attach fan to A603 Carrier board",
+    "ticket_0467_340100_Hi there, I was checking the reComputer Super J401 board (Jetson Orin NX) and I can see that it has",
+    "ticket_0471_339993_Hello! I bought the SO-ARM101 LeRobot 3D Printed Parts for my undergraduate research project at the",
+    "ticket_0533_338204_[474066] [3231339] Regarding _ ODYSSEY- STM32MP135D with eMMC, Cortex-A7 STM32, Yocto_Buildroot OS,",
+    "ticket_0582_325886_Re_ 回复：[## 323711 ##] 【Customized Solution Inquiry 】The day before yesterday I sent query from your",
+    "ticket_0631__.mic_svg__cls{fill_var(--zdt_wms_micSvg_icon_default)}",
+    "ticket_0651_335978_Hi , I have ordered a SO-ARM101 Low-Cost AI Arm Servo Motor Kit Pro for LeRobot (Without 3D Printed"
+  ],
+  "tickets": [
+    {
+      "ticket_dir": "ticket_0001_348264_Fwd_ Application engineer contact form submitted [#44860552]",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0002_348819_Wrong Motors Received (Order #4000494246)",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0003_348990_recomputer jetpack download problem",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0004_346787_Technical Support Inquiry - Please Respond to the Customer [#nicolo.pisoni@avibot.it;]",
+      "conversation_files": 28,
+      "email_units": 14,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0005_348981_Could you please provide the detailed drawing or specification of the power adapter (including conne",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0006_348701_Stream Webcam and video input does not working on ReJ5012",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0007_348673_May I ask which parts are missing_ Could you take a picture so that we can check_",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0008_344711_Re_ Missing big and small lens cap",
+      "conversation_files": 22,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0009_347538_You can use the upper computer to test it. If the servo is broken, we will send a new one",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0010_348827_Do U sell a 360 Camera module _",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0011_348248_转发：AW_ 回复：AW_ Support for your research_ reComputer Robotics J5012 with GMSL Quotation",
+      "conversation_files": 17,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0012_343713_Re_ Part missing_ Pollen Robotics SAS #2985-8178",
+      "conversation_files": 33,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0013_348952_Technical Support Inquiry - Please Respond to the Customer [#mclawrentech@yahoo.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0014_348117_RTL8822CE Wireless Module for Jetson Not Working",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0015_347008_Technical Support Inquiry - Please Respond to the Customer [#lcostanzo@botbot.bot;]",
+      "conversation_files": 24,
+      "email_units": 12,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0016_343929_Re_ Important information before using your Reachy Mini",
+      "conversation_files": 33,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0017_348862_客户购买了54台reServer Industrial J4012设备，其中4台的PoE端口故障，另在设备调试中遇到“设备不匹配”错误并发现FAB版本差异，现请求技术支持解决故障、确__5a679282fefa",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0018_348854_Re_ Seeedstudio Jetson Collaboration for Peer Robotics",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0019_348850_回复：[## 348770 ##] Jetson Developer Kit",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0020_348847_回复：Re_ 回复：Re_ RE_ [## 343819 ##] Technical Assistance Request - SO 500585---A-0000-6107",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0021_348440_Reachy Mini Lite – Motor 4 & Motor 5 Replacement Request",
+      "conversation_files": 19,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0022_348845_RE_ RMA #A-0000-6107 - Update Request for J401 Carrier Boards",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0023_348190_shahaf.rozanski@mano-security.com",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0024_347460_回复：Re_ RE_ [## 343819 ##] Technical Assistance Request - SO 500585---A-0000-6107",
+      "conversation_files": 11,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0025_348830_I would like to purchase a USB cable that can connect the A603 Carrier Board model to the W11 20-pin",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0026_345925_用户尝试刷新Jetson AGX Orin 32GB H01设备，但在执行._apply_binaries.sh时遇到“权限被拒绝”错误，已附上相关截图并请求协助解决问题。",
+      "conversation_files": 22,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0027_348770_用户Alex咨询有关购买Nvidia Jetson Nano Super Developer Kit 8GB的信息，包括电源电压要求、可能导致开发套件问题的电压以及是否有相关文档。",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0028_348331_reComputer J4012 (Jetson Orin NX 16GB) — No Power, No LED, Not Detected in Force Recovery Mode",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0029_347836_Dear Customer Support Team, I am writing to report a technical issue with a J4011 unit I purchased i",
+      "conversation_files": 24,
+      "email_units": 12,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0030_347982_SKU 114110314 - Jetpack 6.2.2 (36.5) support",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0031_340074_RE_ 回复：[## 339506 ##] Order 4000469335 HS Code and Proforma",
+      "conversation_files": 33,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0032_344868_Technical Support Inquiry - Please Respond to the Customer [#m.alzuwayyid@aigcom.com;]",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0033_348511_客户收到的包裹中缺少描述的黑色底座部件，已多次沟通但问题未解决，客户对此表示不满。",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0034_348667_Could you provide an overview of the differences between the J501 with the GMSL extension and someth",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0035_328129_Technical Support Inquiry - Please Respond to the Customer [#normanlam@armitage.com.hk;]",
+      "conversation_files": 33,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0036_348647_用户 Bryan Schulz 询问是否会为 J4012 发布支持 Jetpack 7.x _ CUDA 13 的版本。",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0037_348613_Re_ Maven Robotics - reComputer J4012 Industrial After-Sales Support & Follow-Up",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0038_341378_Problem Flashing Jetson AGX Orin 64GB on reServer J501",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0039_348578_I wanna know if there is other ways to power J5012 reComputer rather than the Power adapter 3P as we",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0040_348022_Kajetan Jeznach, 来自 Łukasiewicz – PIAP，咨询关于 Recomputer J4012 Orin NX 16GB 的 Jetpack 7.x 软件包发布日期，并希望其",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0041_348568_Technical Support Inquiry - Please Respond to the Customer [#richard.osterloh@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0042_345803_Re_ Follow-Up on reServer Industrial J501 Carrier Board for Jetson AGX Orin-Seeedstudio",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0043_348550_Recomputer robotics j401 kernel erro",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0044_346257_Re_ After-sales issues of Reachy Mini",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0045_348509_Compatibility Inquiry_ ZED X One GS with reComputer Mini J501 GMSL Carrier Board",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0046_340544_The reComputer J4011 - Edge AI Computer with NVIDIA® Jetson™ Orin™ NX 8GB （Super Mode NOT Supported)",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0047_348483_Hi, does the SO-ARM101 kit pro come with camera_ Also, do you have WeChat for quick feedback_",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0048_348429_Technical Support Inquiry - Please Respond to the Customer [#purchasing@gradientrobotics.ai;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0049_348426_Technical Support Inquiry - Please Respond to the Customer [#zarianwaheed@live.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0050_348422_I require a replacement powerboard for the Reachy Mini",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0051_347147_用户在尝试为J501主板刷机时遇到错误问题，并提供详细日志以说明操作过程，寻求解决方案。",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0052_348272_回复：[## 348082 ##] Wifi module for reComputer Industrial J4012",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0053_348200_RE_ Reachy Mini Power Board_Battery Failure - Warranty Approved!",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0054_343198_Re_ Your receipt from Pollen Robotics SAS #2483-4677",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0055_348188_Technical question about reBot B601",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0056_348177_Hello, I have purchased one of your products which is reComputer J401 carrier board for Nvidia Orin",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0057_345258_fabien.danieau@pollen-robotics.com",
+      "conversation_files": 20,
+      "email_units": 10,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0058_348148_User-Agent _ Mozilla_5.0 (Windows NT 10.0; Win64; x64) AppleWebKit_537.36 (KHTML, like Gecko) Chrome",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0059_348125_User-Agent _ Mozilla_5.0 (Windows NT 10.0; Win64; x64) AppleWebKit_537.36 (KHTML, like Gecko) Chrome",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0060_348124_Reachy-mini wireless wifi problems",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0061_347913_I am trying to bring up a camera system using MAX96712 + MAX96717 + AR0522 on a reComputer J401 (Jet",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0062_348071_Hello there, So I'm looking at the reComputer J4011 mainly the M.2 Key B connector and I see in the",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0063_347618_客户Jonathan Rosado反馈其购买的Jetson Orin Nano无法进入恢复模式且未被SDK管理器识别，并寻求解决方案。",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0064_347960_AX210 WiFi periodic latency spikes on J401 JetPack 36.4.7",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0065_347867_Would you please take a look at my after-sale request with reference A-0000-6202. I am missing one z",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0066_345584_Re_Flashing Issue with Jetson Orin Nano on Seeed reComputer Mini Carrier Board (JetPack 6.2.2)",
+      "conversation_files": 26,
+      "email_units": 13,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0067_347989_Request for Jetson Orin NX PCB Footprint",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0068_347945_Re_ Re_ Status Update for Ticket #A-0000-5672 (CNY Logistics Cut-off)",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0069_345537_客户报告购买的J4011设备出现短路故障，并请求保修范围内的维修或更换建议。",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0070_347914_Re_ Re_ 转发：Reachy Mini Power Board_Battery Failure - Replacement Parts Needed for Customer Pitch",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0071_346054_Spare parts request — Reachy Mini (REACHYMINI-4336 _ 2034-6592)",
+      "conversation_files": 15,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0072_346589_Request for official CSI _ I2C _ GPIO mapping for camera connectors on reComputer Robotics J401",
+      "conversation_files": 18,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0073_346578_Hello Seeed team, We are integrating a TechNexion AR0522 GMSL2 camera (MAX9296) into a reComputer Ro",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0074_347902_Technical Support Inquiry - Please Respond to the Customer [#evgeni_mi@mer-group.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0075_347884_reServer J501 custom Jetpack 7.2 image expected release date",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0076_347770_reComputer J401 V1.0 recovery issue",
+      "conversation_files": 13,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0077_347833_Technical Support Inquiry - Please Respond to the Customer [#supertoasted@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0078_347832_Inquiry Regarding OmniVision Camera Support for NVIDIA DRIVE AGX Thor_ LI _ (nexty-ele)",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0079_347760_Re_ Status Update for Ticket #A-0000-5672 (CNY Logistics Cut-off)",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0080_347289_回复：Re_ 转发：Reachy Mini Power Board_Battery Failure - Replacement Parts Needed for Customer Pitch",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0081_347519_Adding a wifi module to Seeed studio Industrial J4012",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0082_341932_DOA Issue Report – Order ID #3000010505",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0083_347060_Re_ [EXTERN] Re_ Reachy Mini – Issue with Stewart Motor #5",
+      "conversation_files": 28,
+      "email_units": 14,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0084_347732_Hi, I would like to get confirmation about the Nvidia Jetson Module part numbe rincluded in the reCO",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0085_347723_回复：[## 347511 ##] Honeywell Image for reComputer Super J4012",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0086_347720_回复：[## 347519 ##] Adding a wifi module to Seeed studio Industrial J4012",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0087_347687_Technical Support Inquiry - Please Respond to the Customer [#tos1@JNijst.nl;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0088_347685_Technical Support Inquiry - Please Respond to the Customer [#tos1@JNijst.nl;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0089_347626_Can we use it in jetson nano_orin -- Wio-WM6108 Wi-Fi HaLow Mini-PCIe Module",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0090_347556_Technical Support Inquiry - Please Respond to the Customer [#daniel@mimirsoftware.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0091_347512_Honeywell Image for reComputer Super J4012",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0092_347511_Honeywell Image for reComputer Super J4012",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0093_347483_回复：[## 347370 ##] J401 GMSL image – missing i2c_atr module preventing MAX SerDes initialization",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0094_347484_回复：[## 347370 ##] J401 GMSL image – missing i2c_atr module preventing MAX SerDes initialization",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0095_348409_Problem with reServer Industrial J4012",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0096_348385_Technical Support Inquiry - Please Respond to the Customer [#sotamiyajima@orboh.com;]",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0097_347373_NVIDIA® Jetson Orin™ NX 16GB AI Device - reComputer J4012",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0098_347372_J401 GMSL image – missing i2c_atr module preventing MAX SerDes initialization",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0099_347369_J401 GMSL image – missing i2c_atr module preventing MAX SerDes initialization",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0100_347371_J401 GMSL image – missing i2c_atr module preventing MAX SerDes initialization",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0101_347368_J401 GMSL image – missing i2c_atr module preventing MAX SerDes initialization",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0102_347327_Hi Seeed Studio Support Team, I am writing to request assistance with my reComputer Robotics J4012 (",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0103_347242_Hello, We are currently experiencing an issue when powering a Hikrobot GigE industrial camera throug",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0104_343819_Technical Assistance Request - SO 500585",
+      "conversation_files": 31,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0105_347150_I have the 3D printed parts and I want the motors plus everything else. Could you guide me in which",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0106_345287_Re_Reachy Mini Power Board_Battery Failure - Replacement Parts Needed for Customer Pitch",
+      "conversation_files": 23,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0107_347249_How do I connect this device of recomputer robotics to the display. (J4012) robotic jetson series. I",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0108_346939_Heuberger Mattia Christoph HSLU T&A",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0109_346258_Re_ Your receipt from Pollen Robotics SAS #2609-5502",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0110_342477_Inquiry - 200 Assembled SO-ARM101 (Follower Units Only)",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0111_347116_Can you provide dimensions and power specifications for the ODYSSEY-X86i51135G7. If you have a step",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0112_342686_客户购买的Seeed Studio工业盒式电脑其中一台在使用30分钟后重启时出现故障，现要求退换货并咨询解决方案。",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0113_347065_Product Inquiries (Case and Board Related)+add picture",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0114_347063_Product Inquiries (Case and Board Related)",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0115_346005_Re_ Reachy Mini Lite Camera Support - 2424-5686 - REACHYMINI-0325",
+      "conversation_files": 18,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0116_346196_reComputer J401 + Orin NX_ I2S on 40-pin header outputs wrong clock (BCLK stays around 50MHz)",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0117_346446_Hi - how to order the reComputer Mini Carrier Board for Jetson Orin™ Nano_Orin™ NX with a NVIDIA® Je",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0118_343967_reComputer J4011,reComputer Industrial J4011,reComputer Robotics J4012 with GMSL extension board,reC",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0119_331200_Aftersales Ticket - A-0000-4877",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0120_343196_Re_ November Reachy-mini shipping update",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0121_346665_Technical Support Inquiry - Please Respond to the Customer [#mk@norse-robotics.no;]",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0122_346585_christian.bodenstein@staige.com",
+      "conversation_files": 20,
+      "email_units": 10,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0123_346819_Re_ Status Update for Ticket #A-0000-5672 (CNY Logistics Cut-off)",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0124_346909_It could be that the wire is loose, check it",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0125_346834_客户来自台湾台南市，通过Seeedstudio网站询问需要自动辨识功能的机器人设备。",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0126_346439_Request for Technical Support – USB Timeout Issue While Flashing JetPack 6.2 on reComputer J4012",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0127_346815_Technical Support Inquiry - Please Respond to the Customer [#lcostanzo@botbot.bot;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0128_342388_客户询问如何通过GPIO引脚或网络唤醒功能从SC7模式唤醒reComputer Industrial J4012设备，并提到可能需要参考相关文档以确定具体操作方法。",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0129_346622_回复：Re_ 回复：Re_ 回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0130_347370_J401 GMSL image – missing i2c_atr module preventing MAX SerDes initialization",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0131_347311_PCB上缺少很多零件，與商品頁面的圖片不符。是否有损坏过呢。方便说一下设备的SKU编号吗",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0132_347308_Driver Request_ AR0234 Jetvariety for JetPack 5.1.6 (L4T 35.6.4) - Orin NX",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0133_347320_Re_ 回复：[## 346054 ##] Spare parts request — Reachy Mini (REACHYMINI-4336 _ 2034-6592)",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0134_343590_客户因无线控制板意外损坏，咨询Seeed Studio支持团队是否可以直接购买替换板，并请求下一步指导。",
+      "conversation_files": 21,
+      "email_units": 10,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0135_346577_Power options for the reComputer Robotics J3011 with GMSL Extension - Intelligent Edge AI Computer w",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0136_347383_USB Timeout Error While Flashing JetPack 6.2 on reComputer Orin NX 16G J401",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0137_347374_Hello Seeed Studio Support Team, I am currently working with a reComputer Robotics J401 carrier boar",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0138_346136_RE_ 回复：RE_ 回复：[## 345379 ##] RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0139_346766_回复：Re_ Re_ [## 346435 ##] Hello, My use case requires transmitting video data FROM the Jetson AGX Or",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0140_346757_回复：Re_ [## 346435 ##] Hello, My use case requires transmitting video data FROM the Jetson AGX Orin T",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0141_346756_Do you have a manual to use reComputer with reCamera_",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0142_346693_Replacement Motor Request - Reachy Mini Wireless Kit (Order_ REACHYMINI-2360)",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0143_346302_客户提出售后保修请求，要求处理之前未解决的工单以退回故障硬盘，并希望获得退款，硬盘自收到后一直无法使用。",
+      "conversation_files": 19,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0144_346648_Technical Support Inquiry - Please Respond to the Customer [#arya.kargathara@addverb.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0145_346468_Re_ SeeedStudio Jetson AGX Orin H01 – GPIO Pin Usage and Configuration",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0146_346581_Request for official CSI_I2C_GPIO mapping for camera connectors on reComputer J401 (we already check",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0147_346588_Request for official CSI _ I2C _ GPIO mapping for camera connectors on reComputer Robotics J401",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0148_346586_Hello Seeed team, We are integrating a TechNexion AR0522 GMSL2 camera (MAX9296) with the reComputer",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0149_346579_Hello Seeed team, We are integrating a TechNexion AR0522 GMSL2 camera (MAX9296) into a reComputer Ro",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0150_346412_What seeed carrier board with dual nics can I run the 64g Jetson Orin_ I just want to build out a fa",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0151_346536_CSI Camera integration error with Recomputer super J4012",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0152_346248_Re_ Reachy Mini WiFi - Camera Connector Cable Replacement",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0153_346504_Re_ 回复：Re_ 回复：Re_ 回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0154_346221_Re_ 回复：Re_ 回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0155_346467_Re_ SeeedStudio Jetson AGX Orin H01 – GPIO Pin Usage and Configuration",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0156_342253_Re_ Request for Replacement Top Head Shell – Reachy Mini Lite (FPC Damage)",
+      "conversation_files": 28,
+      "email_units": 14,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0157_343181_Technical Support Inquiry - Please Respond to the Customer [#daniel@latelun.ch;]",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0158_346426_Mouser Electronics - Possibly defective product - 509911",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0159_346424_Technical Support Inquiry - Please Respond to the Customer [#m.chasles@natuition.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0160_346420_Re_ Request for Refund or Replacement – Two Defective Mini Reachy Units",
+      "conversation_files": 9,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0161_342507_Re_ Request for Replacement – Small Lens in Reachy Mini kit ( Invoice No. REACHYMINI-0859)",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0162_346370_吕昭阳将客户问题转给技术支持团队核实，并要求未来的问题邮件抄送给他以便跟进。",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0163_346052_Spare parts request — Reachy Mini (REACHYMINI-4336 _ 2034-6592)",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0164_346255_Re_ Reachy Mini Lens replacement",
+      "conversation_files": 13,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0165_345629_RE_ 回复：[## 345379 ##] RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 18,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0166_346347_回复：Re_ [EXT] 回复：[## 345546 ##] Request for Lifecycle _ EOL Status of 102110547 and 114992731",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0167_345700_Re_ [EXT] 回复：[## 345546 ##] Request for Lifecycle _ EOL Status of 102110547 and 114992731",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0168_346340_回复：Re_ 回复：Re_ 回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0169_346337_回复：Re_ 回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0170_346303_Technical Support Inquiry - Please Respond to the Customer [#emily.masuda@gevernova.com;]",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0171_346229_Hi, I wanted to ask if this Industrial Jetson Orin Nano 4GB model supports MAXN SUPER mode. Does it",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0172_346228_Hi, I wanted to ask if this Jetson Orin Nano 4GB model supports MAXN SUPER mode. Does it meet the th",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0173_343644_Re_ 回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0174_341448_Dear Seeed Studio Support Team, I’m contacting you regarding my recent order, which includes multipl",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0175_346183_回复：RE_ 回复：RE_ 回复：[## 345379 ##] RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0176_343294_Difficulties integrating Arducam IMX477 (B0273) with A603",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0177_345918_Re_ 转发：Warranty inquiry for product Recumputer J2012",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0178_346139_Technical Support Inquiry - Please Respond to the Customer [#eunsooshim@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0179_346134_Sorry, but the A603 carrier schematics are not publicly available",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0180_346028_Technical Support Inquiry - Please Respond to the Customer [#bhanu24@iiserb.ac.in;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0181_345980_I have a reComputer Industrial J4012 Orin NX 16GB computer. I need to purchase a wifi module but I'm",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0182_345595_Re_ Your receipt from Pollen Robotics SAS #2342-4998",
+      "conversation_files": 9,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0183_345935_Hello, I would like to know if this industrial computer with Jetson Orin NX 16GB supports Super Mode",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0184_345926_please be sure to follow the tutorial in our wiki. You may not have preserved the permissions when e",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0185_343845_RMA Request - reComputer Industrial J4012 (Jetson Orin NX 16GB) Not Powering On",
+      "conversation_files": 21,
+      "email_units": 10,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0186_345911_回复：RE_ 回复：[## 345379 ##] RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 1,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0187_345896_回复：[## 345546 ##] Request for Lifecycle _ EOL Status of 102110547 and 114992731",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0188_345546_Request for Lifecycle _ EOL Status of 102110547 and 114992731",
+      "conversation_files": 22,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0189_345558_Technical Support Inquiry - Please Respond to the Customer [#mwellandt@tecnicum.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0190_344864_Return request for return authorization",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0191_343996_客户Mitesh Patel报告Reachy Mini麦克风连接线损坏，并提供发票号码、联系方式、地址及照片，寻求帮助解决问题。",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0192_345496_I am using the A203. Lately i updated to the 32.7.6 with a TX2 NX. Curently i am trying to use the U",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0193_345083_I already returned the device at the end of February as requested and completed the return process a",
+      "conversation_files": 11,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0194_345411_回复：[## 345379 ##] RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0195_345388_RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0196_345385_reServer Industrial J501 Carrier Board",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0197_345378_RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0198_345377_RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0199_345376_RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0200_345375_Re_ Issue with m.2 connector on Jetson",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0201_345374_Re_ Issue with m.2 connector on Jetson",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0202_342072_Orin J4012 Robotics no longer booting",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0203_344881_reComputer Robotics J3011 not displaying video",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0204_345045_Re_ Missing big and small lens cap",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0205_344893_ERROR _ reComputer Mini J4012 (Jetson Orin NX 16GB) with JetPack 6.0 headless boot",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0206_345134_I recently bought 3 Odyssey boards and was wondering if the re_computer case is stackable in a way t",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0207_345855_Hello, I am wondering if the SO-arm101 pro kit comes with the 3d print files, and how long_difficult",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0208_345728_Request for RoHS & REACH Compliance Information – Fan in SKU 114992731 (Jetson TX2 NX Heatsink + Fan",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0209_345727_Subject_ Request for RoHS & REACH Compliance Information – Fan in SKU 114992731 (Jetson TX2 NX Heats",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0210_345716_回复：Re_ ___SPAM___ 回复：Re_ ___SPAM___ 回复：Re_ ___SPAM___ Re_ Enquiry for A603 Carrier Board with Jetson",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0211_345544_Technical Support Inquiry - Please Respond to the Customer [#mihai.anton85@gmail.com;]",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0212_345414_Xaiver AGX H01 kit flashing not available",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0213_345669_回复：[## 345546 ##] Request for Lifecycle _ EOL Status of 102110547 and 114992731",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0214_345663_Re_ [EXT] 回复：[## 345546 ##] Request for Lifecycle _ EOL Status of 102110547 and 114992731",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0215_345662_RE_ 回复：RE_ 回复：[## 345379 ##] RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0216_345657_回复：[## 345546 ##] Request for Lifecycle _ EOL Status of 102110547 and 114992731",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0217_345036_Technical Support Inquiry - Please Respond to the Customer [#dylan.smith@zenus.ai;]",
+      "conversation_files": 22,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0218_345593_Hello, I am looking for below commercial AI Box (not Development Kit) 1. Jetson AGX Orin™ 64GB 2. 2x",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0219_345652_Re_ [EXT] 回复：[## 345546 ##] Request for Lifecycle _ EOL Status of 102110547 and 114992731",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0220_345651_回复：RE_ 回复：[## 345379 ##] RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0221_345646_回复：[## 345546 ##] Request for Lifecycle _ EOL Status of 102110547 and 114992731",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0222_345379_RE_ Issue with m.2 connector on Jetson",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0223_345622_Technical Support Inquiry - Please Respond to the Customer [#jeff.smith4@gapac.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0224_344137_reComputer J30011 Bluetooth Mouse and Keyboard",
+      "conversation_files": 24,
+      "email_units": 12,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0225_343909_Re_ Faulty motor F (Invoice# REACHYMINI-2385)",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0226_345588_The latest version of Jetpack for J401mini and NX 16GB_",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0227_344940_Hello! We would like to order reComputer Industrial J4011- Fanless Edge AI Device with Jetson Orin™",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0228_345210_Technical Inquiry_ Enabling fTPM on reComputer Jetson Industrial J4012 (Orin NX 16GB)",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0229_345146_reComputer Industrial J4012 - Fanless Edge AI Device with Jetson Orin NX 16GB",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0230_343019_santiago.pavon@pollen-robotics.com",
+      "conversation_files": 17,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0231_345072_用户询问reComputer Mini的电源输入范围及性能规格与文档描述不一致，并请求澄清。",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0232_345059_Technical Support Inquiry - Please Respond to the Customer [#sidney.nimako@scale.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0233_345048_Technical Support Inquiry - Please Respond to the Customer [#sfoandrey@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0234_345024_I would like to purchase the reComputer Industrial J4012- Fanless Edge AI Device with Jetson Orin™ N",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0235_345003_Technical Support Inquiry - Please Respond to the Customer [#thalirmahizhan2206@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0236_336720_Re_ 回复：[## 335724 ##] AI Edge Inquiry - EyeGo __ Seedstudio",
+      "conversation_files": 24,
+      "email_units": 12,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0237_344995_回复：回复：Re_ [EXT] 回复：[## 342600 ##] Request for Lifecycle _ EOL Status – 102991695",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0238_344996_用户询问关于Jetson通过GPIO从休眠状态唤醒的测试进展，并表示该问题已成为高优先级，同时请求提供可测试的建议。",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0239_344682_用户尝试使用Ubuntu PC为Jetson J4012设备刷写Jetpack 6.0，但Ubuntu无法识别设备，尽管多次更换电脑、USB端口和电缆仍未解决问题。",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0240_344925_Technical Support Inquiry - Please Respond to the Customer [#vr234865@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0241_344903_Good afternoon, I understand that this doesn't come with the AC power cord, but does it come with th",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0242_344506_I am looking for AGX Orin SOM, sku 900-13701-0050-000. Do you carry this_ If so, what is cost and ho",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0243_344703_Inquiry regarding a custom reComputer J4011 setup for an AI project",
+      "conversation_files": 17,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0244_343152_Technical Support Question – Jetson Orin J4012 Communication Protocols",
+      "conversation_files": 22,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0245_344721_Hello, I purchased a reComputer Robotics J4012 (Orin NX 16GB) with GMSL extension. 1. The FAKRA 1–4",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0246_343174_Hi, Windows 10 Enterprise on the Odyssey Blue I purchased from you says it is not activated and it c",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0247_344697_Subject_ Inquiry regarding a custom reComputer J4011 setup for an AI project Dear S Technical Suppor",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0248_344684_Hello, I am looking to get confirmation if the carrier board used in the J4012B is a dev board or a",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0249_344636_Technical Support Inquiry - Please Respond to the Customer [#henrique.palos@ouronova.com;]",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0250_344622_I’m a Product Manager at Arm evaluating depth sensing hardware _robot accessories for a Linux-based",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0251_344620_Hi, I want to clarify if power adapter for reComputer Robotics J4012 - Intelligent Edge AI Computer",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0252_344261_https___www.seeedstudio.com_reComputer-Mini-J4012-with-Extension-p-6353.html (1) For this, is there",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0253_344580_Technical Support Inquiry - Please Respond to the Customer [#daniel@mimirsoftware.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0254_344572_i have a project and i need a re computer with a kit included power 12 v WIFI and Bluetooth module ,",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0255_344491_Re_ 回复：Re_ [EXTERNAL] Follow-Up on Your Seeed Studio Jetson Purchase – Seeedstudio & Ranpak",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0256_343208_回复：URGENT_ GPIO Output Issue on J401 Carrier Board - JetPack 6 Migration - Production Blocked",
+      "conversation_files": 18,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0257_344478_Technical Support Inquiry - Please Respond to the Customer [#marco.stroppiana@edu.unito.it;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0258_344275_Fw_JETSON AGX ORIN 32GB H01 KIT WIT_114110207 Techdeskref_4904419",
+      "conversation_files": 11,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0259_344150_杰瑞·荣（Jerry Rong）向技术支持团队咨询如何配置Super J4012的两个RJ45网络端口，使一个用于接收数据，另一个用于发送数据。",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0260_342602_Request for Real-Time Kernel Support on Jetson Orin NX 16GB (A603 Carrier Board, JetPack 6.2)",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0261_342026_please re-flash by following this tutorial, and it will restore to the original factory state",
+      "conversation_files": 22,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0262_344405_Fw_Re_Request for Guidance on Customer Query on this part 114110207- Jetson产品线",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0263_339024_Re_ Subject Request for replacement camera PCB _ ZIF latch – Reachy Mini",
+      "conversation_files": 33,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0264_344283_回复：[## 343533 ##] Regarding Order #4000383555",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0265_344210_Technical Support Inquiry - Please Respond to the Customer [#Harishmaran55@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0266_344185_Technical Support Inquiry - Please Respond to the Customer [#jmartinez@cetim.es;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0267_343533_客户 Anders Lundgren 反馈其购买的 _Amazing Hand_ DIY 套件中一个 3 针扩展板 (SCS-Y4-2012) 到货时存在短路问题，虽然他已通过重新布线完成组装且无需更",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0268_344173_回复：[## 344032 ##] 回复：转发：Fwd_ [New Lead] Hype Invention Pvt Ltd - Purchase_Request a Quote - EN站",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0269_320088_Technical Support Inquiry - Please Respond to the Customer [#sugar.chimedsenge@pyrenee.net;]",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0270_344161_reComputer Robotics J401 Carrier Board for Jetson Orin Nano_Orin NX Input voltage inquiry",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0271_344146_Technical Support Inquiry - Please Respond to the Customer [#hyungi5754@kookmin.ac.kr;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0272_344100_Technical Support Inquiry - Please Respond to the Customer [#arpys.arevalo@assetcool.com;]",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0273_343782_reComputer J401 - recovery of Jetson Orin NX (16GB) to Ubuntu 20.04, L4T 35.5.0",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0274_344075_Does this model include wireless card _",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0275_343719_Re_ Your receipt from Pollen Robotics SAS #2390-9201",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0276_342879_Re_ Request for replacement Reachy Mini mic array ribbon cable _ unit",
+      "conversation_files": 31,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0277_344048_reComputer Robotics J401 Carrier Board for Jetson Orin Nano_Orin NX Input voltage inquiry",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0278_344032_回复：转发：Fwd_ [New Lead] Hype Invention Pvt Ltd - Purchase_Request a Quote - EN站",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0279_344031_回复：转发：Fwd_ [New Lead] Hype Invention Pvt Ltd - Purchase_Request a Quote - EN站",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0280_344029_回复：Re_ 回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0281_344013_Re_ 回复：Re_ 回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0282_343949_Re_ Your receipt from Pollen Robotics SAS #2239-3944",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0283_341864_Re_ Your receipt from Pollen Robotics SAS #2239-3944",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0284_342508_Re_ Missing component for Reachy Mini",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0285_343767_Hello, I bought a SO-101 robotic arm, but I am having troubles when I want to teleoperate it. Could",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0286_343912_Does this reComputer come with WiFi and Bluetooth functionality_",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0287_343508_Re_RE_ RE_ RE_ RE_ Quote_ reComputer Robotics J4012 with GMSL Extension (SKU_ 100026552)",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0288_343120_santiago.pavon@pollen-robotics.com",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0289_343207_Problems with recomputer robotics J4012",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0290_343812_回复：Re_ 回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0291_343777_Re_ [EXTERNAL][##343776##] Your ticket has been created",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0292_343776_Software Download and Motor configuration for SO-ARM101",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0293_343709_Technical Support Inquiry - Please Respond to the Customer [#james@dronestar.co.za;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0294_343695_Re_Query - After-sale Support - NVIDIA Jetson",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0295_343685_Re_ Mirco a envoyé une demande de contact",
+      "conversation_files": 11,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0296_342812_Technical Support Inquiry - Please Respond to the Customer [#creatorzack@dol.hi-ho.ne.jp;]",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0297_343073_Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 15,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0298_340647_Kingsley Li 和 Ian Mateo Rodriguez 讨论了 Seeed reServer 产品的订单数量、年需求、账单和发货信息，以及支付方式和运输流程的相关事宜。",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0299_342778_Technical Support Inquiry - Please Respond to the Customer [#joamba@gmail.com;]",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0300_343134_The device is not functioning properly. The fan spins and the module generates heat after powering o",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0301_343298_RE_ Technical Support Email (UK) - 22207853",
+      "conversation_files": 17,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0302_343534_Feedback regarding Amazing Hand (order #4000383555)",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0303_343528_回复：Re_ 回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0304_343525_回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0305_343523_Re_ 回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0306_343424_回复：Re_ 回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0307_343419_回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0308_343315_Technical Support Inquiry - Please Respond to the Customer [#crokko@libero.it;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0309_343308_Technical Support Inquiry - Please Respond to the Customer [#dskang@airobotics.im;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0310_343290_i bought 2 J4012 device when i use it, LAN1+PoE is working but LAN2 is not working. When i Connect E",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0311_343221_Dear Sir, In our application, we used this Jetson, we connected a camera (5W) and a wireless keyboar",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0312_343209_回复：URGENT_ GPIO Output Issue on J401 Carrier Board - JetPack 6 Migration - Production Blocked",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0313_343190_Re_ Muser tech request - 493868",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0314_343125_Re_ URGENT_ GPIO Output Issue on J401 Carrier Board - JetPack 6 Migration - Production Blocked",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0315_342803_I need to return this product and get a full refund. It didn't have the GMSL compatibility that was",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0316_342868_reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0317_343013_Hi I am looking for industrial alternatives to the NVIDIA Orin NX 16 for a vision application runnin",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0318_342919_Technical Support Inquiry - Please Respond to the Customer [#jens.haedrich@t-online.de;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0319_342899_丹麦初创公司Essential Robotics的代表Rasmus咨询关于J4012产品是否有支持NX 16GB完整TDP的设计版本，并询问其可用性及物理设计是否相似。",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0320_342875_回复：[## 342868 ##] reServer J501 _ Technical Assistance - ROOTS",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0321_342851_Re_ Your receipt from Pollen Robotics SAS #2855-0072",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0322_342840_Can you provide warrantary period of the below part",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0323_342762_Hi, I am wondering if the Feetech SCS0009 supports the same position step mode whereby the servo mov",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0324_342744_Hello, I am trying to find the steps to put my Jetson J3011 into recovery mode to flash Jetpack 6. I",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0325_342707_Re_ [## 342513 ##] Information about UAV bundle",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0326_342550_Re_ Please consider my project to be in Seeed Embodied AI Hackathon – Mountain View Application (Oct",
+      "conversation_files": 18,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0327_342599_サーボモーターの中に入っているマイコンのファームウェアが古いと問題が出るらしいという情報があるのですが、この組み立て済みバージョンでは、ア__d65d6e1624fe",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0328_342661_Technical Support Inquiry - Please Respond to the Customer [#eng@usegrizzly.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0329_342658_Technical Support Inquiry - Please Respond to the Customer [#eng@usegrizzly.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0330_342657_Hi, if we add NVme drive to recomputer r2145 order, will it come pre-flashed and booting from nvme_",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0331_341270_USB ports not working on Odyssey Reserver",
+      "conversation_files": 19,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0332_339143_santiago.pavon@pollen-robotics.com",
+      "conversation_files": 33,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0333_342590_Technical Support Inquiry - Please Respond to the Customer [#inspireglobalsales@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0334_342490_Can be install a nvme dis ssk on this jetson AGX to increase from 64GB to 1Tb_",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0335_342338_回复：Technical Support_ GPU Utilization issues on reComputer J4011 with Seeed Studio GitHub Examples",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0336_341745_Bootloader Failure on Jetson Orin NX Carrier Boards",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0337_342513_Dr. Matteo Mendula咨询关于购买用于无人机的UAV套件（Orin Nano 8GB），需求包括载板、扩展和模块，并请求符合MIL-STD-810标准的振动和冲击测试数据、最佳电源要求建",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0338_342478_Hello, I have ordered the above computer 2X, and the wireless modules for USA but I can not find the",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0339_342450_Request for EOL, RoHS and REACH Information – 114110048 (A205 Board for Jetson Nano_NX_TX2)",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0340_342299_patrick.hennessy@histosonics.com",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0341_342236_Hi , i am interested in your reComputer Robotics J4012, but i have a question about the Can communic",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0342_342336_StarAI主臂连接显示motor not found id：0",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0343_342328_Technical Issue_ 8 out of 12 Servos Defective - [Order #4000474486]",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0344_343473_I'm using reServer Industrial J4012. Can I connect a Wi-Fi module to communicate with an api server_",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0345_343124_Re_ URGENT_ GPIO Output Issue on J401 Carrier Board - JetPack 6 Migration - Production Blocked",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0346_343505_https___www.seeedstudio.com_SO-ARM-101-Assembled-Kit-Pro-p-6691.html Does the assembled arm include",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0347_343176_Industrial Orin kit having 2 Ethernet ports ( LAN _ POE ). Is there any possibilities more POE ( 1 L",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0348_343482_I want to purchase this product, RTL 8822CE Module with the antenna kit. My Jetson is NVIDIA Jetson",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0349_343178_Request for Guidance on Customer Query on this part 114110207",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0350_342555_Hi, I was looking to order the Amazing Hand robot kit and I was wondering if I needed a XIOA board a",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0351_337769_回复：回复：Fwd_[## 16809 ##] Urgent Support Needed – A608 Carrier Board with Jetson Orin Nano Not Powerin",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0352_342101_Hi, what is max current for USB A and USB C ports thanks. does usb-c support pd_ thanks",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0353_341392_Bus Servo Driver Board – STS3215 Motor Not Detected During ID Assignment",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0354_342112_Technical Support Inquiry - Please Respond to the Customer [#keita196u@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0355_339155_Re_ Reachy mini - Front Head Assembly",
+      "conversation_files": 23,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0356_341898_用户Arda Nas向Seeed Studio技术支持团队报告，他的reComputer J4012设备在使用JetPack 6.0镜像刷机时遇到一系列问题，包括文件未找到、超时及设备无法启动等错误，",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0357_342050_RE_ DOA Issue Report – Order ID #3000010505",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0358_322350_[Urgent] CSI Port 0 not working on Jetson Orin NX with A603 carrier board",
+      "conversation_files": 35,
+      "email_units": 17,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0359_341443_ReComputer J30 NVIDIA Jetson Orion Firmware Update Failures",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0360_340236_reComputer J4012B - Edge AI Computer with NVIDIA® Jetson™ Orin™ NX 16GB",
+      "conversation_files": 29,
+      "email_units": 14,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0361_341945_I bought 2 units of Orin Nano 8GB reComputer 2 months ago. I want to know if I can install Ubuntu 24",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0362_341934_DOA Issue Report – Order ID #3000010505",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0363_341933_DOA Issue Report – Order ID #3000010505",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0364_341925_Hello Hello, I purchased this order #4000478222 from you. However, by the time I receive the items,",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0365_324367_Technical Support Inquiry - Please Respond to the Customer [#jharris@wipeos.com;]",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0366_341899_Urgent !!! Jetson orin Nx flash ERROR s",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0367_341897_Urgent !!!!!!!!!!!!!!! Recomputer flash errors",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0368_341896_reComputer J4012 (Orin NX 16GB)",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0369_341827_Re_ 回复：[## 340236 ##] Regarding NDVIDA - H_W Issue",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0370_341823_You can recalibrate and make sure the range of calibration of two arms are same",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0371_341656_Re_ Seeed Studio #4000476954 (Order cannot be cancelled)",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0372_341740_Re_ 回复：[## 340236 ##] Regarding NDVIDA - H_W Issue",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0373_341795_回复：[## 340236 ##] Regarding NDVIDA - H_W Issue",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0374_341769_回复：[## 341620 ##] RE_ Detailed Request for Motor Replacement – SO-ARM101 Kit",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0375_342090_用户咨询新款机械臂b601的计划是否会在春节前发布，以及是否会在Seeed网站上提供套件购买。",
+      "conversation_files": 13,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0376_342314_回复：[## 342090 ##] Rebot robot arm b601",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0377_342313_我近期收到的 Reachy Mini Wireless ，该设备可以正常开关机，启动时能听到电机运转的声音，说明机械部分工作正常。",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0378_342310_用户反馈收到的 Reachy Mini 无线版设备存在无线功能故障，无法检测到热点信号，已尝试排查但无效，因无法通过 macOS 系统进一步诊断，要求更换设备。",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0379_342304_买了Reachy Mini WIFI版本，但是启动后，找不到任何WIFI热点，也确认了电路板上的那个按钮是处于Debug状态下的，应该是产品存在问题，要求换货处理",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0380__",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0381_341611_Re_ Re_ reComputer Mini - Connector part numbers",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0382_342235_Technical Support Inquiry - Please Respond to the Customer [#jana.vanderheijden@barco.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0383_342226_Hello, I’m using a reComputer Robotics J401 (Jetson Orin NX 16GB) with the vendor-provided image bas",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0384_341192_Inquiry About Re-Flashing Services for Seeed Studio Devices",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0385_341834_客户José Manuel Arrabal咨询FedEx要求支付65欧元的进口税是否合理，因为他已支付运费且认为此税不符合约定。",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0386_341922_Hi I want to perchuse the so-arm101 arm pro kit assembled arm,May I know do you have in stock and ho",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0387_342183_Technical Support Inquiry - Please Respond to the Customer [#keita196u@gmail.com;]",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0388_342182_回复：转发：[Urgent] CSI Port 0 not working on Jetson Orin NX with A603 carrier board",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0389_341263_Technical Support Inquiry - Please Respond to the Customer [#tyrany@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0390_341243_推理服务器做测试样机。要求：体积小，算力高。适配多路摄像头。现在用的华为500A2，体积太大",
+      "conversation_files": 9,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0391_341220_Re_ 回复：[## 340236 ##] Regarding NDVIDA - H_W Issue",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0392_341210_用户 Ben 在 ODYSSEY-X86J4105 上安装了 Windows 11 Enterprise，但使用 Windows 10 驱动程序包后仍缺少 PCI 数据采集和信号处理控制器的驱动，寻求",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0393_341198_Hi, I'm interested in buying a J4012 with GMSL extension. I see that in the options, I cannot choose",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0394_340760_reComputer Industrial J4011 Jetpack 6.1 password protected",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0395_341126_回复：[## 340236 ##] Regarding NDVIDA - H_W Issue",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0396_341123_Technical Support Inquiry - Please Respond to the Customer [#Florian.kuenne@abbott.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0397_341113_In regards to the Jetson Mate listed here_ https___www.seeedstudio.com_Jetson-Mate-Cooling-Kit-p-478",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0398_340854_I just saw that reComputer Super J3011 has a SIM card port. Is that means we can directly insert a s",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0399_341057_Re_ 回复：[## 340236 ##] Regarding NDVIDA - H_W Issue",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0400_338281_Order_ #4000437308 - faulty unit",
+      "conversation_files": 22,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0401_341016_what is the difference wetween SO-ARM101 kit and SO-ARM101 kit pro_ can not find information on webs",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0402_341010_Technical Support Inquiry - Please Respond to the Customer [#rohaid.ahmed@bcubelimited.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0403_341620_RE_ Detailed Request for Motor Replacement – SO-ARM101 Kit",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0404_341524_Krishna, a Lead Data Scientist at Honeywell, reported an issue with the Seed Studio J4011 device, wh",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0405_341600_reComputer Robotics J401 Carrier Board",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0406_341206_Overcurrent throttling reComputer J4012",
+      "conversation_files": 18,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0407_341651_Technical Support Inquiry - Please Respond to the Customer [#mike.garton@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0408_341645_回复：[## 340236 ##] Regarding NDVIDA - H_W Issue",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0409_341644_Issue Report_ Jetson Thor Unable to Boot into UI",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0410_341520_Detailed Request for Motor Replacement – SO-ARM101 Kit",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0411_341615_Re_ Your Reachy Mini is on its way",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0412_337496_Support Re_ Your Seeed order#3000010270 has been submitted successfully!",
+      "conversation_files": 31,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0413_341439_Do you make an enclosure for the A608 Carrier board or have a 3D model for one_ Thanks Frank",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0414_341241_Question regarding xiao board for lerobot so arm 101",
+      "conversation_files": 18,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0415_341208_GPIO and PWM Not Working on reComputer Jetson J4012",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0416_341521_Product Issue - reComputer J1010 -Edge AI Device with Jetson Nano module, M.2 Key E Slot, Type-C con",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0417_341511_Technical Support Inquiry - Please Respond to the Customer [#hbelec143@hanback.co.kr;]",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0418_341066_I received a defective servo in my recent order and need a replacement ST-3215-C046. This is from or",
+      "conversation_files": 21,
+      "email_units": 10,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0419_341492_Dear SeedStudio, I would like to know if there is a case compatible with the reServer Industrial J50",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0420_335224_I would like to know if the SKU is compatible with Jetson AGX ORIN Industrial Board of having 248TOP",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0421_341213_Hello, I am developing an edge-ai solution that will use an _Eco Capture Dual SDI M.2_ capture card",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0422_341280_I am interested in an M.2 wifi module that is supported by the J3011 Edge computer. Can you please r",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0423_341413_Hello, I have a J101 and Jetson Nano and I want to buy a heatsink for it. I was just wondering if an",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0424_341410_Received reServer. Won't boot up. Powers on, fan turns on, CPU seems to work (gets warm). Ethernet p",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0425_341387_P Abhishek 对编号为#341381的工单进行了评分，内容涉及无法按照Seeed Studio网站的步骤刷写Jetson AGX ORIN 64GB，并已提交即时支持请求。",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0426_341385_回复：[## 326877 ##] URGENT - Request for Availability Update – Item Code 102110767 - ROBOZE SPA",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0427_341381_I have a reserver J501 on which i am using Jetson AGX ORIN 64GB and i am unable to flash it using th",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0428_339905_Re_Fw_ Seeed failed computers - more info request Fw_ Seeed_Sensor Dynamics RMA - Escalation",
+      "conversation_files": 25,
+      "email_units": 12,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0429_341367_Technical Support Inquiry - Please Respond to the Customer [#nasarda7@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0430_340164_Order #4000471595 - Shipping Query",
+      "conversation_files": 29,
+      "email_units": 14,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0431_339765_I would like to ask a few questions regarding the LeKiwi Full Kit (12V Version). Q1_ Can I use a Jet",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0432_339902_回复：[## 339893 ##] Re_ Invoice for your Seeed order",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0433_339893_Re_ Invoice for your Seeed order",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0434_339160_Technical Support Inquiry - Please Respond to the Customer [#het@frontmatec.com;]",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0435_338769_HI I am looking to order extra servos for my Violin Robot arm, but couldn't find by the name of the",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0436_341001_Technical Support Inquiry - Please Respond to the Customer [#prasannakumarg@vrindatech.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0437_340886_Inquiry_ reComputer Robotics J4011 Specifications and Availability (6 USB 3.2 ports),Super Mode, and",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0438_340994_回复：[## 340236 ##] Regarding NDVIDA - H_W Issue",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0439_340971_RE_ Re_ask for help on 110061361",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0440_326877_URGENT - Request for Availability Update – Item Code 102110767 - ROBOZE SPA",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0441_340976_Can the reComputer Industrial J4012 carrier card support both Orin NX 16GB and Orin NX 8GB_",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0442_340973_Technical Support Inquiry - Please Respond to the Customer [#ruban.j@vedhyatech.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0443_340964_Re_ 回复：[## 340236 ##] Regarding NDVIDA - H_W Issue",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0444_340956_reComputer Mini Carrier Board for Jetson Orin™ Nano_Orin™ NX",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0445_340934_Technical Support Inquiry - Please Respond to the Customer [#ericjdarby@gmail.com;]",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0446_340255_Odyssey x86 j104 - Can't recognize drives on NVME to Sata adapter",
+      "conversation_files": 24,
+      "email_units": 12,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0447_340897_I_ Re_R_ URGENT - Request for Availability Update – Item Code 102110767 - ROBOZE SPA",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0448_340884_Disponen de Accesorios E_S vía RS232 para el equipo reComputer_",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0449_340782_Hello. I was wondering - a few months ago, it looked like the kit included six 12V motors but now ev",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0450_340560_Hallo, können Sie mir bitte mitteilen welche Motoren genau in enthalten sind. Danke für Ihre Antwort",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0451_340561_RE_ 回复：[## 340311 ##] RMA Request_ Manufacturing Defect in reComputer J4011 - Internal Memory Failur",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0452_340253_Hi there, I wonder where I can buy the needed Jetson Orin Nano Module to integrate it in the reCompu",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0453_340572_Dear Sir or Madam, I am looking for a AI computer and found the J4012 Orin Nx 16 G. Do you have any",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0454_339294_Re_Help! Can't attach fan to A603 Carrier board",
+      "conversation_files": 1,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0455_340081_用户请求协助将VisionComponents摄像头的设备树和驱动集成到其使用的NVIDIA Jetson Orin NX 16GB的A603载板上，并寻求指导。",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0456_340493_Hello I have a question about this product, https___www.seeedstudio.com_reComputer-Super-J4012-p-644",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0457_340420_I would like to speak to someone regarding the recomputer system. I am working in the virtual film s",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0458_340292_产品NVIDIA Jetson Orin Nano Seeed recomputer classic Super，SN_1422825018420，报",
+      "conversation_files": 9,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0459_339489_Hello, We are interested in the reComputer Mini Carrier Board for Jetson Orin Nano and Orin NX and a",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0460_339191_Re_ Your receipt from Pollen Robotics SAS #2692-9670",
+      "conversation_files": 25,
+      "email_units": 12,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0461_340198_Seeed Studio A603 carrier board",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0462_340193_Hi, I'm considering buying some SKU 102110642, but before I place my order I need to know if the car",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0463_340181_I replied to the tech support mail, but I couldn't got the answer yet. The support number is ##33975",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0464_310267_Technical Support Inquiry - Please Respond to the Customer [#ujjwal.gupta@joulea.com;]",
+      "conversation_files": 35,
+      "email_units": 17,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0465_340137_Technical Support Inquiry - Please Respond to the Customer [#e.grimaldi@hidonix.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0466_340116_Hi there! The reComputer Mini Carrier Board for Jetson Orin™ Nano_Orin™ NX device says it offers a 5",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0467_340100_Hi there, I was checking the reComputer Super J401 board (Jetson Orin NX) and I can see that it has",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0468_339769_I would like to request the STEP file for the robot arm showcased on your website for the robotic ar",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0469_339915_Refund for the item purchased via Amazon",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0470_339869_Technical Support Request – Order #7000005597– Motor Kit Issue",
+      "conversation_files": 11,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0471_339993_Hello! I bought the SO-ARM101 LeRobot 3D Printed Parts for my undergraduate research project at the",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0472_339759_Seeed_Sensor Dynamics RMA - Escalation",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0473_339736_Hi I have an NVIDIA ORIN NX 16gb industrial J4012. How do I put this into recovery mode_ I have trie",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0474_339763_Technical Support Inquiry - Please Respond to the Customer [#harsheit.v@tiflabs.in;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0475_339720_Technical Support Inquiry - Please Respond to the Customer [#T.hirschberg483@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0476_339710_Technical Support Inquiry - Please Respond to the Customer [#arobix.ai@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0477_339701_Technical Support Inquiry - Please Respond to the Customer [#JennyStarr777@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0478_339687_Newer UEFI for Odyssey J4105-V1_",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0479_339591_Technical Support Inquiry - Please Respond to the Customer [#harsheit.v@tiflabs.in;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0480_339550_客户请求RMA流程指导，涉及两台故障设备J4012，Seeed团队将安排工程师首先检查问题。",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0481_339529_Support Re_Fw_ Request for Additional Shipment — Order #3000010259",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0482_338738_Seeed Studio Follow-Up_ Enhanced Support for InDro Robotics' Jetson project",
+      "conversation_files": 17,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0483_339484_Will there be any direct replacements for this item, sku 102110763_",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0484_339452_Re_ Re_ Demande de confirmation de réception du formulaire problème moteur Reachy Mini",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0485_339422_Clarification on USB Host Controller Architecture for J401 Carrier Board",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0486_339420_Technical Support Inquiry - Please Respond to the Customer [#sanjay@swapp.design;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0487_339419_I am Sanjay Johny from Swapp Design Private Limited. We are building autonomous battery swapping for",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0488_339413_Sensing SG3S-ISX031C-GMSL2F 3MP GMSL2 Camera can I acquire it with a jetson orin nano dev kit (are t",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0489_339325_Technical Support Inquiry - Please Respond to the Customer [#j.wachenfeld@t-online.de;]",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0490_338944_用户咨询关于reServer 1115G4风扇的更换事宜，因遗失连接其他风扇的线缆，询问是否可购买该线缆或配套风扇，或提供购买渠道信息。",
+      "conversation_files": 18,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0491_339295_Technical Support Inquiry - Please Respond to the Customer [#amena@agrinpulse.com;]",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0492_339171_用户咨询如何打开Jetson AGX Orin 32GB – H01 Kit的金属外壳以安装NVMe，并寻求技术支持的帮助。",
+      "conversation_files": 25,
+      "email_units": 12,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0493_339248_Jetson Orin Nano 8GB,A603 carrier",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0494_339351_Hello, I was hoping to get the CAD drawing file for SKU 110110145. Thank you",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0495_338080_Would be easier to attach photos and explain but 2 issues_ - one of the feetech servo motor box does",
+      "conversation_files": 37,
+      "email_units": 18,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0496_339195_Re_ URGENT - Multiple motor replacement requests - Invoice REACHYMINI-2213 - No response received",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0497_339179_Flash JEtPack to J3011 problems",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0498_335875_安东尼奥·卡洛·卡鲁索请求支持设置recomputer mini j3011的I2C通信，描述了其电气连接配置和检测输出，并寻求指导以理解和控制通信问题。",
+      "conversation_files": 33,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0499_339044_The recomputer industrial j4012 device we received was shipped with an empty CMOS Battery",
+      "conversation_files": 24,
+      "email_units": 12,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0500_339265_Request for Technical Clarification on PoE-Related Diagnosis – reComputer Industrial J3011",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0501_339141_Technical Support Inquiry - Please Respond to the Customer [#purchases@vigilatevision.com;]",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0502_339243_Hello, I’d like to inquire about the product “OakSense H60Q – QVGA resolution ToF camera (3D camera)",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0503_338176_Technical Support _ Warranty Claim_ reComputer J3011 Power Failure - S_N_ 110110147243200085",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0504_337891_Re_ [## 337794 ##] SO-ARM 101 Pro Kit – Suspected Faulty Servo",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0505_335255_Re_ Your Seeed Order Has Been Received #7000003443",
+      "conversation_files": 34,
+      "email_units": 17,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0506_339170_Technical Support Inquiry - Please Respond to the Customer [#kriss.lidumnieks@gmail.com;]",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0507_339154_Issue with reComputer Industrial J3011- Fanless Edge AI Device with Jetson Orin Nano 8GB module(4761",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0508_338455_Request 3D model for J501 Carrier Board",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0509_335290_No me sirvió mi recomputer j1010",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0510_339055_Re_ Part broken during shipping",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0511_328664_colton.anderson@rsi-visuals.com",
+      "conversation_files": 36,
+      "email_units": 18,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0512_338614_we get this module _ reComputer J4012 S_N_ 110110145251200057 But I tried to switch it on to test it",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0513_338612_客户购买的 reComputer J4012 模块在首次使用时无法显示屏幕输出，尽管连接了所有必要外设并且设备电源和风扇正常工作，请求紧急支持解决问题并附上参考视频。",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0514_338603_Dear Madams or Sirs, I have a question regarding the USB-C_DP1.4 port on the reComputer Robotics J40",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0515_338565_用户购买了一款由卖家在亚马逊上列__1202cdac3ab3.2加速器，但收到的设备外观和功能不符，更像79美元的USB版本，用户尝试多种方法未能使其正常工作，寻求解决方案。",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0516_338580_回复：[## 338565 ##] Amazon order help",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0517_338552_Technical Support Inquiry - Camera OV2311 driver support",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0518_338474_Technical Support Inquiry - Please Respond to the Customer [#styeung@lscm.hk;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0519_338324_Technical Support Inquiry - Please Respond to the Customer [#matsuyoshi@nexora-jp.com;]",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0520_319401_【Technical Support 】Hi I had a reterminal DM that has been working for around a year. I just added t",
+      "conversation_files": 35,
+      "email_units": 17,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0521_338228_Robotics machine vision project",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0522_338356_回复：Re_RTC A608 Carrier Board RTC issue",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0523_338354_Re_RTC A608 Carrier Board RTC issue",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0524_338352_Technical Support Inquiry - Please Respond to the Customer [#m.alhashim@aigcom.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0525_338244_Hi there, I have submitted two support tickets to replace this faulty item but I have not had a resp",
+      "conversation_files": 11,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0526_338177_Jetson J3011 recomputer trouble",
+      "conversation_files": 13,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0527_338273_reComputer Super J4012 - Jetson™ Orin™ NX 16GB Super Edge AI Device,Power Adapter 3P-Black-19V-4.74A",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0528_338264_Technical Support Inquiry - Please Respond to the Customer [#sascha.kolodzie@sywit.de;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0529_338128_回复：Re_ Broken J4012 Industrial to repair--A-0000-5188",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0530_337886_Please let me know if I attach a camera with this computer will I be able to mount it out of the box",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0531_338220_回复：[## 338121 ##] RE_ [EXTERNAL] Jetson AGX Xavier Carrier Board _ Encoder – Backup Supply Options",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0532_338205_Power cable won’t fit Servo Driver Board terminal",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0533_338204_[474066] [3231339] Regarding _ ODYSSEY- STM32MP135D with eMMC, Cortex-A7 STM32, Yocto_Buildroot OS,",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0534_338154_Hi, We are looking at the J501 board for possible use in a product we are designing. I have two ques",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0535_338148_Technical Support Inquiry - Please Respond to the Customer [#160841ms@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0536_338134_用户Han Prust因在安装J3011并运行NVIDIA软件项目时遇到图像无法识别主板及缺少软件包等问题，寻求技术支持，并提供了相关设备和软件信息供参考。",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0537_338103_Technical Support Inquiry - Please Respond to the Customer [#david.stalmarck@gmail.com;]",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0538_338094_客户反馈最近购买的20片产品均出现焊接问题，并询问是否有明确焊接要求、工厂SOP和检测是否存在问题、同批次是否均有问题，以及需提供原因及改进措施。",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0539_337872_secondary development is supported",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0540_338084_回复：Re_ [## 337794 ##] SO-ARM 101 Pro Kit – Suspected Faulty Servo",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0541_330747_用户报告其reComputer J4012设备无法启动，尝试通过Ubuntu主机电脑使用JetPack软件进行恢复，但闪存过程在“等待目标设备启动”步骤超时失败，并寻求解决方案__ec87f5d995ef",
+      "conversation_files": 18,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0542_337794_SO-ARM 101 Pro Kit – Suspected Faulty Servo",
+      "conversation_files": 11,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0543_337407_Dear Seeed Support Team, There is a shortage of parts in the _Amazing Hand (Right Hand)_ kit I purch",
+      "conversation_files": 22,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0544_337867_回复：[## 337794 ##] SO-ARM 101 Pro Kit – Suspected Faulty Servo",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0545_337865_reServer Industrial J4012 Clone",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0546_337693_A608 Carrier Board 3D Model Issue",
+      "conversation_files": 20,
+      "email_units": 10,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0547_337857_Technical Support Inquiry - Please Respond to the Customer [#devin@sbwag.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0548_337741_Flashing Jetpack 6.2 Jetson Orin NX reComputer J4012",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0549_337768_回复：回复：Fwd_[## 16809 ##] Urgent Support Needed – A608 Carrier Board with Jetson Orin Nano Not Powerin",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0550_338816_ReComputer Robotics J4012 GSML_ GSML not working",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0551_338933_Hi, I recently ordered the SO-Arm101 Motor Kit Pro and noticed an issue with one of the 12V servo mo",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0552_323848_Jetson AGX Orin 32GB need Jet-Pack 6.1 installed",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0553_338838_Created its own password can’t get past setup",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0554_338784_Technical Support Inquiry - Please Respond to the Customer [#joamba@gmail.com;]",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0555_338381_用户在使用Seeed载板（J4012）和Orin NX16GB时，成功刷机但HDMI口无显示，尝试多种方法未果，寻求技术支持。",
+      "conversation_files": 21,
+      "email_units": 10,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0556_337615_Technical Support Inquiry - Please Respond to the Customer [#konydrive@hotmail.com;]",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0557_338631_Gianluca Bernasconi 请求为 Odyssey X86J4105 PC 提供 _OCI data acquisition control_ 的驱动程序，并表示已安装官网驱动包但未解决问",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0558_338621_sandhya.gundekayala@element14.com",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0559_337175_Inquiry on Using Seeed Studio reComputer Robotics GMSL Camera Board Kit with i.MX _ Rockchip SoCs",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0560_337048_Technical Support Inquiry - Please Respond to the Customer [#Colby.Laub.b@gmail.com;]",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0561_337154_Inquiry on Porting Allied Vision CSI-2 Driver to A603 Carrier Board (Jetson Orin NX)",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0562_336881_客户Jim Kruse请求Seeed销售团队提供Jetson AGX Thor开发套件的报价及交货时间。",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0563_336923_NVIDIA Ampere Processing unit with 1,024 CUDA Cores and 32 Tensor Cores, clocked at 1,020 MHz. we ne",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0564_336831_We recently bought this reserver, we would like to connect GMSL2 cameras with fakra connectors, we d",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0565_337085_Technical Support Inquiry - Please Respond to the Customer [#alg@web-services.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0566_337042_HI, can you provide 3d model (stp file) for reServer Industrial J501-GMSL extension board. Thanks in",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0567_333318_Cameras for A603 Carrier Board with Jetson Orin Nano",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0568_336969_回复：J401 Robotics with Orin NX8GB - Cannot install any packages",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0569_336907_回复：[## 336821 ##] Technical Support",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0570_336821_You may consider a GMSL2 capture card with an M.2 Key M interface or one with a Mini PCIe interface,",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0571_336687_Request for Repair Service – NVIDIA Jetson Board Damaged by Overvoltage",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0572_336703_I am interested in Amazing Hand (Left Hand)_ The Open-Source Robotic Hand Developer Kit. Do you prov",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0573_336767_Technical Support Inquiry - Please Respond to the Customer [#tomohiro.oka@hakusan.co.jp;]",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0574_336738_Technical Support Inquiry - Please Respond to the Customer [#mclovingun@mail.com;]",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0575_336532_Thank you very much for providing this information. If the device is still under warranty, please re",
+      "conversation_files": 13,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0576_336721_CSI-2 Compatibility Question — reComputer J3011 + DS90UB954 EVM (RAW10_RAW12)",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0577_336653_A603 carrier board,Orin NX 16GB",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0578_334898_Amaging hand _ Can not import Step CAD data",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0579_336676_Üzeyir GÜLAÇ 询问是否可以提供用于 Jetson Orin™ NX_Orin 板的 A608 Carrier Board 的 3D step 文件，以便制造外壳。",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0580_336291_Pre sales question. Im looking at the orin nano super and the recomputer orin nano. Im wanting to kn",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0581_336504_Hello, I just received a eComputer Robotics J4012 and have a few questions_ 1. Does it come with a W",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0582_325886_Re_ 回复：[## 323711 ##] 【Customized Solution Inquiry 】The day before yesterday I sent query from your",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0583_335466_Request for Support - Jetson AGX Orin 32GB H01 (S_N 1423524333329, Batch BH2410090004) - Flashing Is",
+      "conversation_files": 29,
+      "email_units": 14,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0584_335599_Technical Support Inquiry - Please Respond to the Customer [#harshaditya@bharatrohan.in;]",
+      "conversation_files": 27,
+      "email_units": 13,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0585_336322_Wifi dongle not recognized on reComputer Industrial J4012",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0586_336281_One of the boards that I have ordered burned down. At burn down, specifically a Power Board for ReCo",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0587_335032_Hi, is this carrier board and Jetson combination also used in the J4012 (SKU 114110310)_ if not, wha",
+      "conversation_files": 18,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0588_336342_one of my _DC Power Pigtail Cable_ in my recent order is defective, could you send me a new one_ all",
+      "conversation_files": 11,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0589_336429_Jetson Orin NX baseboard,reComputer Mini Carrier Board for NVIDIA Jetson Orin NX Nano",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0590_337643_Fwd_[## 16809 ##] Urgent Support Needed – A608 Carrier Board with Jetson Orin Nano Not Powering On",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0591_337681_Technical Support Inquiry - Please Respond to the Customer [#griezlybear0@gmail.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0592_337675_用户反馈A608板的3D模型存在问题，请求提供更新或更准确的模型版本。",
+      "conversation_files": 9,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0593_337563_Hi, Recently I ordered SO-101 Servo motor kit Pro (without 3D printed parts). I want to enquire what",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0594_337567_Odyssey j4125 v2 reflash firmware",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0595_337470_I have a couple of questions. 1) does the server come 'ready to go' or do I need to buy additonal ha",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0596_337213_Technical Support Inquiry - Please Respond to the Customer [#pratik@etheron.tech;]",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0597_337320_I'm looking for something like SKU_ 102110841, but this is discontinued. I need Orin NX support, min",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0598_337311_does the Bus Servo Driver Board for Seeed Studio XIAO come with the power adapter. I need another 12",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0599_337270_Technical Support Inquiry - Please Respond to the Customer [#hyungi5754@kookmin.ac.kr;]",
+      "conversation_files": 7,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0600_337233_Technical Support Inquiry - Please Respond to the Customer [#hyungi5754@kookmin.ac.kr;]",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0601_337112_hello, i want to get full kit for make lerobot arm, what option should i select i mean i want to pri",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0602_336987_I am writing to enquire about the current availability and lead time of the ODYSSEY – X86J4125800 v2",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0603_337218_hi, does j4012 robotics recomputer p-6505 has ssd and wifi module_",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0604_334846_Re_ 回复：[## 333955 ##] Request for Exchange",
+      "conversation_files": 22,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0605_336071_回复：[## 335724 ##] AI Edge Inquiry",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0606_335011_A subset of these 5V 4A power supplies from previous orders (made on a colleagues account) have fail",
+      "conversation_files": 27,
+      "email_units": 13,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0607_335850_aluminum heatsink with fan for Jetson Orin NX_Orin Nano_Xavier NX modules",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0608_335815_Hi for the above order, while i wait, send me the relevant resources for learning. I am a software e",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0609_324378_Technical Support Inquiry - Please Respond to the Customer [#arcadence@gmail.com;]",
+      "conversation_files": 34,
+      "email_units": 17,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0610_335258_SO-ARM101 Low-Cost AI Arm 3D Printed Skeleton",
+      "conversation_files": 16,
+      "email_units": 8,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0611_332972_Jetson Orin NX with dual IMX477 CSI cameras. Jetson Re 4012",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0612_335644_Issues configuring a touch screen display on reComputer Industrial J4012",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0613_335619_Technical Support Inquiry - Please Respond to the Customer [#aryan@bharatrohan.in;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0614_335565_Issues Flashing NVIDIA Jetson Orin Nano 8GB DevKit Module on Seeed Studio reComputer Mini J40 Carrie",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0615_333530_A608 Driver for Arducam B0215 IMX-477",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0616_335155_Defective SO-101 Follower Board – No Servo Bus Response (Replacement Request)",
+      "conversation_files": 20,
+      "email_units": 10,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0617_335509_Technical Support Inquiry - Please Respond to the Customer [#dimitri1965@icloud.com;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0618_335502_Technical Support Inquiry - Please Respond to the Customer [#a.harwardt@ignaite.de;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0619_335479_Re_ Question about battery-backed RTC on reServer Industrial J3011 (Jetson Orin)",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0620_335411_Nvidia Orin Nano J401 camera support",
+      "conversation_files": 11,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0621_331426_[Compatibility Inquiry] 8× SG3S-ISX031C at 1080p30",
+      "conversation_files": 14,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0622_335366_Hello! I can see the reComputer Robotics J401 Carrier Board for Jetson Orin Nano with the GMSL expan",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0623_335332_Technical Support for XIAO Bus Servo Driver Board",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0624_334283_Re_ Confirmation of Order Details & Shipping Information",
+      "conversation_files": 20,
+      "email_units": 10,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0625_333311_回复：Fw_Reported defect for Seeed part number 102110637",
+      "conversation_files": 2,
+      "email_units": 1,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0626_328801_RMA Request – 7 Jetson Orin NX boards with USB Port Issues",
+      "conversation_files": 26,
+      "email_units": 13,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0627_326169_Re_ Two Dead Jetson Orin NX Boards",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0628_322190_Error while flasshing jetson orin nano with A603 carrier board and 256 GB NVME drive",
+      "conversation_files": 18,
+      "email_units": 9,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0629_323262_Réka遇到USB-CAN分析仪和J401板通信问题，具体表现为数据发送和接收异常，尝试了不同波特率仍未成功，并请求技术支持解决CAN通信问题。",
+      "conversation_files": 32,
+      "email_units": 16,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0630_321122_【Technical Support 】i have reComputer jetson J1010 and i2c pins are not working on the board",
+      "conversation_files": 20,
+      "email_units": 10,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0631__.mic_svg__cls{fill_var(--zdt_wms_micSvg_icon_default)}",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0632_336319_Technical Support Inquiry - Please Respond to the Customer [#ryanpennings@gmail.com;]",
+      "conversation_files": 13,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0633_336354_I am curious if it is possible to sync a strobe light when using the J501 Carrier Board and the J501",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0634_334737_Question about enabling 3.5mm audio jack on reServer Industrial J501 (Jetson AGX Orin, JetPack 5.x)",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0635_336279_Technical Support Inquiry - Please Respond to the Customer [#josserand-pierre.gay@cnrc-nrc.gc.ca;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0636_336272_Re_ Seeed Npi stm32mp157c Odyssey board's PLL error",
+      "conversation_files": 6,
+      "email_units": 3,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0637_336268_Technical Support Inquiry - Please Respond to the Customer [#joe.ralphs@robocean.io;]",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0638_336181_Can't flash a reComputer J4012 following a version update",
+      "conversation_files": 10,
+      "email_units": 5,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0639_336250_Hi Team, We would like to buy or order your product. Speed studio H01 kit (jetson AGX Orin 32GB). Bu",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0640_336241_Hi there, We are using the reComputer and it is working well. We have one issue with our 7_ usb c to",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0641_336159_If we want to purchase a bigger order of recomputers Jetson NX 8 or 16 gb can they be preinstalled w",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0642_336197_Gemini 335LG camera not working with GMSL (but streaming via USB)",
+      "conversation_files": 15,
+      "email_units": 7,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0643_336058_Re_ 回复：Re_ 回复：[## 333955 ##] Request for Exchange",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0644_335870_reComputer J4012 short range stereo camera",
+      "conversation_files": 8,
+      "email_units": 4,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0645_335927_大卫询问如何降低其i2c端口7的速度，并询问是否有相关工具可用。",
+      "conversation_files": 12,
+      "email_units": 6,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0646_336154_A203v2 Carrier Board for Jetson Nano_Xavier NX_TX2 NX",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0647_334513_StarAI Viola_Violin – Joint1 (Motor_1) not moving via LeRobot + teleop button behavior",
+      "conversation_files": 22,
+      "email_units": 11,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0648_329641_Hello, I am looking to buy a _reServer J4012 Orin Nx 16G_ As this will operate (partly) as an NVR, I",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0649_329201_Bulk Purchase - NVIDIA Jetson AGX Orin 64GB Dev Kit",
+      "conversation_files": 30,
+      "email_units": 15,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0650_336078_I have a seeed reComputer J4012. I have some ploblem for operating that computer. So, I want to rein",
+      "conversation_files": 4,
+      "email_units": 2,
+      "meta_fallback_units": 0
+    },
+    {
+      "ticket_dir": "ticket_0651_335978_Hi , I have ordered a SO-ARM101 Low-Cost AI Arm Servo Motor Kit Pro for LeRobot (Without 3D Printed",
+      "conversation_files": 0,
+      "email_units": 0,
+      "meta_fallback_units": 0
+    }
+  ]
+}

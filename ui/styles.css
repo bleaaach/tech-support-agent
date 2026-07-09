@@ -1,0 +1,123 @@
+/* Seeed Tech Support Agent - Custom Styles */
+
+:root {
+  --brand-blue: #1a56db;
+  --brand-blue-dark: #1e40af;
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --border-color: #e5e7eb;
+  --text-primary: #1f2937;
+  --text-muted: #6b7280;
+  --badge-param: #dbeafe;
+  --badge-param-text: #1e40af;
+  --badge-comp: #ede9fe;
+  --badge-comp-text: #6d28d9;
+  --badge-trouble: #fef3c7;
+  --badge-trouble-text: #92400e;
+  --badge-howto: #d1fae5;
+  --badge-howto-text: #065f46;
+  --badge-transfer: #fee2e2;
+  --badge-transfer-text: #991b1b;
+}
+
+html, body, .stApp {
+  background-color: var(--bg-page);
+}
+
+/* Chat bubbles */
+.user-bubble {
+  background: var(--brand-blue);
+  color: white;
+  border-radius: 16px 16px 4px 16px;
+  padding: 10px 14px;
+  max-width: 75%;
+  margin-left: auto;
+  margin-bottom: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.assistant-bubble {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-radius: 16px 16px 16px 4px;
+  padding: 10px 14px;
+  max-width: 75%;
+  margin-bottom: 8px;
+  border: 1px solid var(--border-color);
+  font-size: 15px;
+  line-height: 1.6;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+/* Source tag */
+.source-tag {
+  display: inline-block;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-radius: 6px;
+  padding: 2px 10px;
+  font-size: 12px;
+  margin: 2px 4px 2px 0;
+  border: 1px solid #bfdbfe;
+}
+
+/* Category chips */
+.category-chip {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-block;
+  margin: 4px;
+  transition: all 0.2s;
+}
+
+.category-chip:hover {
+  background: var(--brand-blue);
+  color: white;
+  border-color: var(--brand-blue);
+}
+
+.category-chip.active {
+  background: var(--brand-blue);
+  color: white;
+  border-color: var(--brand-blue);
+}
+
+/* Question type badges */
+.badge-param_query  { background: var(--badge-param);  color: var(--badge-param-text);  border-radius: 20px; padding: 2px 12px; font-size: 11px; font-weight: 600; display: inline-block; margin-bottom: 6px; }
+.badge-compatibility { background: var(--badge-comp);   color: var(--badge-comp-text);   border-radius: 20px; padding: 2px 12px; font-size: 11px; font-weight: 600; display: inline-block; margin-bottom: 6px; }
+.badge-troubleshooting { background: var(--badge-trouble); color: var(--badge-trouble-text); border-radius: 20px; padding: 2px 12px; font-size: 11px; font-weight: 600; display: inline-block; margin-bottom: 6px; }
+.badge-howto { background: var(--badge-howto); color: var(--badge-howto-text); border-radius: 20px; padding: 2px 12px; font-size: 11px; font-weight: 600; display: inline-block; margin-bottom: 6px; }
+.badge-transfer { background: var(--badge-transfer); color: var(--badge-transfer-text); border-radius: 20px; padding: 2px 12px; font-size: 11px; font-weight: 600; display: inline-block; margin-bottom: 6px; }
+.badge-general { background: #f3f4f6; color: #374151; border-radius: 20px; padding: 2px 12px; font-size: 11px; font-weight: 600; display: inline-block; margin-bottom: 6px; }
+
+/* Email section */
+.email-section {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 8px 0;
+}
+
+/* Sidebar styles */
+[data-testid="stSidebar"] {
+  background-color: #f1f5f9;
+  border-right: 1px solid var(--border-color);
+}
+
+/* Button overrides */
+.stButton > button {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+/* Expander styling */
+.streamlit-expanderHeader {
+  border-radius: 8px;
+  font-size: 13px;
+}

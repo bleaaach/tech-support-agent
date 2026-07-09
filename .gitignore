@@ -1,0 +1,93 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual envs
+.venv/
+venv/
+env/
+env.bak/
+venv.bak/
+
+# Distribution
+build/
+dist/
+*.whl
+
+# Logs
+*.log
+logs/
+pip.log
+agent.err
+agent.log
+fastapi_run.log
+fastapi_stderr.log
+fastapi_stdout.log
+streamlit_stderr.log
+streamlit_stdout.log
+probe*.log
+ret_probe*.log
+start.log
+
+# Environment (secrets)
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+.cursor/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Data (large generated artifacts)
+data/index.json
+data/*.pkl
+data/*.bin
+data/*.npz
+
+# Qdrant local storage (if mounted)
+.qdrant_storage/
+.qdrant-initialized
+
+# Qdrant Windows binary (large, not source)
+tools/qdrant/qdrant.exe
+tools/qdrant/qdrant.zip
+tools/qdrant/*.exe
+tools/qdrant/*.zip
+
+# Snapshots / runtime artifacts
+snapshots/
+storage/
+
+# Temporary scripts
+_*.py
+*_tmp.py
+*_check*.py
+
+# Test artifacts
+tests/__pycache__/
+tests/_*.py
+tests/*_tmp.py
+
+# Coverage
+.coverage
+htmlcov/
+.tox/
+
+# Profiling
+*.prof
+*.lprof
