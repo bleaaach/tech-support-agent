@@ -2,15 +2,15 @@
 import time
 import logging
 import os
-from typing import Protocol, Iterator
+from typing import Protocol, Iterator, List, Optional
 
 logger = logging.getLogger(__name__)
 
 
 class EmbeddingModel(Protocol):
     """Embedding 模型接口"""
-    def embed(self, texts: list[str]) -> list[list[float]]: ...
-    def embed_batch(self, texts: list[str], batch_size: int = 32) -> Iterator[list[float]]: ...
+    def embed(self, texts: List[str]) -> List[List[float]]: ...
+    def embed_batch(self, texts: List[str], batch_size: int = 32) -> Iterator[List[float]]: ...
 
 
 class LocalBGEM3Embedder:
@@ -26,7 +26,7 @@ class LocalBGEM3Embedder:
         self.dim = self.model.get_sentence_embedding_dimension()
         logger.info(f"Model loaded. dim={self.dim}, max_seq={self.model.max_seq_length}")
 
-    def embed(self, texts: list[str]) -> list[list[float]]:
+    def embed(self, texts: List[str]) -> List[List[float]]:
         if not texts:
             return []
         vecs = self.model.encode(
@@ -38,7 +38,7 @@ class LocalBGEM3Embedder:
         )
         return vecs.tolist()
 
-    def embed_batch(self, texts: list[str], batch_size: int | None = None) -> Iterator[list[float]]:
+    def embed_batch(self, texts: List[str], batch_size: Optional[int] = None) -> Iterator[List[float]]:
         total = len(texts)
         bs = batch_size or self.batch_size
         for i in range(0, total, bs):
@@ -76,7 +76,7 @@ class OpenAIEmbedding:
         self.dim = dimensions
         self.model_name = model
 
-    def embed(self, texts: list[str]) -> list[list[float]]:
+    def embed(self, texts: List[str]) -> List[List[float]]:
         if not texts:
             return []
         response = self.client.embeddings.create(
@@ -86,7 +86,7 @@ class OpenAIEmbedding:
         )
         return [item.embedding for item in response.data]
 
-    def embed_batch(self, texts: list[str], batch_size: int | None = None) -> Iterator[list[float]]:
+    def embed_batch(self, texts: List[str], batch_size: Optional[int] = None) -> Iterator[List[float]]:
         total = len(texts)
         bs = batch_size or self.batch_size
         for i in range(0, total, bs):
@@ -128,7 +128,7 @@ class SiliconFlowEmbedding:
         self.dim = dimensions
         self.model_name = model
 
-    def embed(self, texts: list[str]) -> list[list[float]]:
+    def embed(self, texts: List[str]) -> List[List[float]]:
         if not texts:
             return []
         response = self.client.embeddings.create(
@@ -137,7 +137,7 @@ class SiliconFlowEmbedding:
         )
         return [item.embedding for item in response.data]
 
-    def embed_batch(self, texts: list[str], batch_size: int | None = None) -> Iterator[list[float]]:
+    def embed_batch(self, texts: List[str], batch_size: Optional[int] = None) -> Iterator[List[float]]:
         total = len(texts)
         bs = batch_size or self.batch_size
         for i in range(0, total, bs):

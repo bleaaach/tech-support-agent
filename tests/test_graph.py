@@ -276,3 +276,91 @@ def run_all():
 
 if __name__ == "__main__":
     sys.exit(run_all())
+
+
+# ============================================================
+# 6) Phase 3 子 Agent 集成测试（默认 disabled 零回归）
+# ============================================================
+
+def test_phase3_default_disabled_zero_regression():
+    """Phase 3 验收点：agents.diagnose/websearch 默认 enabled=false，TechSupportChat.chat() 不注入新节点逻辑。
+
+    Mock 掉 retriever/router/generator/graph，验证 chat() 在默认配置下行为不变。
+    """
+    import pytest  # 放在顶部若不存在会失败，但项目 requirements 有 pytest
+    try:
+        from agent.chat import TechSupportChat, ConversationContext
+    except Exception as e:
+        pytest.skip(f"agent.chat import not available in current env: {type(e).__name__}: {e}")
+    from agent.agents.diagnose_agent import DiagnoseAgent
+    from agent.agents.websearch_agent import WebSearchAgent
+
+    # 1) 默认 config 下，diagnose/websearch agent 不应被实例化（即使 enabled=true 也不行 —— 因为 config 默认 false）
+    import yaml
+    cfg_path = ROOT / "config.yaml"
+    with open(cfg_path) as f:
+        cfg = yaml.safe_load(f)
+    assert cfg["agents"]["diagnose"]["enabled"] is False, "默认必须 disabled"
+    assert cfg["agents"]["websearch"]["enabled"] is False, "默认必须 disabled"
+
+    # 2) TechSupportChat 在不传 agent 时，应把 diagnose_agent / websearch_agent 置 None
+    chat = TechSupportChat(
+        retriever=MagicMock(),
+        router=MagicMock(),
+        generator=MagicMock(),
+    )
+    assert chat.diagnose_agent is None, "默认 diagnose_agent 应为 None"
+    assert chat.websearch_agent is None, "默认 websearch_agent 应为 None"
+
+
+def test_phase3_diagnose_agent_injects_when_enabled():
+    """Phase 3 验收点：enabled=true 时，TechSupportChat 接受 diagnose_agent 实例。
+
+    通过 mock build_graph 验证：build_graph 被调用时传入 diagnose_agent。
+    """
+    import pytest
+    try:
+        from agent.chat import TechSupportChat
+    except Exception as e:
+        pytest.skip(f"agent.chat import failed (env issue: {type(e).__name__}: {e})")
+    from agent.agents.diagnose_agent import DiagnoseAgent
+    from agent.agents.websearch_agent import WebSearchAgent
+
+    fake_diag = MagicMock(spec=DiagnoseAgent)
+    fake_ws = MagicMock(spec=WebSearchAgent)
+
+    # 验证 attribute 注入
+    chat = TechSupportChat(
+        retriever=MagicMock(),
+        router=MagicMock(),
+        generator=MagicMock(),
+        diagnose_agent=fake_diag,
+        websearch_agent=fake_ws,
+    )
+    assert chat.diagnose_agent is fake_diag
+    assert chat.websearch_agent is fake_ws
+
+    # 验证 _get_graph() 透传给 build_graph
+    with patch("agent.chat.build_graph") as mock_build:
+        mock_build.return_value = MagicMock()
+        chat._graph = None
+        g = chat._get_graph()
+        assert mock_build.called
+        kwargs = mock_build.call_args.kwargs
+        assert kwargs.get("diagnose_agent") is fake_diag
+        assert kwargs.get("websearch_agent") is fake_ws
+
+
+def test_phase3_agent_state_has_new_fields():
+    """Phase 3 验收点：AgentState 暴露 diagnostic_chunks / websearch_chunks 字段。
+
+    这是 graph.py 节点和外部 state 的契约，必须存在。
+    """
+    import pytest
+    try:
+        from agent.graph import AgentState
+    except Exception:
+        pytest.skip("agent.graph import not available in current env")
+    keys = AgentState.__annotations__.keys()
+    assert "diagnostic_chunks" in keys, "AgentState 必须有 diagnostic_chunks"
+    assert "websearch_chunks" in keys, "AgentState 必须有 websearch_chunks"

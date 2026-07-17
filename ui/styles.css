@@ -1,5 +1,4 @@
-/* Seeed Tech Support Agent - Custom Styles */
-
+/* ==================== LIGHT MODE (only) ==================== */
 :root {
   --brand-blue: #1a56db;
   --brand-blue-dark: #1e40af;
@@ -18,6 +17,10 @@
   --badge-howto-text: #065f46;
   --badge-transfer: #fee2e2;
   --badge-transfer-text: #991b1b;
+  --user-bubble-bg: #1a56db;
+  --user-bubble-text: #ffffff;
+  --asst-bubble-bg: #ffffff;
+  --asst-bubble-text: #1f2937;
 }
 
 html, body, .stApp {
@@ -26,8 +29,8 @@ html, body, .stApp {
 
 /* Chat bubbles */
 .user-bubble {
-  background: var(--brand-blue);
-  color: white;
+  background: var(--user-bubble-bg);
+  color: var(--user-bubble-text);
   border-radius: 16px 16px 4px 16px;
   padding: 10px 14px;
   max-width: 75%;
@@ -38,8 +41,8 @@ html, body, .stApp {
 }
 
 .assistant-bubble {
-  background: var(--bg-card);
-  color: var(--text-primary);
+  background: var(--asst-bubble-bg);
+  color: var(--asst-bubble-text);
   border-radius: 16px 16px 16px 4px;
   padding: 10px 14px;
   max-width: 75%;
@@ -73,6 +76,7 @@ html, body, .stApp {
   display: inline-block;
   margin: 4px;
   transition: all 0.2s;
+  color: var(--text-primary);
 }
 
 .category-chip:hover {

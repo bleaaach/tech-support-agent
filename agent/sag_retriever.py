@@ -16,6 +16,7 @@ SAG 默认端口:    4173 (HTTP API)
 - hybrid 模式：与 Qdrant 并联，chat.py 用 RRF 融合两边结果
 - replace 模式：彻底替换 Qdrant（暂不推荐）
 """
+from __future__ import annotations
 import json
 import logging
 import os
@@ -69,6 +70,7 @@ class SAGRetriever:
         self.timeout = timeout
         self.enabled = enabled
         self._session = requests.Session()
+        self._source_ids: list[str] | None = None
 
     @classmethod
     def from_config(cls) -> "SAGRetriever":
@@ -83,6 +85,60 @@ class SAGRetriever:
             timeout=sag.get("timeout", 30),
             enabled=sag.get("enabled", True),
         )
+
+    # ---- UUID 解析 ----
+
+    def _resolve_source_ids(self) -> list[str]:
+        """把 project_id（可能是名称或 UUID）解析为 UUID 列表。
+
+        SAG API 要求 sourceIds 为 UUID。先用 GET /api/sources 列出所有 source，
+        再匹配 project_id（优先匹配 id，其次匹配 name）。
+        """
+        if self._source_ids is not None:
+            return self._source_ids
+
+        try:
+            r = self._session.get(f"{self.base_url}/api/sources", timeout=10)
+            r.raise_for_status()
+            resp = r.json()
+            # API 返回 {"sources": [...]} 或直接 [...]
+            if isinstance(resp, dict) and "sources" in resp:
+                sources = resp["sources"]
+            elif isinstance(resp, list):
+                sources = resp
+            else:
+                sources = []
+        except Exception as e:
+            logger.warning(f"Failed to fetch SAG sources: {e}")
+            self._source_ids = []
+            return []
+
+        if not isinstance(sources, list):
+            logger.warning(f"Unexpected SAG /api/sources response: {sources}")
+            self._source_ids = []
+            return []
+
+        matched = []
+        for s in sources:
+            sid = s.get("id", "")
+            sname = s.get("name", "")
+            # 匹配 id 或 name
+            if sid == self.project_id or sname == self.project_id:
+                matched.append(sid)
+
+        if not matched:
+            logger.warning(
+                f"No SAG source matched project_id='{self.project_id}'. "
+                f"Available sources: {[(x.get('id'), x.get('name')) for x in sources]}"
+            )
+            # 如果 project_id 本身是 UUID 格式，直接用它
+            import re
+            if re.match(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", self.project_id, re.I):
+                matched = [self.project_id]
+
+        self._source_ids = matched
+        logger.debug(f"SAG source IDs resolved: {self._source_ids}")
+        return self._source_ids
 
     # ---- 健康检查 ----
 
@@ -116,9 +172,15 @@ class SAGRetriever:
         if category_filter:
             logger.debug(f"SAG does not support category filter (got '{category_filter}'), proceeding")
 
+        # SAG API 要求 sourceIds 为 UUID 数组，先解析 sourceId
+        source_uuids = self._resolve_source_ids()
+        if not source_uuids:
+            logger.warning("No valid SAG source IDs found, returning empty")
+            return []
+
         payload = {
             "query": query,
-            "sourceIds": [self.project_id],
+            "sourceIds": source_uuids,
             "strategy": self.strategy,
             "searchMode": self.search_mode,
             "topK": self.top_k,
@@ -142,7 +204,8 @@ class SAGRetriever:
             return []
 
         latency_ms = int((time.time() - t0) * 1000)
-        results = data.get("results", [])
+        # SAG API 返回 {"sections": [...]}（新版）或 {"results": [...]}（旧版）
+        results = data.get("sections") or data.get("results") or []
         logger.info(f"SAG search: q='{query[:40]}', hits={len(results)}, latency={latency_ms}ms")
 
         chunks: list[RetrievedChunk] = []
@@ -192,8 +255,12 @@ class SAGRetriever:
         if not self.enabled:
             return {"ok": False, "error": "SAG disabled"}
 
+        # 解析 sourceId 为 UUID
+        source_uuids = self._resolve_source_ids()
+        source_id = source_uuids[0] if source_uuids else self.project_id
+
         payload = {
-            "sourceId": source_id or self.project_id,
+            "sourceId": source_id,
             "title": title,
             "content": content,
             "extract": extract,
@@ -215,34 +282,42 @@ class SAGRetriever:
     def _hit_to_chunk(self, hit: dict) -> RetrievedChunk:
         """把 SAG 返回的 hit 转成 RetrievedChunk。
 
-        SAG hit 字段（基于 README 示例）：
-        - id / eventId:     事件 id
-        - content / text:   event 文本（即完整事实链）
-        - title:            来源文档标题
-        - sourceUrl / url:  来源链接
-        - score / relevance:相关度分数
-        - entities:         关联实体列表（可选）
-        - imageUrls:        图片链接列表（可选）
-        - resourceUrls:     资源链接列表（可选）
+        SAG sections 格式（当前版本 /api/search）：
+        - chunkId:       chunk UUID
+        - documentId:    文档 UUID（用于构建 wiki URL）
+        - heading:       章节标题
+        - content:       chunk 文本
+        - score:         相关度分数
+        - sourceId:      来源 UUID
 
-        不同 SAG 版本字段名可能略有差异，做容错处理。
+        兼容旧版 /results 格式（event-based）。
         """
+        # sections 格式（当前）
         text = hit.get("content") or hit.get("text") or hit.get("event_text") or ""
-        title = hit.get("title") or hit.get("sourceTitle") or ""
-        url = hit.get("sourceUrl") or hit.get("url") or hit.get("wikiUrl") or ""
-        score = float(hit.get("score") or hit.get("relevance") or 0.0)
-        doc_id = str(hit.get("eventId") or hit.get("id") or hit.get("chunkId") or "")
+        heading = hit.get("heading") or ""
+        doc_id = str(hit.get("chunkId") or hit.get("eventId") or hit.get("id") or hit.get("documentId") or "")
 
-        # SAG 暂未标准返回图片/资源链接字段，留空避免误判
+        # 尝试从 documentId 构建 wiki URL（通过搜索文档获取路径）
+        # 暂时用 documentId 作为 doc_id
+        document_id = str(hit.get("documentId") or doc_id)
+
+        # title = heading（sections 格式） 或 sourceTitle（旧格式）
+        title = hit.get("heading") or hit.get("title") or hit.get("sourceTitle") or ""
+
+        score = float(hit.get("score") or hit.get("relevance") or 0.0)
+
+        # wiki_url: SAG 不直接返回 URL，尝试从 metadata 构建
+        wiki_url = hit.get("sourceUrl") or hit.get("url") or hit.get("wikiUrl") or ""
+
         image_urls = hit.get("imageUrls") or hit.get("image_urls") or []
         resource_urls = hit.get("resourceUrls") or hit.get("resource_urls") or []
 
         return RetrievedChunk(
             chunk_text=text,
             title=title,
-            wiki_url=url,
+            wiki_url=wiki_url,
             category="sag",
-            doc_id=doc_id,
+            doc_id=document_id,
             score=score,
             image_urls=image_urls,
             resource_urls=resource_urls,

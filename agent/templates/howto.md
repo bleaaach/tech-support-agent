@@ -1,6 +1,57 @@
-**Seeed Studio Technical Support - How-To Guide**
+{% if lang == 'zh' %}您好{% if customer_name %} {{ customer_name }}{% endif %}，
 
-Hi{% if customer_name %} {{ customer_name }},{% else %} Dear,{% endif %}
+感谢您联系 Seeed Studio。以下是您所需操作的分步说明：
+
+---
+
+## 您的问题
+
+{{ question }}
+
+---
+
+## 分步操作指南
+
+{{ answer }}
+
+{% if sources %}
+## 参考文档
+{% for source in sources %}
+- [{{ source.title }}]({{ source.url }})
+{% endfor %}
+{% endif %}
+
+{% if image_urls %}
+## 相关示意图
+{% for url in image_urls[:3] %}
+- {{ url }}
+{% endfor %}
+{% endif %}
+
+{% if resource_urls %}
+## 相关下载
+{% for url in resource_urls[:3] %}
+- {{ url }}
+{% endfor %}
+{% endif %}
+
+## 操作前注意事项
+
+- 在刷机或连接外设之前，请确保设备已**完全断电**
+- 请使用产品随附的**原装电源适配器**
+- 如果某一步失败，请先记录终端输出（或截图）再重试，以便我们快速排查问题
+
+如需最新教程，欢迎访问 Seeed Wiki：https://wiki.seeedstudio.com/
+
+---
+
+如有任何不清楚的地方或遇到意外错误，请直接回复此邮件，我们将尽快为您解答。
+
+此致
+Seeed Studio 技术支持团队
+------------------------------------------------------------------
+我们的工作时间为：周一至周五 9:00 AM - 6:00 PM GMT+8
+关注我们：[LinkedIn](https://www.linkedin.com/company/seeed-studio/) | [Twitter/X](https://twitter.com/seeedstudio) | [YouTube](https://www.youtube.com/c/SeeedStudioOfficial) | [Facebook](https://www.facebook.com/SeeedStudio){% else %}Hi{% if customer_name %} {{ customer_name }}{% endif %},
 
 Thank you for contacting Seeed Studio. Please find the step-by-step instructions for your request below.
 
@@ -10,13 +61,14 @@ Thank you for contacting Seeed Studio. Please find the step-by-step instructions
 
 {{ question }}
 
+---
+
 ## Step-by-Step Instructions
 
 {{ answer }}
 
 {% if sources %}
 ## Reference Documentation
-
 {% for source in sources %}
 - [{{ source.title }}]({{ source.url }})
 {% endfor %}
@@ -24,7 +76,6 @@ Thank you for contacting Seeed Studio. Please find the step-by-step instructions
 
 {% if image_urls %}
 ## Reference Diagrams
-
 {% for url in image_urls[:3] %}
 - {{ url }}
 {% endfor %}
@@ -32,7 +83,6 @@ Thank you for contacting Seeed Studio. Please find the step-by-step instructions
 
 {% if resource_urls %}
 ## Related Downloads
-
 {% for url in resource_urls[:3] %}
 - {{ url }}
 {% endfor %}
@@ -53,6 +103,6 @@ If anything is unclear or you hit an unexpected error, just reply to this email 
 Best Regards!
 {{ agent_name | default('Seeed') }}
 Seeed Technical Support Team
-------------------------------
+------------------------------------------------------------------
 Our working hours are 9:00 AM - 6:00 PM GMT+8, Monday - Friday.
-Follow us on [LinkedIn](https://www.linkedin.com/company/seeed-studio/), [Twitter/X](https://twitter.com/seeedstudio), [YouTube](https://www.youtube.com/c/SeeedStudioOfficial) and [Facebook](https://www.facebook.com/SeeedStudio).
+Follow us on [LinkedIn](https://www.linkedin.com/company/seeed-studio/) | [Twitter/X](https://twitter.com/seeedstudio) | [YouTube](https://www.youtube.com/c/SeeedStudioOfficial) | [Facebook](https://www.facebook.com/SeeedStudio){% endif %}

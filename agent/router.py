@@ -1,4 +1,5 @@
 """问题分类路由器"""
+from __future__ import annotations
 import json
 import logging
 from enum import Enum
@@ -60,10 +61,13 @@ class QuestionRouter:
                 base_url=dc.get("base_url", "https://api.deepseek.com/v1"),
             )
         oc = cfg["openai"]
+        import os
+        model = oc.get("llm_model") or os.environ.get("OPENAI_LLM_MODEL", "qwen3.7-plus")
+        base_url = oc.get("base_url") or os.environ.get("OPENAI_BASE_URL")
         return cls(
             api_key=oc.get("api_key", ""),
-            model=oc.get("llm_model", "glm-5.2"),
-            base_url=oc.get("base_url") or None,
+            model=model,
+            base_url=base_url,
         )
 
     def classify(self, question: str, history: str = "") -> QuestionType:

@@ -1,0 +1,133 @@
+# ================================================================
+# Seeed Tech Support + SAG 一键部署
+#
+# 启动: docker compose up -d
+# 查看日志: docker compose logs -f [service]
+# 停止: docker compose down
+# 重启: docker compose restart [service]
+#
+# 服务端口:
+#   6333  - Qdrant 向量数据库
+#   5432  - PostgreSQL (SAG)
+#   4173  - SAG API + Web UI
+#   8000  - Tech Support FastAPI
+#   8501  - Tech Support Streamlit
+# ================================================================
+
+services:
+  # ── 向量数据库 ─────────────────────────────────────────────────
+  qdrant:
+    image: docker.m.daocloud.io/qdrant/qdrant:v1.7.4
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:6333/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── SAG 向量增强检索服务 ────────────────────────────────────────
+  postgres:
+    image: docker.m.daocloud.io/pgvector/pgvector:pg16
+    container_name: sag_postgres
+    environment:
+      POSTGRES_DB: sag_lite
+      POSTGRES_USER: sag_lite
+      POSTGRES_PASSWORD: sag_lite_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - sag_pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sag_lite -d sag_lite"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  sag:
+    build:
+      context: ../SAG
+      dockerfile: ../SAG/Dockerfile
+    container_name: sag_api
+    ports:
+      - "4173:4173"
+    environment:
+      NODE_ENV: production
+      HTTP_HOST: 0.0.0.0
+      HTTP_PORT: 4173
+      DATABASE_URL: postgres://sag_lite:sag_lite_pass@sag_postgres:5432/sag_lite
+      DEFAULT_TENANT_ID: default
+      AUTH_MODE: none
+      EMBEDDING_DIMENSIONS: "1024"
+      EMBEDDING_MODEL: BAAI/bge-m3
+      EMBEDDING_API_KEY: ${EMBEDDING_API_KEY:-}
+      EMBEDDING_BASE_URL: https://api.siliconflow.cn/v1
+      LLM_MODEL: ${LLM_MODEL:-deepseek-v4-pro}
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://47.236.182.242/v1}
+      LLM_TIMEOUT_MS: "60000"
+      LLM_MAX_RETRIES: "2"
+      RERANK_MODEL: BAAI/bge-reranker-v2-m3
+      RERANK_BASE_URL: https://api.siliconflow.cn/v1/rerank
+      DEFAULT_SEARCH_MODE: fast
+      SAG_LOG_STDERR: "true"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4173/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ── Tech Support Agent ──────────────────────────────────────────
+  tech-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tech-agent
+    ports:
+      - "8000:8000"
+      - "8501:8501"
+    environment:
+      DATABASE_URL: not_needed
+      SAG_BASE_URL: http://sag:4173
+      SAG_ENABLED: "true"
+      SAG_PROJECT_ID: jetson_wiki
+      SAG_TOP_K: "8"
+      SAG_SEARCH_MODE: fast
+      SAG_STRATEGY: multi
+      SAG_QDRANT_WEIGHT: "0.4"
+      SAG_SAG_WEIGHT: "0.6"
+      QDRANT_HOST: qdrant
+      QDRANT_PORT: "6333"
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_LLM_MODEL: ${OPENAI_LLM_MODEL:-qwen3.7-plus}
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      qdrant:
+        condition: service_healthy
+      sag:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  qdrant_data:
+  sag_pgdata:

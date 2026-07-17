@@ -6,16 +6,10 @@ import time
 import uuid
 from datetime import datetime
 
-# Load custom CSS
-css_path = Path(__file__).parent / "styles.css"
-if css_path.exists():
-    css_content = css_path.read_text(encoding="utf-8")
-    st.markdown(f"<style>{css_content}</style>", unsafe_allow_html=True)
-
 # ---- Config ----
 API_BASE = "http://localhost:8000"
 
-# ---- Page Config ----
+# ---- Page Config (must be first Streamlit command) ----
 st.set_page_config(
     page_title="Seeed Tech Support",
     page_icon="🤖",
@@ -23,51 +17,41 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ---- Custom CSS ----
+# Load custom CSS
+css_path = Path(__file__).parent / "styles.css"
+if css_path.exists():
+    css_content = css_path.read_text(encoding="utf-8")
+    st.markdown(f"<style>{css_content}</style>", unsafe_allow_html=True)
+
+# ---- Custom CSS (light mode only) ----
 st.markdown("""
 <style>
-.stApp { background: #f8fafc; }
-.chat-bubble-user {
-    background: #1a56db; color: white; border-radius: 16px 16px 4px 16px;
-    padding: 12px 16px; margin: 6px 0; max-width: 75%;
-    margin-left: auto; font-size: 15px; line-height: 1.5;
+:root {
+    --user-bg: #1a56db;
+    --user-text: white;
+    --assistant-bg: white;
+    --assistant-text: #1f2937;
+    --bg-color: #f8fafc;
+    --sidebar-bg: transparent;
+    --border-color: #e5e7eb;
 }
-.chat-bubble-assistant {
-    background: white; color: #1f2937; border-radius: 16px 16px 16px 4px;
-    padding: 12px 16px; margin: 6px 0; max-width: 75%;
-    border: 1px solid #e5e7eb; font-size: 15px; line-height: 1.5;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
-.source-tag {
-    display: inline-block; background: #eff6ff; color: #1d4ed8;
-    border-radius: 6px; padding: 2px 10px; font-size: 12px;
-    margin: 2px 4px 2px 0; border: 1px solid #bfdbfe;
-}
-.stButton>button {
-    background: #1a56db; color: white; border: none; border-radius: 8px;
-    padding: 0.5rem 1.5rem; font-weight: 600;
-}
-.stButton>button:hover { background: #1e40af; }
-.question-type-badge {
-    display: inline-block; background: #f0fdf4; color: #15803d;
-    border: 1px solid #bbf7d0; border-radius: 20px;
-    padding: 2px 12px; font-size: 11px; font-weight: 600;
-    margin-bottom: 4px;
-}
-.email-section {
-    background: white; border: 1px solid #e5e7eb; border-radius: 12px;
-    padding: 20px; margin: 8px 0;
-}
-.category-chip {
-    background: #f8fafc; border: 1px solid #cbd5e1;
-    border-radius: 20px; padding: 4px 14px; font-size: 13px;
-    cursor: pointer; display: inline-block; margin: 4px;
-}
-.category-chip:hover, .category-chip.active {
-    background: #1a56db; color: white; border-color: #1a56db;
-}
+
+.stApp { background: var(--bg-color); }
 </style>
 """, unsafe_allow_html=True)
+
+st.markdown(
+    """
+    <script>
+        // Force Streamlit to stay in light mode regardless of OS/browser preference.
+        try {
+            localStorage.setItem('stTheme', 'light');
+        } catch (e) {}
+        document.documentElement.setAttribute('data-theme', 'light');
+    </script>
+    """,
+    unsafe_allow_html=True,
+)
 
 # ---- Session State ----
 if "session_id" not in st.session_state:
@@ -173,7 +157,7 @@ if prompt := st.chat_input("输入您的问题...", key="main_input"):
                         "session_id": st.session_state.session_id,
                         "category": st.session_state.category,
                     },
-                    timeout=60,
+                    timeout=180,  # SAG 工作流需要更长时间（包含 rewrite 循环）
                 )
                 resp.raise_for_status()
                 data = resp.json()

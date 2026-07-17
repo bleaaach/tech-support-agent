@@ -1,4 +1,5 @@
-"""LLM 回答生成器"""
+"""LLM answer generator"""
+from __future__ import annotations
 import json
 import logging
 import os
@@ -12,34 +13,72 @@ from .router import QuestionType
 
 logger = logging.getLogger(__name__)
 
-_SYSTEM_PROMPT = """你是一个专业的 Jetson 技术支持工程师。请根据检索到的文档内容，用专业、耐心、清晰的方式回答用户问题。
+_SYSTEM_PROMPT = """\
+You are a professional Jetson technical support engineer. Answer based ONLY on the provided documents.
 
-规则：
-1. 回答必须基于提供的文档内容，不要编造信息
-2. 如果检索到的内容不足以回答，请明确说明，并给出一般性建议
-3. 答案要清晰、有条理，优先使用表格和列表
-4. 涉及操作步骤时，使用编号列表
-5. 提及产品规格时，尽量引用 Wiki 原文
-6. 英文产品名/型号保持原样，不翻译
-7. 如果是故障排查，引导用户逐步排查，并询问关键信息（电源、网络、连接状态等）
+LANGUAGE RULE (MUST FOLLOW):
+- If the user's question contains ANY English words or sentences -> reply in ENGLISH only
+- If the user's question is entirely in Chinese -> reply in CHINESE only
+- All headings, body text, and closing sentences MUST match the question language
+- NEVER mix languages in a single reply
+- Example CORRECT: English question -> English answer (all English)
+- Example WRONG: English question -> Chinese answer (NEVER do this)
+
+Email body format:
+- Write only the email body, go straight to the point (greeting is in the template)
+- Do NOT write "Dear XXX" or "Thank you for contacting..." (template handles it)
+- Do NOT write "Best regards" etc. at the end (template handles it)
+- Keep concise, professional CS style
+
+Troubleshooting questions:
+- Briefly explain possible cause
+- Give 2-4 key troubleshooting steps
+- Ask for diagnostic info (logs, command output)
+- List once, do not repeat
+
+Device model follow-up:
+- If user does NOT mention a specific device model (e.g. reComputer J4012, A206, R301, etc.)
+  -> Add this line BEFORE the template closing signature:
+    English: "Could you please let us know your device model and product name? (e.g. reComputer J4012, A206, R301, etc.)"
+    Chinese: "请问您使用的是哪款设备？（例如：reComputer J4012、A206、R301 等）"
+- If user already provided the device model, no need to ask
 """
 
-# Few-shot 样例懒加载
-_FEW_SHOT_DATA: dict[str, list[dict]] | None = None
-_FEW_SHOT_MAX_CHARS_PER_SAMPLE = 200  # 每条样例 answer 截断到 200 字以内 (控制 token 数)
+
+def detect_language(text: str, question: str = "") -> str:
+    """Detect language from text, returns 'zh' or 'en'.
+
+    STRICT RULE: Always use the QUESTION language, never the answer language.
+    Reason: LLM generation may occasionally ignore the system prompt language rule,
+    but the question's original language is the ground truth for what the user expects.
+    Heuristic: zh-char ratio > 15% => Chinese, else English.
+    """
+    # Priority: question language > text language
+    # (text is LLM answer which may be wrong language, question is ground truth)
+    for src in [question, text]:
+        if not src:
+            continue
+        zh_chars = sum(1 for c in src if "\u4e00" <= c <= "\u9fff")
+        total = len(src)
+        if total == 0:
+            continue
+        if zh_chars / total > 0.15:
+            return "zh"
+    return "en"
 
 
-def _get_few_shot_data() -> dict[str, list[dict]]:
-    """懒加载 data/few_shot_examples.json (按 qtype 分组)"""
+_FEW_SHOT_DATA = None
+_FEW_SHOT_MAX_CHARS_PER_SAMPLE = 200
+
+
+def get_few_shot_data():
     global _FEW_SHOT_DATA
     if _FEW_SHOT_DATA is not None:
         return _FEW_SHOT_DATA
-    # 项目根目录 = agent/ 的上一级
     project_root = Path(__file__).parent.parent
     fs_path = project_root / "data" / "few_shot_examples.json"
     if not fs_path.exists():
-        log_msg = f"Few-shot file not found: {fs_path}, skipping few-shot injection"
-        logger.warning(log_msg)
+        logger.warning(f"Few-shot file not found: {fs_path}")
         _FEW_SHOT_DATA = {}
         return _FEW_SHOT_DATA
     try:
@@ -52,102 +91,85 @@ def _get_few_shot_data() -> dict[str, list[dict]]:
     return _FEW_SHOT_DATA
 
 
-def _build_few_shot_block(qtype: QuestionType, n: int = 3) -> str:
-    """根据 qtype 构造 few-shot 提示块。
-
-    - 每类最多取 n 条
-    - 每条样例 answer 截断到 _FEW_SHOT_MAX_CHARS_PER_SAMPLE 字以内
-    - 若样例不存在 (空 dict)，返回空串
-    """
-    data = _get_few_shot_data()
+def build_few_shot_block(qtype, n=3):
+    data = get_few_shot_data()
     if not data:
         return ""
     items = data.get(qtype.value, [])[:n]
     if not items:
         return ""
-    blocks = ["=== 历史工单参考样例 (仅参考风格与结构，不要直接复制) ==="]
+    blocks = ["=== Historical ticket examples (style/structure reference only, do not copy) ==="]
     for i, item in enumerate(items, 1):
         question = item.get("question", "").strip()
         answer = item.get("answer", "").strip()
         if len(answer) > _FEW_SHOT_MAX_CHARS_PER_SAMPLE:
             answer = answer[:_FEW_SHOT_MAX_CHARS_PER_SAMPLE].rstrip() + "..."
         blocks.append(
-            f"\n--- 示例 {i} ---\n"
-            f"客户问题：{question}\n"
-            f"历史回复：{answer}\n"
+            f"\n--- Example {i} ---\n"
+            f"Customer question: {question}\n"
+            f"Historical reply: {answer}\n"
         )
-    blocks.append("=== 样例结束 ===\n")
+    blocks.append("=== End of examples ===\n")
     return "\n".join(blocks)
 
 
-def _build_context(chunks: list[RetrievedChunk]) -> str:
+def build_context(chunks):
     if not chunks:
-        return "（未检索到相关文档）"
+        return "（No relevant documents retrieved）"
     lines = []
     for i, c in enumerate(chunks, 1):
-        lines.append(f"--- 文档 {i} ---")
-        lines.append(f"标题：{c.title}")
-        lines.append(f"分类：{c.category}")
-        lines.append(f"来源：{c.wiki_url}")
+        lines.append(f"--- Document {i} ---")
+        lines.append(f"Title: {c.title}")
+        lines.append(f"Category: {c.category}")
+        lines.append(f"Source: {c.wiki_url}")
         if c.image_urls:
-            lines.append(f"相关图片：{', '.join(c.image_urls[:3])}")
+            lines.append(f"Related images: {', '.join(c.image_urls[:3])}")
         if c.resource_urls:
-            lines.append(f"相关资源：{', '.join(c.resource_urls[:3])}")
-        lines.append(f"内容：{c.chunk_text}")
+            lines.append(f"Related resources: {', '.join(c.resource_urls[:3])}")
+        lines.append(f"Content: {c.chunk_text}")
         lines.append("")
     return "\n".join(lines)
 
 
-def _build_user_message(
-    question: str,
-    history: str,
-    qtype: QuestionType,
-    context: str,
-    historical_replies: list[RetrievedChunk] | None = None,
-) -> str:
+def build_user_message(
+    question, history, qtype, context, historical_replies=None
+):
     type_hints = {
-        QuestionType.PARAM_QUERY: "这是参数查询类问题，请优先列出具体参数，格式清晰。",
-        QuestionType.COMPATIBILITY: "这是兼容性问题，请重点说明兼容的具体型号/版本/条件。",
-        QuestionType.TROUBLESHOOTING: "这是故障排查类问题，请引导用户逐步排查，询问关键状态信息。",
-        QuestionType.HOWTO: "这是操作指引类问题，请给出清晰的分步骤说明。",
-        QuestionType.TRANSFER: "这是需要转接的问题，请礼貌说明转至相应部门。",
-        QuestionType.GENERAL: "请给出专业、友好的回答。",
+        QuestionType.PARAM_QUERY: "This is a parameter query. Please list specific parameters clearly.",
+        QuestionType.COMPATIBILITY: "This is a compatibility question. Focus on specific models/versions/conditions.",
+        QuestionType.TROUBLESHOOTING: "This is troubleshooting. Guide user step-by-step, ask for key status info.",
+        QuestionType.HOWTO: "This is a how-to question. Give clear step-by-step instructions.",
+        QuestionType.TRANSFER: "This needs transfer. Politely redirect to the right department.",
+        QuestionType.GENERAL: "Give a professional, friendly answer.",
     }
     hint = type_hints.get(qtype, "")
 
     parts = []
     if history:
-        parts.append(f"=== 对话历史 ===\n{history}\n")
-    parts.append(f"=== 用户当前问题 ===\n{question}\n")
-    parts.append(f"=== 问题类型提示 ===\n{hint}\n")
+        parts.append(f"=== Conversation History ===\n{history}\n")
+    parts.append(f"=== Current User Question ===\n{question}\n")
+    parts.append(f"=== Question Type Hint ===\n{hint}\n")
 
-    # 注入 few-shot 样例
-    few_shot = _build_few_shot_block(qtype, n=3)
+    few_shot = build_few_shot_block(qtype, n=3)
     if few_shot:
         parts.append(few_shot)
 
-    # 注入历史相似回复 (RAG-2)
     if historical_replies:
-        parts.append("=== 检索到的历史相似回复 (仅参考风格与信息) ===")
+        parts.append("=== Retrieved similar historical replies (style/info reference only) ===")
         for j, h in enumerate(historical_replies, 1):
             txt = h.chunk_text.strip()
             if len(txt) > 400:
                 txt = txt[:400].rstrip() + "..."
-            parts.append(f"\n--- 历史回复 {j} (相似度={h.score:.3f}, 工单={h.doc_id}) ---\n{txt}\n")
-        parts.append("=== 历史回复结束 ===\n")
+            parts.append(f"\n--- Historical reply {j} (similarity={h.score:.3f}, ticket={h.doc_id}) ---\n{txt}\n")
+        parts.append("=== End of historical replies ===\n")
 
-    parts.append(f"=== 检索到的文档 ===\n{context}")
+    parts.append(f"=== Retrieved Documents ===\n{context}")
     return "\n".join(parts)
 
 
 class AnswerGenerator:
-    def __init__(
-        self,
-        api_key: str = "",
-        model: str = "deepseek-chat",
-        temperature: float = 0.3,
-        base_url: str | None = None,
-    ):
+    def __init__(self, api_key: str = "", model: str = "deepseek-chat",
+                 temperature: float = 0.3, base_url: str | None = None):
         if not api_key:
             api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("OPENAI_API_KEY", "")
         self.client = OpenAI(api_key=api_key, base_url=base_url) if base_url else OpenAI(api_key=api_key)
@@ -155,7 +177,7 @@ class AnswerGenerator:
         self.temperature = temperature
 
     @classmethod
-    def from_config(cls) -> "AnswerGenerator":
+    def from_config(cls):
         from .config import get_config
         cfg = get_config()
         provider = cfg.get("provider", "openai").lower()
@@ -168,32 +190,21 @@ class AnswerGenerator:
                 base_url=dc.get("base_url", "https://api.deepseek.com/v1"),
             )
         oc = cfg["openai"]
+        import os as _os
+        model = oc.get("llm_model") or _os.environ.get("OPENAI_LLM_MODEL", "qwen3.7-plus")
+        base_url = oc.get("base_url") or _os.environ.get("OPENAI_BASE_URL")
         return cls(
             api_key=oc.get("api_key", ""),
-            model=oc.get("llm_model", "glm-5.2"),
+            model=model,
             temperature=oc.get("llm_temperature", 0.3),
-            base_url=oc.get("base_url") or None,
+            base_url=base_url,
         )
 
-    def generate(
-        self,
-        question: str,
-        chunks: list[RetrievedChunk],
-        history: str = "",
-        qtype: QuestionType = QuestionType.GENERAL,
-        historical_replies: list[RetrievedChunk] | None = None,
-    ) -> dict[str, Any]:
-        """生成回答，返回 dict 包含 answer + sources
-
-        Args:
-            question: 用户问题
-            chunks: wiki 文档检索结果 (RAG-1)
-            history: 对话历史
-            qtype: 问题分类
-            historical_replies: 历史相似回复 (RAG-2)，可选
-        """
-        context = _build_context(chunks)
-        user_msg = _build_user_message(question, history, qtype, context, historical_replies)
+    def generate(self, question, chunks, history="", qtype=None, historical_replies=None):
+        if qtype is None:
+            qtype = QuestionType.GENERAL
+        context = build_context(chunks)
+        user_msg = build_user_message(question, history, qtype, context, historical_replies)
 
         try:
             response = self.client.chat.completions.create(
@@ -208,7 +219,7 @@ class AnswerGenerator:
             answer = response.choices[0].message.content.strip()
         except Exception as e:
             logger.error(f"LLM generation failed: {e}")
-            answer = "抱歉，生成回答时遇到问题，请稍后重试。"
+            answer = "Sorry, generation failed. Please try again later."
 
         sources = [
             {"title": c.title, "url": c.wiki_url, "score": round(c.score, 3)}
@@ -221,4 +232,5 @@ class AnswerGenerator:
             "question_type": qtype.value,
             "image_urls": sum([c.image_urls for c in chunks], [])[:5],
             "resource_urls": sum([c.resource_urls for c in chunks], [])[:5],
+            "answer_language": detect_language(answer, question=question),
         }

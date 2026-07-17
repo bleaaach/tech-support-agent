@@ -1,4 +1,5 @@
 """Qdrant 检索器"""
+from __future__ import annotations
 import logging
 import os
 import re
@@ -31,6 +32,9 @@ _KEYWORD_SYNONYMS = {
     "schematic": "schematic PDF circuit diagram",
     "datasheet": "datasheet PDF specification",
     "dimension": "dimension drawing measurement",
+    "super": "reComputer Super J4012 J4011 J3011 J3010",  # 新增
+    "j4012": "J4012 reComputer Super Orin NX 16GB",  # 新增
+    "eth1": "eth1 second ethernet port network interface RJ45",  # 新增
 }
 
 
@@ -70,11 +74,23 @@ class QdrantRetriever:
         collection_name: str = "jetson_wiki",
         top_k: int = 5,
         min_score: float = 0.3,
-        historical_collection_name: str | None = None,
+        historical_collection_name: Optional[str] = None,
         historical_top_k: int = 3,
         historical_min_score: float = 0.50,
+        local_path: Optional[str] = None,
     ):
-        self.client = QdrantClient(host=host, port=port)
+        """支持两种模式：
+        - 远程模式 (默认): 连接 host:port 上的 Qdrant 服务
+        - 本地模式 (local_path 给出路径): 使用 qdrant_client 内置的 QdrantLocal，无需外部服务
+        """
+        if local_path:
+            from qdrant_client.local.qdrant_local import QdrantLocal
+            self._local_mode = True
+            self.client = QdrantLocal(location=local_path)
+            logger.info(f"QdrantRetriever using local mode: path={local_path}")
+        else:
+            self._local_mode = False
+            self.client = QdrantClient(host=host, port=port)
         self.collection_name = collection_name
         self.top_k = top_k
         self.min_score = min_score
@@ -87,6 +103,13 @@ class QdrantRetriever:
         cfg = get_config()
         qc = cfg["qdrant"]
         rc = cfg.get("retrieval", {})
+        # 支持环境变量强制启用本地模式（避免远程 Qdrant 依赖）
+        local_path = os.environ.get("QDRANT_LOCAL_PATH") or qc.get("local_path")
+        if not local_path and os.environ.get("QDRANT_FALLBACK_LOCAL") == "1":
+            default_path = str(Path(__file__).parent.parent / "data" / "qdrant_local")
+            Path(default_path).mkdir(parents=True, exist_ok=True)
+            local_path = default_path
+            logger.warning(f"QDRANT_FALLBACK_LOCAL=1, using local path: {local_path}")
         return cls(
             host=qc["host"],
             port=qc["port"],
@@ -96,9 +119,10 @@ class QdrantRetriever:
             historical_collection_name=qc.get("historical_replies_collection"),
             historical_top_k=rc.get("historical_top_k", 3),
             historical_min_score=rc.get("historical_min_score", 0.50),
+            local_path=local_path,
         )
 
-    def retrieve(self, query: str, category_filter: str | None = None) -> list[RetrievedChunk]:
+    def retrieve(self, query: str, category_filter: Optional[str] = None) -> List[RetrievedChunk]:
         """字符串查询 → 内部 embed → 向量检索。
         兼容两种调用：传 str（自动 embed）或传 list[float]（向量检索）。"""
         if isinstance(query, list):
@@ -109,6 +133,10 @@ class QdrantRetriever:
         if expanded_query != query:
             logger.info(f"Query expanded: '{query}' → '{expanded_query}'")
         try:
+            import sys
+            project_root = str(Path(__file__).parent.parent)
+            if project_root not in sys.path:
+                sys.path.insert(0, project_root)
             from pipeline.embedder import get_embedder
             from agent.config import get_config
             emb_cfg = get_config().get('embedding', {})
@@ -137,17 +165,16 @@ class QdrantRetriever:
             return []
         return self.retrieve_vector(query_vector, category_filter=category_filter)
 
-    def retrieve_vector(self, query_vector: list[float], category_filter: str | None = None) -> list[RetrievedChunk]:
+    def retrieve_vector(self, query_vector: List[float], category_filter: Optional[str] = None) -> List[RetrievedChunk]:
         """纯向量检索入口"""
         try:
-            response = self.client.query_points(
+            response = self.client.search(
                 collection_name=self.collection_name,
-                query=query_vector,
+                query_vector=query_vector,
                 limit=self.top_k,
-                with_payload=True,
                 score_threshold=self.min_score,
             )
-            results = response.points
+            results = response
         except Exception as e:
             logger.error(f"Qdrant search failed: {e}")
             return []
@@ -179,7 +206,7 @@ class QdrantRetriever:
         except Exception:
             return 0
 
-    def retrieve_historical(self, query_vector: list[float]) -> list[RetrievedChunk]:
+    def retrieve_historical(self, query_vector: List[float]) -> List[RetrievedChunk]:
         """检索历史相似回复 (RAG-2, 方向 B)。
 
         输入: query_vector (已经是 1024 维向量)
@@ -188,19 +215,18 @@ class QdrantRetriever:
         if not self.historical_collection_name:
             return []
         try:
-            response = self.client.query_points(
+            response = self.client.search(
                 collection_name=self.historical_collection_name,
-                query=query_vector,
+                query_vector=query_vector,
                 limit=self.historical_top_k,
-                with_payload=True,
                 score_threshold=self.historical_min_score,
             )
-            results = response.points
+            results = response
         except Exception as e:
             logger.error(f"Historical Qdrant search failed: {e}")
             return []
 
-        chunks: list[RetrievedChunk] = []
+        chunks: List[RetrievedChunk] = []
         for hit in results:
             payload = hit.payload or {}
             chunk = RetrievedChunk(

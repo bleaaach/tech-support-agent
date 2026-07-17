@@ -1,10 +1,12 @@
 """Agent 配置加载"""
+from __future__ import annotations
 import os
 from pathlib import Path
+from typing import Optional, Union
 import yaml
 
 
-def load_config(config_path: str | Path | None = None) -> dict:
+def load_config(config_path: Union[str, Path, None] = None) -> dict:
     if config_path is None:
         config_path = Path(__file__).parent.parent / "config.yaml"
     with open(config_path, "r", encoding="utf-8") as f:
@@ -22,7 +24,7 @@ def load_config(config_path: str | Path | None = None) -> dict:
     return _resolve(config)
 
 
-_config: dict | None = None
+_config: Optional[dict] = None
 
 
 def get_config() -> dict:

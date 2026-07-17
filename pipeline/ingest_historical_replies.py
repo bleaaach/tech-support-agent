@@ -30,7 +30,7 @@ logging.basicConfig(
 log = logging.getLogger(__name__)
 
 
-def _get_qdrant_cfg(cfg: dict) -> tuple[str, int, str, int]:
+def _get_qdrant_cfg(cfg: dict):
     qc = cfg["qdrant"]
     return (
         qc.get("host", "localhost"),
@@ -103,7 +103,7 @@ def _ensure_collection(client: QdrantClient, name: str, vector_size: int, recrea
         log.info(f"Creating collection: {name} (dim={vector_size})")
         client.create_collection(
             collection_name=name,
-            vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE),
+            vectors_config={"default": VectorParams(size=vector_size, distance=Distance.COSINE)},
         )
 
 
@@ -140,7 +140,7 @@ def ingest(
         log.info(f"  embedded {min(i + batch_size, len(replies))}/{len(replies)}")
 
     # 2) 入库
-    client = QdrantClient(host=host, port=port)
+        client = QdrantClient(host=host, port=port)
     _ensure_collection(client, collection, vector_size, recreate=recreate)
 
     points: list[PointStruct] = []

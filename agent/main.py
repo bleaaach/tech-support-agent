@@ -1,4 +1,5 @@
 """FastAPI Agent 服务"""
+from __future__ import annotations
 import os
 from pathlib import Path
 
@@ -13,15 +14,17 @@ if _dotenv_path.exists():
                 k, v = line.split("=", 1)
                 os.environ[k.strip()] = v.strip()
 
+import asyncio
 import uuid
 import logging
 from contextlib import asynccontextmanager
-from typing import Any
+from typing import Any, Optional, List, Dict
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
+from concurrent.futures import ThreadPoolExecutor
 
 from .chat import TechSupportChat, ConversationContext
 from .router import QuestionType
@@ -31,7 +34,8 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 log = logging.getLogger(__name__)
 
 # ---- 会话存储（生产环境换 Redis）----
-_sessions: dict[str, ConversationContext] = {}
+_sessions: Dict[str, ConversationContext] = {}
+_executor = ThreadPoolExecutor(max_workers=4, thread_name_prefix="agent-worker")
 
 # ---- 配置加载 ----
 _api_cfg: dict = {
@@ -47,7 +51,7 @@ except Exception:
     _cfg = {}
 
 
-def get_or_create_session(session_id: str | None, category: str = "") -> tuple[str, ConversationContext]:
+def get_or_create_session(session_id: Optional[str], category: str = "") -> tuple[str, ConversationContext]:
     if session_id and session_id in _sessions:
         ctx = _sessions[session_id]
         if category:
@@ -61,7 +65,7 @@ def get_or_create_session(session_id: str | None, category: str = "") -> tuple[s
 
 class ChatRequest(BaseModel):
     message: str
-    session_id: str | None = None
+    session_id: Optional[str] = None
     category: str = ""
     raw: bool = False  # True = 返回纯文本，不走邮件模板
 
@@ -69,10 +73,10 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     session_id: str
     answer: str
-    sources: list[dict]
+    sources: List[dict]
     question_type: str
-    image_urls: list[str]
-    resource_urls: list[str]
+    image_urls: List[str]
+    resource_urls: List[str]
     needs_followup: bool
     followup_hint: str
 
@@ -103,7 +107,7 @@ app.add_middleware(
 )
 
 # 懒加载 Agent
-_agent: TechSupportChat | None = None
+_agent: Optional[TechSupportChat] = None
 
 
 def get_agent() -> TechSupportChat:
@@ -111,6 +115,32 @@ def get_agent() -> TechSupportChat:
     if _agent is None:
         _agent = TechSupportChat()
     return _agent
+
+
+def _sync_chat(agent: TechSupportChat, ctx: ConversationContext, message: str, raw: bool) -> dict:
+    """同步 agent.chat() 包装，run_in_executor 需要可调用对象。"""
+    result = agent.chat(ctx, message)
+
+    if not raw:
+        from .router import QuestionType
+        qtype_str = result.get("question_type", "general")
+        try:
+            qtype = QuestionType(qtype_str)
+        except ValueError:
+            qtype = QuestionType.GENERAL
+        from .email_renderer import render_email
+        rendered = render_email(
+            question=message,
+            answer=result["answer"],
+            sources=result["sources"],
+            image_urls=result.get("image_urls", []),
+            resource_urls=result.get("resource_urls", []),
+            qtype=qtype,
+            answer_language=result.get("answer_language", "zh"),
+        )
+        result["answer"] = rendered
+
+    return result
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -133,23 +163,12 @@ async def chat(req: ChatRequest) -> ChatResponse:
     sid, ctx = get_or_create_session(req.session_id, req.category)
     agent = get_agent()
 
-    result = agent.chat(ctx, req.message)
-
-    if not req.raw:
-        qtype_str = result.get("question_type", "general")
-        try:
-            qtype = QuestionType(qtype_str)
-        except ValueError:
-            qtype = QuestionType.GENERAL
-        rendered = render_email(
-            question=req.message,
-            answer=result["answer"],
-            sources=result["sources"],
-            image_urls=result.get("image_urls", []),
-            resource_urls=result.get("resource_urls", []),
-            qtype=qtype,
-        )
-        result["answer"] = rendered
+    loop = asyncio.get_running_loop()
+    result = await loop.run_in_executor(
+        _executor,
+        _sync_chat,
+        agent, ctx, req.message, req.raw
+    )
 
     return ChatResponse(
         session_id=sid,
@@ -164,7 +183,7 @@ async def chat(req: ChatRequest) -> ChatResponse:
 
 
 @app.post("/history")
-async def get_history(req: HistoryRequest) -> dict[str, Any]:
+async def get_history(req: HistoryRequest) -> Dict[str, Any]:
     if req.session_id not in _sessions:
         raise HTTPException(status_code=404, detail="session not found")
     ctx = _sessions[req.session_id]
@@ -185,7 +204,7 @@ async def get_history(req: HistoryRequest) -> dict[str, Any]:
 
 
 @app.post("/reset")
-async def reset_session(req: HistoryRequest) -> dict[str, str]:
+async def reset_session(req: HistoryRequest) -> Dict[str, str]:
     if req.session_id in _sessions:
         del _sessions[req.session_id]
     return {"status": "ok", "message": f"Session {req.session_id} cleared"}

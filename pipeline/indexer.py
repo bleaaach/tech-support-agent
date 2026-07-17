@@ -1,6 +1,8 @@
 """Qdrant 向量入库 + index.json 输出"""
+from __future__ import annotations
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Any
 
@@ -49,8 +51,23 @@ class QdrantIndexer:
         port: int = 6333,
         collection_name: str = "jetson_wiki",
         vector_size: int = 1536,
+        local_path: str | None = None,
     ):
-        self.client = QdrantClient(host=host, port=port)
+        # 若未显式指定 local_path 但环境变量启用，则自动使用 data/qdrant_local/
+        if local_path is None and os.environ.get("QDRANT_FALLBACK_LOCAL") == "1":
+            from pathlib import Path
+            local_path = str(Path(__file__).parent.parent / "data" / "qdrant_local")
+            Path(local_path).mkdir(parents=True, exist_ok=True)
+            logger.warning(f"QDRANT_FALLBACK_LOCAL=1, indexer using local path: {local_path}")
+
+        if local_path:
+            from qdrant_client.local.qdrant_local import QdrantLocal
+            self.client = QdrantLocal(location=local_path)
+            self._local_mode = True
+            logger.info(f"QdrantIndexer using local mode: path={local_path}")
+        else:
+            self.client = QdrantClient(host=host, port=port)
+            self._local_mode = False
         self.collection_name = collection_name
         self.vector_size = vector_size
 
@@ -70,10 +87,10 @@ class QdrantIndexer:
     def _create_collection(self) -> None:
         self.client.create_collection(
             collection_name=self.collection_name,
-            vectors_config=VectorParams(
+            vectors_config={"default": VectorParams(
                 size=self.vector_size,
                 distance=Distance.COSINE,
-            ),
+            )},
         )
         logger.info(f"Created collection: {self.collection_name}")
 

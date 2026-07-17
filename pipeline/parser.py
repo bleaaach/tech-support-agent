@@ -1,4 +1,5 @@
 """Wiki 文档解析器 - 解析 MD/MDX 文件，提取 frontmatter + 正文 + 图片/链接"""
+from __future__ import annotations
 import re
 import html
 from pathlib import Path

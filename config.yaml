@@ -3,17 +3,17 @@
 # ========================
 
 # Wiki 文档路径（指向包含 Edge/NVIDIA_Jetson 的根目录，pipeline 会递归扫描子目录）
-wiki_docs_path: "D:/wiki-documents/sites/en/docs"
-jetson_docs_path: "D:/wiki-documents/sites/en/docs/Edge/NVIDIA_Jetson"
+wiki_docs_path: "/home/seeed/wiki-documents/sites/en/docs"
+jetson_docs_path: "/home/seeed/wiki-documents/sites/en/docs/Edge/NVIDIA_Jetson"
 
 # 数据输出路径
-output_dir: "D:/tech-support-agent/data"
-index_file: "D:/tech-support-agent/data/index.json"
+output_dir: "/home/seeed/tech-support-agent/data"
+index_file: "/home/seeed/tech-support-agent/data/index.json"
 
 # Qdrant 配置
 qdrant:
-  host: "localhost"
-  port: 6333
+  host: "${QDRANT_HOST:-localhost}"
+  port: ${QDRANT_PORT:-6333}
   collection_name: "jetson_wiki"
   historical_replies_collection: "zoho_historical"  # 历史 agent 回复 RAG (方向 B)
   vector_size: 1024  # BAAI/bge-m3 = 1024 维；OpenAI text-embedding-3-small = 1024 维（推荐）
@@ -46,39 +46,39 @@ deepseek:
 
 # Embedding 配置（独立 provider，跟 chat 无关）
 embedding:
-  provider: "siliconflow"    # "local" | "openai" | "siliconflow"  (硅基流动性价比最高)
+  provider: "siliconflow"    # "local" | "openai" | "siliconflow"  (硅基流动性价比最高，速度快)
   local_model: "BAAI/bge-m3"
-  local_batch_size: 16
+  local_batch_size: 8
   openai_model: "text-embedding-3-small"
   openai_dimensions: 1024
   siliconflow:
-    api_key: "${SILICONFLOW_API_KEY}"
+    api_key: "${SILICONFLOW_API_KEY:-}"
     model: "BAAI/bge-m3"
-    batch_size: 1000
+    batch_size: 64
 
 # 向量检索配置
 retrieval:
-  backend: "qdrant"          # "qdrant" | "sag" | "hybrid" (hybrid = Qdrant + SAG RRF 融合)
-  top_k: 10  # 增加 top_k 以获得更多候选结果
-  min_score: 0.30  # 降低阈值以捕获更多相关文档
+  backend: "qdrant"          # 当前使用 Qdrant（需要先同步 wiki 文档）
+  top_k: 10                   # 向量检索返回 Top-K 条 chunk
+  min_score: 0.30            # 适中的阈值
   enable_rerank: false
   # 历史相似回复检索配置 (方向 B: 历史 agent 回复 RAG)
-  historical_top_k: 3
-  historical_min_score: 0.50
+  historical_top_k: 2  # 减少历史回复数量
+  historical_min_score: 0.55  # 提高阈值，只要高质量的
   # hybrid 模式参数（仅 backend=hybrid 时生效）
   qdrant_weight: 0.4
   sag_weight: 0.6
   hybrid_top_n: 10
 
 # SAG 检索后端（可选，独立服务）
-# 部署见 docs/SAG_DEPLOY_AND_INTEGRATION.md
+# Docker 部署时通过 SAG_BASE_URL / SAG_ENABLED / SAG_PROJECT_ID 环境变量覆盖
 sag:
-  enabled: false             # 首次接入建议先设为 false，验证 SAG 后再切 true
-  base_url: "http://localhost:4173"
-  project_id: "jetson_wiki"
-  top_k: 8
-  search_mode: "fast"        # "fast" (无 LLM 抽实体) | "standard" (LLM 抽实体 + rerank)
-  strategy: "multi"          # "multi" (多跳) | "vector" (单跳)
+  enabled: ${SAG_ENABLED:-true}
+  base_url: "${SAG_BASE_URL:-http://localhost:4173}"
+  project_id: "${SAG_PROJECT_ID:-jetson_wiki}"
+  top_k: ${SAG_TOP_K:-8}
+  search_mode: "${SAG_SEARCH_MODE:-fast}"        # "fast" (无 LLM 抽实体) | "standard" (LLM 抽实体 + rerank)
+  strategy: "${SAG_STRATEGY:-multi}"          # "multi" (多跳) | "vector" (单跳)
   timeout: 30
 
 # 关键词扩展配置（检索前自动扩展同义词）
@@ -119,10 +119,37 @@ streamlit:
 
 # Agentic RAG Graph 配置 (Stage 2: LangGraph)
 graph:
-  max_rewrites: 2                 # 反思循环最大重写次数
-  reflection_threshold: 0.7       # 自评分数 ≥ 此值视为"文档够用"
+  max_rewrites: 1                 # 减少重写次数，加快速度
+  reflection_threshold: 0.6       # 降低阈值，更容易满足
   enable_query_rewrite: true      # 是否启用 query_rewrite 节点
   enable_reflection: true         # 是否启用 reflect 节点（关闭则退化为单次检索）
   enable_historical: true         # 是否按 qtype 条件触发历史回复检索
-  reflection_model: "${OPENAI_LLM_MODEL}"  # 改写/反思用模型（默认同 LLM）
-  reflection_max_tokens: 200      # 反思输出 token 上限（结构化 JSON）
+  reflection_model: "${OPENAI_LLM_MODEL:-qwen3.7-plus}"  # 改写/反思用模型（默认同 LLM）
+  reflection_max_tokens: 100      # 减少token上限
+  qdrant_weight: ${SAG_QDRANT_WEIGHT:-0.4}
+  sag_weight: ${SAG_SAG_WEIGHT:-0.6}
+  hybrid_top_n: 10
+
+# 子 Agent 配置（Phase 3，默认全部 disabled，零回归）
+# 启用方式：把对应 enabled 改为 true，并满足依赖（TAVILY_API_KEY 等）
+agents:
+  diagnose:
+    enabled: false                 # Phase 3 默认关闭；启用前必须先确保 data/error_codes.yaml 加载正确
+    trigger_qtypes: ["troubleshooting"]   # 仅对这些 qtype 触发
+    max_matched_docs: 3            # 同一错误码最多关联文档数
+    error_codes_db: "data/error_codes.yaml"   # 相对项目根目录
+  websearch:
+    enabled: false                 # Phase 3 默认关闭；启用需配置 TAVILY_API_KEY
+    provider: "tavily"             # 当前仅支持 tavily（DeepSeek web_search 经实测网关不支持）
+    max_results: 3
+    trigger_on_empty_wiki_chunks: true     # Wiki 没命中时兜底
+    trigger_on_reflect_score_below: 0.4    # 反思评分低时兜底
+    allowed_domains:
+      - "wiki.seeedstudio.com"
+      - "seeedstudio.com"
+      - "developer.nvidia.com"
+      - "forums.developer.nvidia.com"
+    tavily:
+      api_key: "${TAVILY_API_KEY}"        # 需用户单独申请
+      base_url: "https://api.tavily.com"
+      search_depth: "basic"

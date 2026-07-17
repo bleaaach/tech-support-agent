@@ -16,8 +16,9 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 from pathlib import Path
-from typing import Annotated, Any, TypedDict
+from typing import Any, Dict, List, Optional, Tuple, TypedDict, Union
 
 # .env 强制覆盖（与其他模块一致）
 _env_path = Path(__file__).parent.parent / ".env"
@@ -29,13 +30,22 @@ if _env_path.exists():
                 k, v = line.split("=", 1)
                 os.environ[k.strip()] = v.strip()
 
-from langgraph.graph import END, START, StateGraph
+try:
+    from langgraph.graph import END, START, StateGraph
+    LANGGRAPH_AVAILABLE = True
+except ImportError:
+    LANGGRAPH_AVAILABLE = False
+    END = START = None  # type: ignore
+    StateGraph = None   # type: ignore
 from openai import OpenAI
 
+from .agents.diagnose_agent import DiagnoseAgent
+from .agents.websearch_agent import WebSearchAgent
 from .config import get_config
 from .generator import AnswerGenerator
 from .retriever import QdrantRetriever, RetrievedChunk, _expand_query
 from .router import QuestionRouter, QuestionType
+from .sag_retriever import SAGRetriever, rrf_fuse
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +53,33 @@ logger = logging.getLogger(__name__)
 # ============================================================
 # 状态定义
 # ============================================================
+
+def _safe_init_agents(agents_cfg: dict) -> tuple:
+    """按 config 构造 DiagnoseAgent / WebSearchAgent 实例（异常时回退为 None）。
+
+    任何 agent 构造失败不应阻塞 graph 构建，仅记录 warning。
+    """
+    diagnose_agent = None
+    websearch_agent = None
+
+    diag_cfg = agents_cfg.get("diagnose", {}) or {}
+    if diag_cfg.get("enabled", False):
+        try:
+            diagnose_agent = DiagnoseAgent.from_config(diag_cfg)
+            logger.info(f"[graph] DiagnoseAgent enabled: trigger_qtypes={diagnose_agent.trigger_qtypes}")
+        except Exception as e:
+            logger.warning(f"[graph] DiagnoseAgent init failed, disabled: {e}")
+
+    ws_cfg = agents_cfg.get("websearch", {}) or {}
+    if ws_cfg.get("enabled", False):
+        try:
+            websearch_agent = WebSearchAgent.from_config(ws_cfg)
+            avail, reason = websearch_agent.available()
+            logger.info(f"[graph] WebSearchAgent enabled: available={avail}, reason={reason}")
+        except Exception as e:
+            logger.warning(f"[graph] WebSearchAgent init failed, disabled: {e}")
+
+    return diagnose_agent, websearch_agent
 
 def _merge_unique_chunks(existing: list[dict], new: list[RetrievedChunk]) -> list[dict]:
     """合并去重：按 doc_id+chunk_text 前 80 字符去重"""
@@ -73,18 +110,23 @@ class AgentState(TypedDict, total=False):
     history_text: str          # 来自 ConversationContext.history_text()
     category: str              # 来自 ctx.category
     # ----- 中间状态 -----
-    rewritten_queries: list[str]
+    rewritten_queries: List[str]
+    cited_urls: List[str]      # 用户消息中引用的 wiki URL（待 fetch）
+    cited_wiki_chunks: List[Dict]  # fetch 到的 wiki 内容，prepend 到 wiki_chunks
     question_type: str
-    wiki_chunks: list[dict]        # RetrievedChunk 序列化的 dict 列表
-    historical_chunks: list[dict]
+    wiki_chunks: List[Dict]        # RetrievedChunk 序列化的 dict 列表
+    historical_chunks: List[Dict]
+    # ----- Phase 3: 子 Agent 注入 -----
+    diagnostic_chunks: List[Dict]  # DiagnoseAgent 输出，最高优先级 prepend
+    websearch_chunks: List[Dict]   # WebSearchAgent 输出，refine 阶段注入
     reflection_score: float
     reflection_reason: str
     rewrite_iterations: int
     # ----- 输出 -----
     answer: str
-    sources: list[dict]
-    image_urls: list[str]
-    resource_urls: list[str]
+    sources: List[Dict]
+    image_urls: List[str]
+    resource_urls: List[str]
     needs_followup: bool
     followup_hint: str
     # ----- 错误/降级 -----
@@ -97,14 +139,15 @@ class AgentState(TypedDict, total=False):
 
 _REWRITE_PROMPT = """你是一个查询改写器。任务：
 1. 解析对话历史中的代词（"它"、"这个"、"上面那个"）→ 替换为具体对象
-2. 如果原问题已经清晰、无需改写，原样返回
-3. 仅当问题明显是多跳/复合查询（如"A 和 B 是否兼容"）时，拆成多个子问题
+2. **对于长问题（>100字符），提取核心关键词和产品型号，简化为1-2个短查询**
+3. 如果原问题已经清晰简短，原样返回
+4. 仅当问题明显是多跳/复合查询（如"A 和 B 是否兼容"）时，拆成多个子问题
 
-只返回一个 JSON 数组，元素是改写后的查询字符串（1-2 个）。
+只返回一个 JSON 数组，元素是改写后的查询字符串（1-2 个），每个查询不超过50字符。
 示例：
 - 输入："reComputer J401 功耗多少？" → ["reComputer J401 功耗"]
-- 输入："那它支持哪个 JetPack？" (历史: reComputer J401) → ["reComputer J401 支持哪个 JetPack 版本"]
-- 输入："A 能不能接 B？" → ["A 能不能接 B", "A 的接口规格", "B 的接口规格"]
+- 输入："那它支持哪个 JetPack？" (历史: reComputer J401) → ["reComputer J401 JetPack 版本"]
+- 输入："我在 J401 上安装 TechNexion 相机驱动后崩溃并出现乱码，移除 GMSL 板后正常，重新连接后再次崩溃。附图显示 GMSL 板上有芯片缺失。请确认板子是否正常并帮助调试？" → ["J401 TechNexion 相机驱动崩溃", "GMSL 板硬件故障排查"]
 
 对话历史：
 {history}
@@ -133,10 +176,94 @@ _REFLECT_PROMPT = """你是一个检索质量评估器。判断【检索到的�
 只返回 JSON："""
 
 
+# ============================================================
+# URL 提取（客户引用的 wiki 直接 fetch 补充上下文）
+# ============================================================
+
+_WIKI_URL_RE = re.compile(
+    r"https?://(?:wiki\.seeedstudio\.com|seeed\.studio\.com)[^\s<>\"']+",
+    re.IGNORECASE,
+)
+
+
+def _fetch_wiki_content(url: str, timeout: int = 15) -> Dict[str, str]:
+    """抓取 wiki 页面，返回 {title, content, chunk_text}，失败返回空 dict。"""
+    try:
+        import requests as _req
+        headers = {
+            "User-Agent": "Mozilla/5.0 (compatible; TechSupportAgent/1.0)",
+            "Accept": "text/html, application/xhtml+xml",
+        }
+        r = _req.get(url, headers=headers, timeout=timeout, allow_redirects=True)
+        if not r.ok:
+            return {}
+        html = r.text
+
+        # 用简单正则提取 <title> 和主要正文段落
+        title_match = re.search(r"<title[^>]*>([^<]+)</title>", html, re.IGNORECASE)
+        title = title_match.group(1).strip() if title_match else ""
+
+        # 去掉 nav/footer/script/style
+        html_clean = re.sub(r"(?is)<(script|style|nav|footer|header)[^>]*>.*?</\1>", "", html)
+        html_clean = re.sub(r"(?is)<!--.*?-->", "", html_clean)
+
+        # 提取正文段落
+        paragraphs = re.findall(r"(?is)<p[^>]*>(.*?)</p>", html_clean)
+        lines = []
+        for p in paragraphs:
+            text = re.sub(r"<[^>]+>", "", p).strip()
+            if len(text) > 30:
+                lines.append(text)
+
+        content = "\n".join(lines[:20])  # 最多 20 段
+        if len(content) < 100:
+            # 降级：取所有可见文本
+            texts = re.findall(r"(?is)<(?:div|span|td|li)[^>]*>(.*?)</(?:div|span|td|li)>", html_clean)
+            lines = [re.sub(r"<[^>]+>", "", t).strip() for t in texts if len(re.sub(r"<[^>]+>", "", t).strip()) > 30]
+            content = "\n".join(lines[:30])
+
+        return {
+            "title": title,
+            "content": content[:3000],  # 限制长度
+            "chunk_text": f"标题：{title}\n内容：{content[:2000]}",
+        }
+    except Exception as e:
+        logger.warning(f"Failed to fetch wiki URL {url}: {e}")
+        return {}
+
+
+def node_extract_urls(state: AgentState) -> dict:
+    """提取用户消息中的 wiki.seeedstudio.com URL 并抓取内容，注入 wiki_chunks。"""
+    text = state.get("user_message", "") + "\n" + (state.get("history_text", "") or "")
+    urls = list(dict.fromkeys(_WIKI_URL_RE.findall(text)))  # 去重保序
+    if not urls:
+        return {"cited_urls": []}
+
+    logger.info(f"[extract_urls] found {len(urls)} URLs: {urls}")
+    fetched_chunks: list[dict] = []
+    for url in urls[:3]:  # 最多处理 3 个 URL
+        info = _fetch_wiki_content(url)
+        if info.get("chunk_text"):
+            fetched_chunks.append({
+                "chunk_text": info["chunk_text"],
+                "title": info.get("title", url.split("/")[-1]),
+                "wiki_url": url,
+                "category": "cited_wiki",
+                "doc_id": f"cited_{hash(url)}",
+                "score": 1.0,  # 用户明确引用，给最高分
+                "image_urls": [],
+                "resource_urls": [],
+            })
+
+    if not fetched_chunks:
+        return {"cited_urls": []}
+    return {"cited_urls": [u for u in urls[:3]], "cited_wiki_chunks": fetched_chunks}
+
+
 class _RewriteClient:
     """轻量 LLM 客户端，专门做改写和反思。temperature=0，max_tokens 小。"""
 
-    def __init__(self, model: str, api_key: str, base_url: str | None,
+    def __init__(self, model: str, api_key: str, base_url: Optional[str],
                  max_tokens: int = 200):
         self.model = model
         self.client = OpenAI(api_key=api_key, base_url=base_url) if base_url else OpenAI(api_key=api_key)
@@ -156,10 +283,13 @@ class _RewriteClient:
                 max_tokens=g.get("reflection_max_tokens", 200),
             )
         oc = cfg["openai"]
+        import os
+        model = g.get("reflection_model") or oc.get("llm_model") or os.environ.get("OPENAI_LLM_MODEL", "qwen3.7-plus")
+        base_url = oc.get("base_url") or os.environ.get("OPENAI_BASE_URL")
         return cls(
-            model=g.get("reflection_model") or oc.get("llm_model", "glm-5.2"),
+            model=model,
             api_key=oc.get("api_key", ""),
-            base_url=oc.get("base_url") or None,
+            base_url=base_url,
             max_tokens=g.get("reflection_max_tokens", 200),
         )
 
@@ -167,6 +297,14 @@ class _RewriteClient:
         """改写 query；失败时返回 [原 question]。"""
         if not question.strip():
             return [question]
+
+        # 如果问题过长（>150字符），先做简单截断作为fallback
+        fallback_query = question
+        if len(question) > 150:
+            # 提取前100字符作为基础查询
+            fallback_query = question[:100].strip()
+            logger.info(f"Long question detected ({len(question)} chars), fallback: '{fallback_query}...'")
+
         try:
             resp = self.client.chat.completions.create(
                 model=self.model,
@@ -181,15 +319,23 @@ class _RewriteClient:
                 max_tokens=self.max_tokens,
             )
             text = (resp.choices[0].message.content or "").strip()
+            # 去掉 markdown code fence（LLM 经常输出 ```json ... ``` 导致 json.loads 失败）
+            text = text.removeprefix("```json").removeprefix("```").removeprefix("`")
+            text = text.removeprefix("```").removeprefix("```json").strip()
+            # 处理 ```json ... ``` 或 ``` ... ``` 包裹
+            import re
+            text = re.sub(r"^```json\s*", "", text)
+            text = re.sub(r"^```\s*", "", text)
+            text = re.sub(r"\s*```$", "", text)
             queries = json.loads(text)
             if isinstance(queries, list) and queries:
                 # 兜底：确保所有元素都是 str 且非空
                 qs = [str(q).strip() for q in queries if str(q).strip()]
-                return qs[:2] if qs else [question]
-            return [question]
+                return qs[:2] if qs else [fallback_query]
+            return [fallback_query]
         except Exception as e:
-            logger.warning(f"query_rewrite failed, using original: {e}")
-            return [question]
+            logger.warning(f"query_rewrite failed, using fallback: {e}")
+            return [fallback_query]
 
     def reflect(self, question: str, qtype: str,
                 context_summary: str) -> tuple[float, str, bool]:
@@ -209,6 +355,13 @@ class _RewriteClient:
                 max_tokens=self.max_tokens,
             )
             text = (resp.choices[0].message.content or "").strip()
+            # 去掉 markdown code fence（LLM 经常输出 ```json ... ``` 导致 json.loads 失败）
+            text = text.removeprefix("```json").removeprefix("```").removeprefix("`")
+            text = text.removeprefix("```").removeprefix("```json").strip()
+            import re
+            text = re.sub(r"^```json\s*", "", text)
+            text = re.sub(r"^```\s*", "", text)
+            text = re.sub(r"\s*```$", "", text)
             data = json.loads(text)
             score = float(data.get("score", 0.5))
             score = max(0.0, min(1.0, score))
@@ -236,8 +389,11 @@ def _make_nodes(retriever: QdrantRetriever,
                 router: QuestionRouter,
                 generator: AnswerGenerator,
                 rewrite_client: _RewriteClient,
-                graph_cfg: dict):
-    """工厂：闭包绑定依赖，返回 6 个节点函数。"""
+                graph_cfg: dict,
+                sag_retriever: SAGRetriever | None = None,
+                diagnose_agent: DiagnoseAgent | None = None,
+                websearch_agent: WebSearchAgent | None = None):
+    """工厂：闭包绑定依赖，返回节点函数集合。"""
 
     cfg_max_rewrites = int(graph_cfg.get("max_rewrites", 2))
     cfg_threshold = float(graph_cfg.get("reflection_threshold", 0.7))
@@ -265,9 +421,9 @@ def _make_nodes(retriever: QdrantRetriever,
                 sf = emb_cfg.get("siliconflow", {})
                 _EMBEDDER = get_embedder(
                     provider=emb_provider,
-                    api_key=sf.get("api_key", "") or os.environ.get("SILICONFLOW_API_KEY", ""),
-                    model=sf.get("model", "BAAI/bge-m3"),
-                    batch_size=sf.get("batch_size", 1000),
+                    api_key=sf.get('api_key', '') or os.environ.get('SILICONFLOW_API_KEY', ''),
+                    model=sf.get('model', 'BAAI/bge-m3'),
+                    batch_size=sf.get('batch_size', 64),
                     dimensions=1024,
                 )
             else:
@@ -307,17 +463,72 @@ def _make_nodes(retriever: QdrantRetriever,
     def node_retrieve(state: AgentState) -> dict:
         queries = state.get("rewritten_queries") or [state["user_message"]]
         category = state.get("category") or None
-        merged: list[RetrievedChunk] = []
+        qdrant_chunks: list[RetrievedChunk] = []
+        sag_chunks: list[RetrievedChunk] = []
         try:
             for q in queries:
                 qv = _embed(q)
                 hits = retriever.retrieve_vector(qv, category_filter=category)
-                merged.extend(hits)
-            # 按 score 降序，截断到 top_k * 2 防止过大
-            merged.sort(key=lambda c: c.score, reverse=True)
-            merged = merged[: max(retriever.top_k * 2, 10)]
-            wiki_dicts: list[dict] = []
-            for c in merged:
+                qdrant_chunks.extend(hits)
+            qdrant_chunks.sort(key=lambda c: c.score, reverse=True)
+        except Exception as e:
+            logger.error(f"[retrieve/qdrant] failed: {e}")
+
+        # SAG hybrid（如果启用且可用）
+        if sag_retriever is not None and sag_retriever.enabled:
+            try:
+                for q in queries:
+                    hits = sag_retriever.retrieve(q, category_filter=category)
+                    sag_chunks.extend(hits)
+                sag_chunks.sort(key=lambda c: c.score, reverse=True)
+            except Exception as e:
+                logger.warning(f"[retrieve/sag] failed: {e}")
+
+        # RRF 融合或降级
+        if sag_chunks:
+            qdrant_w = float(graph_cfg.get("qdrant_weight", 0.4))
+            sag_w = float(graph_cfg.get("sag_weight", 0.6))
+            top_n = int(graph_cfg.get("hybrid_top_n", 10))
+            fused = rrf_fuse([qdrant_chunks, sag_chunks], weights=[qdrant_w, sag_w], top_n=top_n)
+            logger.info(f"[retrieve] RRF fused: {len(qdrant_chunks)} Qdrant + {len(sag_chunks)} SAG -> {len(fused)}")
+            merged_chunks = fused
+        else:
+            merged_chunks = qdrant_chunks[: max(retriever.top_k * 2, 10)]
+            logger.info(f"[retrieve] Qdrant only: {len(merged_chunks)} chunks")
+
+        # prepend 诊断 chunks（Phase 3，diagnose_agent 启用时）
+        diag = state.get("diagnostic_chunks", [])
+        if diag:
+            logger.info(f"[retrieve] prepending {len(diag)} diagnostic chunks")
+            merged_chunks = list(diag) + merged_chunks
+
+        # prepend 客户引用的 wiki 内容（来自 node_extract_urls，优先级最高）
+        cited = state.get("cited_wiki_chunks", [])
+        if cited:
+            logger.info(f"[retrieve] prepending {len(cited)} cited wiki chunks")
+            merged_chunks = cited + merged_chunks
+
+        # append websearch 兜底 chunks（Phase 3，websearch_agent 启用时；score 较低，排在最后）
+        ws_chunks = state.get("websearch_chunks", [])
+        if ws_chunks:
+            logger.info(f"[retrieve] appending {len(ws_chunks)} websearch chunks")
+            merged_chunks = merged_chunks + list(ws_chunks)
+
+        wiki_dicts: list[dict] = []
+        for c in merged_chunks:
+            # 支持 dict（cited_wiki_chunks）和 RetrievedChunk（Qdrant/SAG 结果）两种格式
+            if isinstance(c, dict):
+                wiki_dicts.append({
+                    "chunk_text": c.get("chunk_text", ""),
+                    "title": c.get("title", ""),
+                    "wiki_url": c.get("wiki_url", ""),
+                    "category": c.get("category", ""),
+                    "doc_id": c.get("doc_id", ""),
+                    "score": float(c.get("score", 0.0)),
+                    "image_urls": c.get("image_urls", []),
+                    "resource_urls": c.get("resource_urls", []),
+                })
+            else:
                 wiki_dicts.append({
                     "chunk_text": c.chunk_text,
                     "title": c.title,
@@ -328,12 +539,8 @@ def _make_nodes(retriever: QdrantRetriever,
                     "image_urls": c.image_urls,
                     "resource_urls": c.resource_urls,
                 })
-            logger.info(f"[retrieve] {len(wiki_dicts)} chunks from {len(queries)} queries")
-            return {"wiki_chunks": wiki_dicts}
-        except Exception as e:
-            logger.error(f"[retrieve] failed: {e}")
-            return {"wiki_chunks": [], "fallback_reason": f"retrieve_failed: {e}"}
-
+        return {"wiki_chunks": wiki_dicts}
+    
     # ---------- 节点 4: retrieve_historical ----------
     def node_retrieve_historical(state: AgentState) -> dict:
         if not cfg_enable_historical:
@@ -426,9 +633,78 @@ def _make_nodes(retriever: QdrantRetriever,
             "followup_hint": _FOLLOWUP_HINTS[0] if needs_followup else "",
         }
 
+    # ---------- 节点 7: diagnose (Phase 3 子 Agent) ----------
+    def node_diagnose(state: AgentState) -> dict:
+        """DiagnoseAgent：从用户消息识别错误码，注入 diagnostic_chunks。
+
+        仅当 diagnose_agent 已初始化（enabled=true 且构造成功）时生效。
+        否则返回空 dict（不影响主流程）。
+        """
+        if diagnose_agent is None:
+            return {"diagnostic_chunks": []}
+        out = diagnose_agent.run(
+            state["user_message"],
+            qtype=state.get("question_type", "general"),
+        )
+        if out.matched_error_codes:
+            codes_str = ", ".join(m.code for m in out.matched_error_codes)
+            logger.info(f"[diagnose] matched codes: {codes_str}")
+        return {
+            "diagnostic_chunks": out.diagnostic_chunks,
+            "fallback_reason": state.get("fallback_reason", "") or out.fallback_reason,
+        }
+
+    # ---------- 节点 8: websearch (Phase 3 子 Agent) ----------
+    def node_websearch(state: AgentState) -> dict:
+        """WebSearchAgent：wiki_chunks 为空或 reflection_score 低时，调 Tavily 兜底。
+
+        仅当 websearch_agent 已初始化（enabled=true 且构造成功）时生效。
+        否则返回空 dict。
+        """
+        if websearch_agent is None:
+            return {"websearch_chunks": []}
+        wiki_chunks = state.get("wiki_chunks", [])
+        reflect_score = state.get("reflection_score")
+        should_run, reason = websearch_agent.should_trigger(
+            wiki_chunks=wiki_chunks,
+            reflect_score=reflect_score,
+        )
+        if not should_run:
+            logger.info(f"[websearch] skip: {reason}")
+            return {"websearch_chunks": []}
+        queries = state.get("rewritten_queries") or [state["user_message"]]
+        query = queries[0]
+        ws_out = websearch_agent.run(query)
+        if ws_out.websearch_chunks:
+            logger.info(
+                f"[websearch] injected {len(ws_out.websearch_chunks)} chunks "
+                f"(provider={ws_out.provider_used}, latency={ws_out.search_latency_ms}ms)"
+            )
+        else:
+            logger.info(f"[websearch] no chunks: {ws_out.fallback_reason}")
+        return {"websearch_chunks": ws_out.websearch_chunks}
+
     # ---------- 条件边 ----------
     def route_after_classify(state: AgentState) -> str:
-        """classify 后：所有路径都进 retrieve，retrieve 之后历史分支由 retrieve 内部判断。"""
+        """classify 后：若 diagnose_agent 已启用且 qtype 命中 trigger → diagnose，否则 → retrieve。
+
+        diagnose 默认 disabled（diagnose_agent is None），直接走 retrieve（保持原行为）。
+        """
+        if diagnose_agent is not None:
+            try:
+                qtype = QuestionType(state.get("question_type", "general"))
+                if qtype.value in diagnose_agent.trigger_qtypes:
+                    return "diagnose"
+            except (ValueError, AttributeError):
+                pass
+        return "retrieve"
+
+    def route_after_diagnose(state: AgentState) -> str:
+        """diagnose 后：若有诊断 chunks，跳过 retrieve 直接 reflect；否则继续 retrieve。"""
+        diag_chunks = state.get("diagnostic_chunks", [])
+        if diag_chunks:
+            logger.info(f"[diagnose→reflect] {len(diag_chunks)} chunks, skip retrieve")
+            return "reflect"
         return "retrieve"
 
     def route_after_retrieve(state: AgentState) -> str:
@@ -443,17 +719,43 @@ def _make_nodes(retriever: QdrantRetriever,
             qtype = QuestionType.GENERAL
         return "retrieve_historical" if qtype in _HISTORICAL_QTYPES else "reflect"
 
+    def route_after_historical(state: AgentState) -> str:
+        """historical 后：决定是否走 websearch 兜底。
+
+        websearch 默认 disabled（websearch_agent is None），直接 reflect。
+        启用后：wiki_chunks 空 OR reflect_score 低 → websearch，否则直接 reflect。
+        """
+        if websearch_agent is None:
+            return "reflect"
+        wiki_chunks = state.get("wiki_chunks", [])
+        reflect_score = state.get("reflection_score")
+        should_run, reason = websearch_agent.should_trigger(
+            wiki_chunks=wiki_chunks,
+            reflect_score=reflect_score,
+        )
+        return "websearch" if should_run else "reflect"
+
+    def route_after_websearch(state: AgentState) -> str:
+        """websearch 后：合并 websearch_chunks 到 wiki_chunks，再进 reflect。"""
+        ws_chunks = state.get("websearch_chunks", [])
+        if ws_chunks:
+            logger.info(f"[websearch→reflect] {len(ws_chunks)} chunks added to wiki_chunks")
+        return "reflect"  # 合并由 wiki_chunks 读取时统一处理
+
     def route_after_reflect(state: AgentState) -> str:
         """reflect 后：score 够 OR 已达 max_rewrites → generate；否则 → query_rewrite。"""
         if not cfg_enable_reflect:
             return "generate"
         score = float(state.get("reflection_score", 0.0))
         iterations = int(state.get("rewrite_iterations", 0))
-        if score >= cfg_threshold:
-            return "generate"
+        # 先检查迭代次数（防止无限循环）
         if iterations >= cfg_max_rewrites:
             logger.info(f"[reflect→generate] max_rewrites={iterations} reached, force generate")
             return "generate"
+        if score >= cfg_threshold:
+            return "generate"
+        # 只有在 iterations < max_rewrites 且 score < threshold 时才重写
+        logger.info(f"[reflect→rewrite] score={score:.2f} < threshold={cfg_threshold}, iteration={iterations+1}/{cfg_max_rewrites}")
         return "query_rewrite"
 
     return {
@@ -463,8 +765,13 @@ def _make_nodes(retriever: QdrantRetriever,
         "node_retrieve_historical": node_retrieve_historical,
         "node_reflect": node_reflect,
         "node_generate": node_generate,
+        "node_diagnose": node_diagnose,
+        "node_websearch": node_websearch,
         "route_after_classify": route_after_classify,
+        "route_after_diagnose": route_after_diagnose,
         "route_after_retrieve": route_after_retrieve,
+        "route_after_historical": route_after_historical,
+        "route_after_websearch": route_after_websearch,
         "route_after_reflect": route_after_reflect,
     }
 
@@ -479,32 +786,87 @@ _compiled_graph = None
 def build_graph(retriever: QdrantRetriever | None = None,
                 router: QuestionRouter | None = None,
                 generator: AnswerGenerator | None = None,
-                rewrite_client: _RewriteClient | None = None):
+                rewrite_client: _RewriteClient | None = None,
+                sag_retriever: SAGRetriever | None = None,
+                diagnose_agent: DiagnoseAgent | None = None,
+                websearch_agent: WebSearchAgent | None = None):
     """构造并编译 LangGraph。返回 compiled graph（可调用 .invoke()）。"""
     cfg = get_config().get("graph", {})
     retriever = retriever or QdrantRetriever.from_config()
     router = router or QuestionRouter.from_config()
     generator = generator or AnswerGenerator.from_config()
     rewrite_client = rewrite_client or _RewriteClient.from_config()
+    # SAG: 按配置决定是否启用，优先从 config 读取（允许独立禁用）
+    if sag_retriever is None:
+        sag_cfg = get_config().get("sag", {})
+        if sag_cfg.get("enabled", False):
+            try:
+                sag_retriever = SAGRetriever.from_config()
+                if sag_retriever.health():
+                    logger.info(f"SAG hybrid enabled (base_url={sag_retriever.base_url}, "
+                                f"project={sag_retriever.project_id})")
+                else:
+                    logger.warning("SAG enabled but not reachable, disabling hybrid")
+                    sag_retriever = None
+            except Exception as e:
+                logger.warning(f"SAG init failed, disabling hybrid: {e}")
+                sag_retriever = None
 
-    nodes = _make_nodes(retriever, router, generator, rewrite_client, cfg)
+    # Phase 3 子 Agent：按 agents.*.enabled 决定是否启用（默认 disabled → None）
+    agents_cfg = get_config().get("agents", {})
+    if diagnose_agent is None:
+        diag_cfg = agents_cfg.get("diagnose", {}) or {}
+        if diag_cfg.get("enabled", False):
+            try:
+                diagnose_agent = DiagnoseAgent.from_config(diag_cfg)
+                logger.info(f"[build_graph] DiagnoseAgent enabled: trigger_qtypes={diagnose_agent.trigger_qtypes}")
+            except Exception as e:
+                logger.warning(f"[build_graph] DiagnoseAgent init failed, disabled: {e}")
+                diagnose_agent = None
+    if websearch_agent is None:
+        ws_cfg = agents_cfg.get("websearch", {}) or {}
+        if ws_cfg.get("enabled", False):
+            try:
+                websearch_agent = WebSearchAgent.from_config(ws_cfg)
+                avail, reason = websearch_agent.available()
+                logger.info(f"[build_graph] WebSearchAgent enabled: available={avail}, reason={reason}")
+            except Exception as e:
+                logger.warning(f"[build_graph] WebSearchAgent init failed, disabled: {e}")
+                websearch_agent = None
+
+    nodes = _make_nodes(retriever, router, generator, rewrite_client, cfg,
+                        sag_retriever, diagnose_agent, websearch_agent)
 
     g = StateGraph(AgentState)
     g.add_node("query_rewrite", nodes["node_query_rewrite"])
+    g.add_node("extract_urls", node_extract_urls)
     g.add_node("classify", nodes["node_classify"])
+    g.add_node("diagnose", nodes["node_diagnose"])
     g.add_node("retrieve", nodes["node_retrieve"])
     g.add_node("retrieve_historical", nodes["node_retrieve_historical"])
+    g.add_node("websearch", nodes["node_websearch"])
     g.add_node("reflect", nodes["node_reflect"])
     g.add_node("generate", nodes["node_generate"])
 
     g.add_edge(START, "query_rewrite")
-    g.add_edge("query_rewrite", "classify")
+    g.add_edge("query_rewrite", "extract_urls")
+    g.add_edge("extract_urls", "classify")
+    # classify → diagnose 或 retrieve（diagnose 默认 disabled → 永远 retrieve，零回归）
     g.add_conditional_edges("classify", nodes["route_after_classify"],
-                            {"retrieve": "retrieve"})
+                            {"diagnose": "diagnose", "retrieve": "retrieve"})
+    # diagnose → retrieve 或 reflect（命中错误码 → 跳过 retrieve）
+    g.add_conditional_edges("diagnose", nodes["route_after_diagnose"],
+                            {"retrieve": "retrieve", "reflect": "reflect"})
+    # retrieve → retrieve_historical 或 reflect
     g.add_conditional_edges("retrieve", nodes["route_after_retrieve"],
                             {"retrieve_historical": "retrieve_historical",
                              "reflect": "reflect"})
-    g.add_edge("retrieve_historical", "reflect")
+    # retrieve_historical → websearch 或 reflect（websearch 默认 disabled → 永远 reflect）
+    g.add_conditional_edges("retrieve_historical", nodes["route_after_historical"],
+                            {"websearch": "websearch", "reflect": "reflect"})
+    # websearch → reflect
+    g.add_edge("websearch", "reflect")
+    # reflect → generate 或 query_rewrite
     g.add_conditional_edges("reflect", nodes["route_after_reflect"],
                             {"generate": "generate",
                              "query_rewrite": "query_rewrite"})

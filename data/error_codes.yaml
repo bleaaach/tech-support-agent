@@ -1,0 +1,153 @@
+# Jetson 已知错误码 → Wiki 故障文档路径
+# 用于 DiagnoseAgent 自动识别用户日志中的错误码并路由到对应故障文档
+#
+# 维护规则：
+# 1. 按历史工单频次排序（高频在前）
+# 2. pattern 使用 Python re 模块正则，捕获组为错误码本身
+# 3. suggested_docs 为 Wiki 仓库相对路径，DiagnoseAgent 会用其 slug 在 Qdrant 中检索
+# 4. severity 仅用于日志聚合（critical=影响启动/数据丢失；warning=功能受限；info=信息提示）
+# 5. 新增错误码请同步追加单测 case 到 tests/test_diagnose_agent.py
+#
+# 最后更新：2026-07-13
+
+error_codes:
+  # ========== 启动/硬件类（critical）==========
+  - code: "MC_ERR"
+    pattern: "MC[_-]?ERR\\s+(?:0x[0-9a-fA-F]+|\\d+)"
+    description: "Memory Controller Error — 内存控制器硬件故障"
+    category: "hardware"
+    severity: "critical"
+    suggested_docs:
+      - "Edge/NVIDIA_Jetson/FAQs/How_to_Troubleshoot_Memory_Errors.md"
+      - "Edge/NVIDIA_Jetson/FAQs/Memory_Burn-in_Test.md"
+    troubleshooting_steps:
+      - "检查 dmesg 中 MC_ERR 出现的具体地址 0x..."
+      - "运行 sudo tegrastats 观察内存使用率"
+      - "用 memtester 对可疑地址做压力测试"
+      - "若多块板子复现同一地址 → 申请 RMA"
+
+  - code: "BOOTLOADER"
+    pattern: "(?:bootloader|RCM|tegraflash).*(?:fail|timeout|crc|error)"
+    description: "Bootloader / RCM 烧录/启动错误"
+    category: "boot"
+    severity: "critical"
+    suggested_docs:
+      - "Edge/NVIDIA_Jetson/FAQs/Bootloader_Brick_Recovery.md"
+      - "Edge/NVIDIA_Jetson/FAQs/Flash_Failure_Recovery.md"
+    troubleshooting_steps:
+      - "确认设备处于 Recovery 模式（lsusb 看到 NVIDIA Corp）"
+      - "重新烧录：sudo ./flash.sh <board> mmcblk0p1"
+      - "检查 USB 线缆与供电稳定性（>5V/3A 推荐）"
+      - "若 CRC 错：尝试完全擦除后再刷（--erase-all）"
+
+  - code: "FLASH"
+    pattern: "(?:flash|tegraflash|nvflash).*(?:fail|error|crc|timeout)"
+    description: "Flash 烧录失败"
+    category: "boot"
+    severity: "critical"
+    suggested_docs:
+      - "Edge/NVIDIA_Jetson/FAQs/Flash_Failure_Recovery.md"
+    troubleshooting_steps:
+      - "查看完整烧录日志定位具体失败阶段（生成 dtb / writing partitions）"
+      - "确保 Jetson 进入 Recovery 模式并被主机识别"
+      - "检查磁盘空间（>20GB 空闲）和 L4T 包完整性"
+
+  - code: "GPU_FAULT"
+    pattern: "(?:GPU\\s+(?:fault|hang)|nvrm_gpu.*err|tegra_gpu.*hang)"
+    description: "GPU 故障 / 挂起"
+    category: "hardware"
+    severity: "critical"
+    suggested_docs:
+      - "Edge/NVIDIA_Jetson/FAQs/GPU_Hang_Recovery.md"
+      - "Edge/NVIDIA_Jetson/FAQs/Power_Mode_Selection.md"
+    troubleshooting_steps:
+      - "运行 sudo tegrastats 观察 GPU 频率与温度"
+      - "检查 nvidia-smi 是否能识别 GPU"
+      - "尝试切换至低功耗模式：sudo nvpmodel -m 0"
+
+  # ========== 总线/外设类（warning）==========
+  - code: "TEGRA_XUSB"
+    pattern: "tegra[-_]?xusb.*(?:disconnect|fail|error|timeout)"
+    description: "USB 控制器 / xHCI 错误"
+    category: "peripheral"
+    severity: "warning"
+    suggested_docs:
+      - "Edge/NVIDIA_Jetson/FAQs/USB_Device_Not_Recognized.md"
+    troubleshooting_steps:
+      - "检查 USB 设备供电（>500mA 标准 USB）"
+      - "用 lsusb -t 查看设备拓扑"
+      - "拔插测试 + 更换 USB 线缆"
+      - "查看 dmesg 中的完整 xHCI 错误堆栈"
+
+  - code: "NVHOST"
+    pattern: "nvhost(?:_channel)?.*(?:err|fail|timeout|fault)"
+    description: "Host1x / NVHOST 引擎错误（GPU/VIC/ISP 驱动）"
+    category: "driver"
+    severity: "warning"
+    suggested_docs:
+      - "Edge/NVIDIA_Jetson/FAQs/NVHOST_Channel_Fault.md"
+    troubleshooting_steps:
+      - "运行 sudo cat /sys/kernel/debug/nvhost*/status"
+      - "重启 nvhost 服务或整机重启"
+      - "回滚最近一次 JetPack OTA 升级"
+
+  - code: "CAM_ERR_IOCTL"
+    pattern: "(?:CAM_ERR_IOCTL|(?:Camera|V4L2).*ioctl.*(?:fail|error))"
+    description: "Camera IOCTL 调用失败"
+    category: "peripheral"
+    severity: "warning"
+    suggested_docs:
+      - "Edge/NVIDIA_Jetson/FAQs/Camera_Initialization_Failed.md"
+      - "Edge/NVIDIA_Jetson/FAQs/MIPI_Camera_Troubleshooting.md"
+    troubleshooting_steps:
+      - "检查摄像头模组与板子的 FPC 排线连接方向"
+      - "用 v4l2-ctl --list-devices 验证节点是否注册"
+      - "确认 device tree 中摄像头 overlay 已正确启用"
+      - "检查 I2C 通信是否正常（i2cdetect -y -r <bus>）"
+
+  - code: "I2C"
+    pattern: "(?:i2c|tegra_i2c).*(?:timeout|nack|fail|error)"
+    description: "I2C 总线通信错误"
+    category: "peripheral"
+    severity: "warning"
+    suggested_docs:
+      - "Edge/NVIDIA_Jetson/FAQs/I2C_Bus_Troubleshooting.md"
+    troubleshooting_steps:
+      - "运行 i2cdetect -y -r <bus_number> 扫描从设备地址"
+      - "用示波器检查 SDA/SCL 波形（典型 100kHz / 400kHz）"
+      - "检查上拉电阻（通常 4.7kΩ）"
+      - "确认设备地址与 datasheet 一致"
+
+  # ========== 性能/调优类（info）==========
+  - code: "JETSON_CLOCKS"
+    pattern: "jetson_clocks.*(?:fail|denied|permission|error)"
+    description: "jetson_clocks 调频权限错误"
+    category: "performance"
+    severity: "info"
+    suggested_docs:
+      - "Edge/NVIDIA_Jetson/FAQs/jetson_clocks_Permission_Denied.md"
+      - "Edge/NVIDIA_Jetson/FAQs/Power_Mode_Selection.md"
+    troubleshooting_steps:
+      - "检查 nvpmodel 配置：sudo nvpmodel -q"
+      - "确认以 root 运行：sudo jetson_clocks"
+      - "设置风扇曲线：sudo jetson_clocks --fan"
+      - "持久化：sudo /usr/bin/jetson_clocks 在 /etc/rc.local 中"
+
+  - code: "ETH"
+    pattern: "(?:eth\\d.*(?:link.?down|no.?carrier)|eqos.*err|eqos.*timeout)"
+    description: "以太网链路 / 载波异常"
+    category: "network"
+    severity: "info"
+    suggested_docs:
+      - "Edge/NVIDIA_Jetson/FAQs/Ethernet_Not_Working.md"
+    troubleshooting_steps:
+      - "ethtool <iface> 检查 link status 与 speed"
+      - "检查网线与交换机端口（推荐 Cat5e 以上）"
+      - "sudo ifconfig <iface> down && sudo ifconfig <iface> up"
+      - "检查 dts 中 PHY 的 enable GPIO 与 reset GPIO 时序"
+
+# 全局配置
+diagnose_config:
+  case_sensitive: false        # 错误码匹配大小写不敏感
+  max_pattern_matches_per_code: 5   # 单个错误码最多匹配次数（避免日志刷屏）
+  min_chunk_text_length: 50    # 诊断 chunk_text 最小长度

@@ -11,7 +11,7 @@ import os
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, List, Dict, Optional
 
 # 确保环境变量已加载（.env 文件）
 # 使用 os.environ[...] = v 强制覆盖，避免 shell 中残留旧变量导致 .env 失效
@@ -24,9 +24,12 @@ if _env_path.exists():
                 k, v = line.split("=", 1)
                 os.environ[k.strip()] = v.strip()
 
+from .agents.diagnose_agent import DiagnoseAgent
+from .agents.websearch_agent import WebSearchAgent
 from .generator import AnswerGenerator
 from .retriever import QdrantRetriever, RetrievedChunk
 from .router import QuestionRouter, QuestionType
+from .sag_retriever import SAGRetriever
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +39,7 @@ class Message:
     role: str          # "user" | "assistant"
     content: str
     timestamp: str = ""
-    sources: list[dict] = field(default_factory=list)
+    sources: List[Dict] = field(default_factory=list)
     question_type: str = ""
 
     def __post_init__(self):
@@ -48,7 +51,7 @@ class Message:
 class ConversationContext:
     """单个会话的上下文"""
     session_id: str
-    messages: list[Message] = field(default_factory=list)
+    messages: List[Message] = field(default_factory=list)
     category: str = ""       # 当前选中的产品分类
     last_question_type: QuestionType = QuestionType.GENERAL
 
@@ -64,7 +67,7 @@ class ConversationContext:
     def add_user(self, content: str) -> None:
         self.messages.append(Message(role="user", content=content))
 
-    def add_assistant(self, content: str, sources: list[dict] = None, question_type: str = "") -> None:
+    def add_assistant(self, content: str, sources: Optional[List[Dict]] = None, question_type: str = "") -> None:
         self.messages.append(Message(
             role="assistant",
             content=content,
@@ -87,31 +90,70 @@ class TechSupportChat:
         retriever: QdrantRetriever | None = None,
         router: QuestionRouter | None = None,
         generator: AnswerGenerator | None = None,
-        embedder: Any = None,  # 保留参数位（向后兼容），graph 内部自己 embed
+        embedder: Any = None,
+        sag_retriever: SAGRetriever | None = None,
+        diagnose_agent: DiagnoseAgent | None = None,
+        websearch_agent: WebSearchAgent | None = None,
     ):
-        # 显式接受这些参数是为了让旧测试/调用方不报错；实际 graph 内部自行构造依赖
-        self.retriever = retriever
-        self.router = router
-        self.generator = generator
+        self.retriever = retriever if retriever is not None else QdrantRetriever.from_config()
+        self.router = router if router is not None else QuestionRouter.from_config()
+        self.generator = generator if generator is not None else AnswerGenerator.from_config()
+        self.sag_retriever = sag_retriever
         self.embedder = embedder
-        self._graph = None  # 懒加载
+        # Phase 3 子 Agent（按 agents.*.enabled 决定，None = disabled）
+        self.diagnose_agent = diagnose_agent
+        self.websearch_agent = websearch_agent
+        self._graph = None
 
     def _get_graph(self):
         if self._graph is None:
-            from .graph import build_graph
+            from .graph import build_graph, LANGGRAPH_AVAILABLE
+            if not LANGGRAPH_AVAILABLE:
+                raise RuntimeError("langgraph not installed, cannot use graph pipeline")
             self._graph = build_graph(
                 retriever=self.retriever,
                 router=self.router,
                 generator=self.generator,
+                sag_retriever=self.sag_retriever,
+                diagnose_agent=self.diagnose_agent,
+                websearch_agent=self.websearch_agent,
             )
         return self._graph
+
+    def _fallback_chat(self, ctx: ConversationContext, user_message: str) -> Dict[str, Any]:
+        """降级路径：不走 LangGraph，直接 retriever + generator（Qdrant + LLM）。"""
+        qtype = self.router.classify(user_message, ctx.history_text(last_n=6))
+        try:
+            hits = self.retriever.retrieve(user_message, category_filter=ctx.category or None)
+            qv = hits[: self.retriever.top_k]
+        except Exception:
+            qv = []
+        chunks = list(qv)
+        result = self.generator.generate(
+            question=user_message,
+            chunks=chunks,
+            history=ctx.history_text(last_n=6),
+            qtype=qtype,
+            historical_replies=[],
+        )
+        ctx.last_question_type = qtype
+        return {
+            "answer": result["answer"],
+            "sources": result["sources"],
+            "question_type": qtype.value,
+            "image_urls": result.get("image_urls", []),
+            "resource_urls": result.get("resource_urls", []),
+            "needs_followup": False,
+            "followup_hint": "",
+            "fallback_reason": "langgraph_unavailable",
+        }
 
     def chat(
         self,
         ctx: ConversationContext,
         user_message: str,
         embed_query: bool = True,  # 保留参数位（向后兼容）
-    ) -> dict[str, Any]:
+    ) -> Dict[str, Any]:
         """处理一条用户消息，返回 dict（保持与 Stage 1 兼容的字段集）。
 
         字段：
@@ -119,7 +161,19 @@ class TechSupportChat:
             needs_followup, followup_hint, fallback_reason (新增)
         """
         ctx.add_user(user_message)
-        graph = self._get_graph()
+        try:
+            graph = self._get_graph()
+        except RuntimeError as e:
+            if "langgraph" in str(e):
+                logger.warning(f"langgraph unavailable, using fallback: {e}")
+                result = self._fallback_chat(ctx, user_message)
+                ctx.add_assistant(
+                    content=result["answer"],
+                    sources=result["sources"],
+                    question_type=result["question_type"],
+                )
+                return result
+            raise
 
         initial_state = {
             "user_message": user_message,
