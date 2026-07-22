@@ -1,18 +1,27 @@
 # ================================================================
 # Seeed Tech Support + SAG 一键部署
 #
-# 启动: docker compose up -d
+# 测试环境: docker compose --env-file .env.testing up -d
+#           (或直接 docker compose up -d，已自动加载 .env.testing)
+# 生产环境: docker compose -f docker-compose.yml -f docker-compose.prod.yml \
+#             --env-file .env.production up -d
 # 查看日志: docker compose logs -f [service]
 # 停止: docker compose down
 # 重启: docker compose restart [service]
 #
-# 服务端口:
+# 服务端口（测试）:
 #   6333  - Qdrant 向量数据库
 #   5432  - PostgreSQL (SAG)
 #   4173  - SAG API + Web UI
 #   8000  - Tech Support FastAPI
 #   8501  - Tech Support Streamlit
+#
+# 生产端口见 docker-compose.prod.yml
 # ================================================================
+
+# .env.testing is committed; for prod use .env.production (gitignored).
+# Using `env_file` here makes plain `docker compose up -d` work for testing
+# without needing a symlink to .env.
 
 services:
   # ── 向量数据库 ─────────────────────────────────────────────────

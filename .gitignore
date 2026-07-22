@@ -40,6 +40,12 @@ start.log
 .env
 .env.*
 !.env.example
+!.env.testing
+!.env.production.template
+# Allowlisted: testing config + production template (real .env.production is gitignored)
+# Protect real secrets anyway as a belt-and-suspenders rule:
+.env.production
+.env.production.local
 
 # IDE
 .vscode/

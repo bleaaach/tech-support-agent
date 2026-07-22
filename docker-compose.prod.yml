@@ -1,0 +1,50 @@
+# ================================================================
+# 生产环境 docker compose
+# 启动: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+# 停止: docker compose -f docker-compose.yml -f docker-compose.prod.yml down
+# 查看: docker compose -f docker-compose.yml -f docker-compose.prod.yml ps
+#
+# 服务端口（与测试环境隔离）:
+#   16333 - Qdrant 向量数据库
+#   15432 - PostgreSQL (SAG)
+#   14173 - SAG API + Web UI
+#   18000 - Tech Support FastAPI
+#   18501 - Tech Support Streamlit
+# ================================================================
+
+services:
+  qdrant:
+    container_name: qdrant-prod
+    ports:
+      - "16333:6333"
+      - "16334:6334"
+    volumes:
+      - qdrant_data_prod:/qdrant/storage
+
+  postgres:
+    container_name: sag-postgres-prod
+    ports:
+      - "15432:5432"
+    volumes:
+      - sag_pgdata_prod:/var/lib/postgresql/data
+
+  sag:
+    container_name: sag-api-prod
+    ports:
+      - "14173:4173"
+    environment:
+      NODE_ENV: production
+      SAG_LOG_STDERR: "true"
+
+  tech-agent:
+    container_name: tech-agent-prod
+    ports:
+      - "18000:8000"
+      - "18501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./logs-prod:/app/logs
+
+volumes:
+  qdrant_data_prod:
+  sag_pgdata_prod:
