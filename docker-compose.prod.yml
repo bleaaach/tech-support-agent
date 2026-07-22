@@ -15,7 +15,7 @@
 services:
   qdrant:
     container_name: qdrant-prod
-    ports:
+    ports: !override
       - "16333:6333"
       - "16334:6334"
     volumes:
@@ -23,14 +23,14 @@ services:
 
   postgres:
     container_name: sag-postgres-prod
-    ports:
+    ports: !override
       - "15432:5432"
     volumes:
       - sag_pgdata_prod:/var/lib/postgresql/data
 
   sag:
     container_name: sag-api-prod
-    ports:
+    ports: !override
       - "14173:4173"
     environment:
       NODE_ENV: production
@@ -38,12 +38,19 @@ services:
 
   tech-agent:
     container_name: tech-agent-prod
-    ports:
+    ports: !override
       - "18000:8000"
       - "18501:8501"
+    environment:
+      # Override SAG host: prod uses sag-api-prod, not the base "sag" name
+      SAG_BASE_URL: http://sag-api-prod:4173
+      QDRANT_HOST: qdrant-prod
     volumes:
       - ./data:/app/data
       - ./logs-prod:/app/logs
+    depends_on:
+      sag:
+        condition: service_healthy
 
 volumes:
   qdrant_data_prod:

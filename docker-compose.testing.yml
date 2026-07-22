@@ -1,0 +1,39 @@
+# ================================================================
+# 测试环境 compose override（v2 规范）
+#
+# 用法:
+#   docker compose -p techagent-testing \
+#     -f docker-compose.yml -f docker-compose.testing.yml \
+#     --env-file .env.testing up -d
+#
+# 与生产套端口完全隔离：
+#   测试套: 26333/26334 (qdrant), 25432 (pg), 14174 (sag),
+#          28000 (FastAPI), 28501 (Streamlit)
+#   生产套: 6333-6334+16333-16334 / 5432+15432 / 4173+14173 / 8000+8501+18000+18501
+#
+# 使用 !override 把基底 ports 列表整体替换，避免和 prod merge 叠加冲突。
+# 数据/网络通过独立 project 名 (-p techagent-testing) 与生产完全隔离。
+# ================================================================
+
+services:
+  qdrant:
+    ports: !override
+      - "26333:6333"
+      - "26334:6334"
+
+  postgres:
+    ports: !override
+      - "25432:5432"
+
+  sag:
+    ports: !override
+      - "14174:4173"
+
+  tech-agent:
+    ports: !override
+      - "28000:8000"
+      - "28501:8501"
+
+networks:
+  default:
+    name: techagent-testing-net
