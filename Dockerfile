@@ -19,7 +19,8 @@ COPY . .
 EXPOSE 8000 8501
 
 # supervisord to run both FastAPI + Streamlit
-RUN pip install --no-cache-dir supervisord
+RUN pip install --no-cache-dir supervisor \
+    && mkdir -p /var/log/supervisor /var/run /etc/supervisor/conf.d
 
 COPY <<'EOF' /etc/supervisor/conf.d/tech-agent.conf
 [supervisord]
@@ -47,4 +48,4 @@ EOF
 HEALTHCHECK --interval=10s --timeout=5s --start-period=30s --retries=3 \
     CMD curl -sf http://localhost:8000/health || exit 1
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/tech-agent.conf"]
+CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisor/conf.d/tech-agent.conf"]
