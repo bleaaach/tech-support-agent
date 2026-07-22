@@ -66,15 +66,18 @@ class EmailRenderer:
         resource_urls: list[str] | None = None,
         qtype: QuestionType = QuestionType.GENERAL,
         answer_language: str = "zh",
+        grouped_sources: list[dict] | None = None,
     ) -> str:
         """将回答渲染为邮件格式
 
         Args:
             answer_language: 回答语言，'zh' | 'en'，用于模板选择中/英文标题和落款
+            grouped_sources: 按产品分组的参考文档列表，每项包含 group_name, items 等
         """
         sources = sources or []
         image_urls = image_urls or []
         resource_urls = resource_urls or []
+        grouped_sources = grouped_sources or []
 
         if self._use_file:
             template_name = _TEMPLATE_MAP.get(qtype, "general.md")
@@ -84,6 +87,7 @@ class EmailRenderer:
                     question=question,
                     answer=answer,
                     sources=sources,
+                    grouped_sources=grouped_sources,
                     image_urls=image_urls,
                     resource_urls=resource_urls,
                     lang=answer_language,
@@ -91,13 +95,14 @@ class EmailRenderer:
             except Exception as e:
                 logger.error(f"Failed to load template {template_name}: {e}, falling back to inline")
 
-        return self._render_fallback(question, answer, sources, image_urls, resource_urls, answer_language)
+        return self._render_fallback(question, answer, sources, grouped_sources, image_urls, resource_urls, answer_language)
 
     def _render_fallback(
         self,
         question: str,
         answer: str,
         sources: list[dict],
+        grouped_sources: list[dict],
         image_urls: list[str],
         resource_urls: list[str],
         lang: str,
@@ -118,7 +123,17 @@ class EmailRenderer:
 
 {{ answer }}
 
-{% if sources %}
+{% if grouped_sources %}
+## 参考文档
+{% for group in grouped_sources %}
+{% if group.items %}
+### {{ group.group_name }} ({{ group.doc_type }})
+{% for item in group.items %}
+- [{{ item.title }}]({{ item.url }})
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% elif sources %}
 ## 参考文档
 {% for source in sources %}
 - [{{ source.title }}]({{ source.url }})
@@ -161,7 +176,17 @@ Thank you for contacting Seeed Studio Technical Support. Please find our respons
 
 {{ answer }}
 
-{% if sources %}
+{% if grouped_sources %}
+## Reference Documentation
+{% for group in grouped_sources %}
+{% if group.items %}
+### {{ group.group_name }} ({{ group.doc_type }})
+{% for item in group.items %}
+- [{{ item.title }}]({{ item.url }})
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% elif sources %}
 ## Reference Documentation
 {% for source in sources %}
 - [{{ source.title }}]({{ source.url }})
@@ -210,6 +235,7 @@ def render_email(
     qtype: QuestionType = QuestionType.GENERAL,
     template_dir: str | None = None,
     answer_language: str = "zh",
+    grouped_sources: list[dict] | None = None,
 ) -> str:
     """快捷函数：渲染邮件"""
     renderer = EmailRenderer(template_dir=template_dir)
@@ -221,4 +247,5 @@ def render_email(
         resource_urls=resource_urls,
         qtype=qtype,
         answer_language=answer_language,
+        grouped_sources=grouped_sources,
     )

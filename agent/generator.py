@@ -10,6 +10,7 @@ from openai import OpenAI
 
 from .retriever import RetrievedChunk
 from .router import QuestionType
+from .source_processor import process_sources
 
 logger = logging.getLogger(__name__)
 
@@ -226,11 +227,20 @@ class AnswerGenerator:
             for c in chunks if c.wiki_url
         ]
 
+        # Process sources: dedup, language unification, grouping
+        answer_lang = detect_language(answer, question=question)
+        processed = process_sources(sources, user_language=answer_lang)
+        grouped_sources = processed.get("grouped", [])
+        flat_sources = processed.get("flat", sources)
+        source_stats = processed.get("stats", {})
+
         return {
             "answer": answer,
-            "sources": sources,
+            "sources": flat_sources,
+            "grouped_sources": grouped_sources,
+            "source_stats": source_stats,
             "question_type": qtype.value,
             "image_urls": sum([c.image_urls for c in chunks], [])[:5],
             "resource_urls": sum([c.resource_urls for c in chunks], [])[:5],
-            "answer_language": detect_language(answer, question=question),
+            "answer_language": answer_lang,
         }

@@ -133,6 +133,7 @@ def _sync_chat(agent: TechSupportChat, ctx: ConversationContext, message: str, r
             question=message,
             answer=result["answer"],
             sources=result["sources"],
+            grouped_sources=result.get("grouped_sources", []),
             image_urls=result.get("image_urls", []),
             resource_urls=result.get("resource_urls", []),
             qtype=qtype,

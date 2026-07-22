@@ -14,11 +14,22 @@
 
 {{ answer }}
 
-{% if sources %}
+{% if grouped_sources or sources %}
 ## 参考文档
+{% if grouped_sources %}
+{% for group in grouped_sources %}
+{% if group.items %}
+### {{ group.group_name }} ({{ group.doc_type }})
+{% for item in group.items %}
+- [{{ item.title }}]({{ item.url }})
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% else %}
 {% for source in sources %}
 - [{{ source.title }}]({{ source.url }})
 {% endfor %}
+{% endif %}
 {% endif %}
 
 ---
@@ -61,11 +72,22 @@ Thank you for contacting Seeed Studio. We have received your request and will ro
 
 {{ answer }}
 
-{% if sources %}
+{% if grouped_sources or sources %}
 ## Reference Documentation
+{% if grouped_sources %}
+{% for group in grouped_sources %}
+{% if group.items %}
+### {{ group.group_name }} ({{ group.doc_type }})
+{% for item in group.items %}
+- [{{ item.title }}]({{ item.url }})
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% else %}
 {% for source in sources %}
 - [{{ source.title }}]({{ source.url }})
 {% endfor %}
+{% endif %}
 {% endif %}
 
 ---

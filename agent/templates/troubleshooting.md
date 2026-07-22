@@ -4,6 +4,24 @@
 
 {{ answer }}
 
+{% if grouped_sources or sources %}
+## 参考文档
+{% if grouped_sources %}
+{% for group in grouped_sources %}
+{% if group.items %}
+### {{ group.group_name }} ({{ group.doc_type }})
+{% for item in group.items %}
+- [{{ item.title }}]({{ item.url }})
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% else %}
+{% for source in sources %}
+- [{{ source.title }}]({{ source.url }})
+{% endfor %}
+{% endif %}
+{% endif %}
+
 如需进一步帮助，请随时回复此邮件。如需社区讨论和技术支持，欢迎访问 [Seeed 论坛](https://forum.seeedstudio.com/) 或加入我们的 [Discord 社区](https://discord.gg/cpudkZmKb9)。
 
 此致
@@ -15,6 +33,24 @@ Seeed Studio 技术支持团队
 Thank you for contacting Seeed Studio Technical Support. Please find our detailed response below.
 
 {{ answer }}
+
+{% if grouped_sources or sources %}
+## Reference Documentation
+{% if grouped_sources %}
+{% for group in grouped_sources %}
+{% if group.items %}
+### {{ group.group_name }} ({{ group.doc_type }})
+{% for item in group.items %}
+- [{{ item.title }}]({{ item.url }})
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% else %}
+{% for source in sources %}
+- [{{ source.title }}]({{ source.url }})
+{% endfor %}
+{% endif %}
+{% endif %}
 
 If you have any further questions, please feel free to reply to this email directly. For community discussion and peer-to-peer help, visit the [Seeed Forum](https://forum.seeedstudio.com/) or join our [Discord Community](https://discord.gg/cpudkZmKb9).
 
