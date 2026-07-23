@@ -11,10 +11,10 @@
 #
 # 也可以直接用 docker compose：
 #
-#   测试: docker-compose -f docker-compose.yml -f docker-compose.testing.yml \
+#   测试: docker compose -f docker-compose.yml -f docker-compose.testing.yml \
 #           --env-file .env.testing up -d
 #
-#   生产: docker-compose -f docker-compose.yml -f docker-compose.prod.yml \
+#   生产: docker compose -f docker-compose.yml -f docker-compose.prod.yml \
 #           --env-file .env.production up -d
 #
 # 端口（测试 / 生产）:
