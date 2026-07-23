@@ -1,27 +1,29 @@
 # ================================================================
 # Seeed Tech Support + SAG 一键部署
 #
-# 测试环境: docker compose --env-file .env.testing up -d
-#           (或直接 docker compose up -d，已自动加载 .env.testing)
-# 生产环境: docker compose -f docker-compose.yml -f docker-compose.prod.yml \
-#             --env-file .env.production up -d
-# 查看日志: docker compose logs -f [service]
-# 停止: docker compose down
-# 重启: docker compose restart [service]
+# 两种启动方式（均通过 ./deploy.sh）：
 #
-# 服务端口（测试）:
-#   6333  - Qdrant 向量数据库
-#   5432  - PostgreSQL (SAG)
-#   4173  - SAG API + Web UI
-#   8000  - Tech Support FastAPI
-#   8501  - Tech Support Streamlit
+#   测试环境 (develop 分支):
+#     ./deploy.sh test     # 自动 checkout develop，拉取最新，重建镜像，启动
 #
-# 生产端口见 docker-compose.prod.yml
+#   生产环境 (main 分支):
+#     ./deploy.sh prod     # 自动 checkout main，读取 .env.production，启动
+#
+# 也可以直接用 docker compose：
+#
+#   测试: docker compose -f docker-compose.yml -f docker-compose.testing.yml \
+#           --env-file .env.testing up -d
+#
+#   生产: docker compose -f docker-compose.yml -f docker-compose.prod.yml \
+#           --env-file .env.production up -d
+#
+# 端口（测试 / 生产）:
+#   Qdrant      26333 / 16333
+#   PostgreSQL  25432 / 15432
+#   SAG         14174 / 14173
+#   FastAPI     28000 / 18000
+#   Streamlit   28501 / 18501
 # ================================================================
-
-# .env.testing is committed; for prod use .env.production (gitignored).
-# Using `env_file` here makes plain `docker compose up -d` work for testing
-# without needing a symlink to .env.
 
 services:
   # ── 向量数据库 ─────────────────────────────────────────────────
